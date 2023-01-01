@@ -1,0 +1,22 @@
+<div class="card">
+    <div class="left">
+        <div class="author">{{data.author.name.label}}</div>
+        <div class="version">
+            <span class="versionText">Version : </span>
+            <span class="versionNumber">{{data["im:version"].label}}</span>
+        </div>
+    </div>
+    <div class="center">
+        <div class="stars-container">
+            <div class="rate" *ngFor="let star of rating">
+                <span *ngIf="!star.shouldHighlight">&#39734;</span>
+                <span *ngIf="star.shouldHighlight">&#39733;</span>
+            </div>
+        </div>
+        <div class="title">{{data.title.label}}</div>
+        <div class="content">{{data.content.label}}</div>
+    </div>
+    <div class="right">
+        <div class="date">{{data.updated.label | date}}</div>
+    </div>
+</div>

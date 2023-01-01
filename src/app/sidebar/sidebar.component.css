@@ -1,0 +1,143 @@
+.side-bar-container {
+    position: absolute;
+    left: 5px;
+    top: 55px;
+    padding: 20px 5px;
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+    background-color: white;
+    height: calc(100vh - 65px);
+    border-radius: 5px;
+}
+
+.open {
+    left: 5px;
+    animation: open 300ms forwards;
+}
+
+.close {
+    left: -305px;
+    animation: close 300ms backwards;
+}
+
+@keyframes open {
+    from {
+        left: -305px;
+    } to {
+        left: 5px;
+    }
+}
+
+@keyframes close {
+    from {
+        left: 5px;
+    } to {
+        left: -305px;
+    }
+}
+
+.link {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgba(100%, 100%, 100%, 100%);
+    cursor: pointer;
+
+}
+
+.img {
+    width: 20px;
+    height: 20px;
+    filter: grayscale(100%);
+}
+
+.link:hover {
+    gap: 20px;
+    transition-duration: 200ms;
+}
+
+hr {
+    height: 2px;
+    width: 100%;
+    background-color: #e7e7e7;
+    border: none;
+}
+
+.delete {
+    background-image: linear-gradient(to left, red 50%, white 80%);
+    color: white;
+    justify-content: space-between;
+}
+
+.delete > .img {
+    filter: none;
+}
+
+.apps-container {
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 5px 0 0;
+}
+
+.apps-container::-webkit-scrollbar {
+    width: 3px;
+}
+
+.apps {
+    width: 100%;
+    height: 45px;
+    user-select: none;
+    cursor: pointer;
+}
+
+.apps .img {
+    filter: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 8px 0 0px 8px;
+}
+
+.platform-img {
+    width: 20px;
+    height: 20px;
+    filter: grayscale(100%);
+    border-radius: 50%;
+}
+
+.apps .link {
+    padding: 0 5px 0 0;
+}
+
+.app {
+    font-size: 15px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bold {
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.rating {
+    font-size: 12px;
+}
+
+.device {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}

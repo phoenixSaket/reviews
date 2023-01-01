@@ -1,0 +1,43 @@
+.card {
+    width: 100%;
+    display: flex;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 1px rgb(0 0 0 / 20%);
+    margin: 10px 0px;
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    width: 65%;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+}
+
+.rate {
+    color: grey;
+}
+
+.title {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.content, .date, .version {
+    color: #747474;
+}
+
+.content, .date, .author, .version {
+    font-size: 14px;
+}

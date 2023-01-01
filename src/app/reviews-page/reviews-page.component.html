@@ -1,0 +1,14 @@
+<div class="title">
+
+</div>
+<div class="filter">
+
+</div>
+<div class="reviews-container">
+    <div class="apps-container" *ngFor="let review of androidReviews">
+        <app-card-android [data]="review"></app-card-android>
+    </div>
+    <div class="apps-container" *ngFor="let review of iosReviews">
+        <app-card-ios [data]="review"></app-card-ios>
+    </div>
+</div>
