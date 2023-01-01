@@ -1,6 +1,7 @@
 {
   "name": "reviews",
   "version": "0.0.0",
+  "homepage": "https://phoenixSaket.github.io/reviews/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
