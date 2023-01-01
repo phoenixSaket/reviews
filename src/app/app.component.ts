@@ -43,6 +43,9 @@ export class AppComponent {
           this.apps.push({ name: resp.title, icon: resp.icon, rating: resp.score, isIOS: false, appId: resp.appId });
           this.apps.sort((a, b) => { if (a.name > b.name) { return 1 } else if (b.name > a.name) { return -1 } else {return 0} });
           this.cdr.detectChanges();
+          let app = { name: resp.title, icon: resp.icon, rating: resp.score, isIOS: false, appId: resp.appId }
+          let histogram = {reviews: resp.reviews, ratings: resp.ratings, histogram: resp.histogram}
+          this.android.setHistogram(app, histogram);
         })
       })
     }

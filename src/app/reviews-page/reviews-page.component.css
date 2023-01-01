@@ -1,0 +1,32 @@
+.img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+    top: -10px;
+    background-color: #d5e7ff;
+    margin: -10px;
+    width: calc(100% + 20px);
+    padding: 10px 20px;
+}
+
+.inner {
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.reviews-container {
+    margin-top: 15px;
+}

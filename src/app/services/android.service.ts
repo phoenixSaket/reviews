@@ -13,6 +13,7 @@ export class AndroidService {
     'com.ibxtpa.iamobile',
     'com.ahc.ahcmobile'
   ];
+  public histograms: any[] = [];
 
   constructor(private http: HttpClient) { }
 
@@ -29,5 +30,15 @@ export class AndroidService {
   searchApp(term: string, num: number, lang: string, price: string) {
     let url = this.url + "search";
     return this.http.post(url, { term: term, num: num, lang: lang, price: price })
+  }
+
+  setHistogram(app: any, histogram: any) {
+    if(!this.histograms.includes({app: app.name, histogram: histogram})) {
+      this.histograms.push({app: app.name, histogram: histogram});
+    }
+  }
+
+  getHistogram(appName: string): any {
+    return this.histograms.find(app=> {return app.app == appName});
   }
 }

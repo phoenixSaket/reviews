@@ -12,6 +12,7 @@ export class ReviewsPageComponent implements OnInit {
   public iosReviews: any[] = [];
   public androidReviews: any[] = [];
   public isIOS: boolean = false;
+  public app: any ={};
 
   constructor(
     private data: DataService,
@@ -22,6 +23,7 @@ export class ReviewsPageComponent implements OnInit {
   ngOnInit(): void {
     this.data.appLoader.subscribe((app: any) => {
       if (!!app) {
+        this.app = app;
         this.androidReviews = [];
         this.iosReviews = [];
         if (app.isIOS) {

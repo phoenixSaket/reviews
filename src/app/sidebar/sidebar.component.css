@@ -1,46 +1,45 @@
 .side-bar-container {
     position: absolute;
-    left: 5px;
-    top: 55px;
+    left: 0px;
+    top: 50px;
     padding: 0px 5px 5px;
     width: 100%;
-    max-width: 300px;
+    max-width: 305px;
     display: flex;
     flex-direction: column;
     gap: 10px;
     align-items: flex-start;
-    background-color: white;
-    height: calc(100vh - 55px);
-    border-radius: 5px;
+    background-color: #d5e7ff;
+    height: calc(100vh - 50px);
 }
 
 .open {
-    left: 5px;
+    left: 0px;
     animation: open 300ms forwards;
 }
 
 .close {
-    left: -305px;
+    left: -300px;
     animation: close 300ms backwards;
 }
 
 @keyframes open {
     from {
-        left: -305px;
+        left: -300px;
     }
 
     to {
-        left: 5px;
+        left: 0px;
     }
 }
 
 @keyframes close {
     from {
-        left: 5px;
+        left: 0px;
     }
 
     to {
-        left: -305px;
+        left: -300px;
     }
 }
 
@@ -108,6 +107,7 @@ hr {
     align-items: center;
     padding: 10px;
     border-radius: 5px;
+    background-color: white;
 }
 
 .apps .img {

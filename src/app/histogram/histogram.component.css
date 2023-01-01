@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    height: 15px;
+}
+
+.text {
+    width: 25px;
+    line-height: 15px;
+    font-size: 12px;
+}
+
+.histogram span {
+    line-height: 15px;
+    font-size: 15px;
+}

@@ -29,7 +29,8 @@ import { HomepageComponent } from './homepage/homepage.component';
     AddAppCardComponent,
     HistogramComponent,
     ReviewsPageComponent,
-    HomepageComponent
+    HomepageComponent,
+    
   ],
   imports: [
     BrowserModule,
