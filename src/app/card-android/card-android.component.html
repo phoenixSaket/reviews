@@ -1,1 +1,25 @@
-<p>card-android works!</p>
+<div class="card">
+    <div class="left">
+        <div class="image">
+            <img [src]="data.userImage" alt="userImage" class="user-img">
+        </div>
+        <div class="author">{{data.userName}}</div>
+        <div class="version" *ngIf="!!data.version">
+            <span class="versionText">Version : </span>
+            <span class="versionNumber">{{data.version}}</span>
+        </div>
+    </div>
+    <div class="center">
+        <div class="stars-container">
+            <div class="rate" *ngFor="let star of rating">
+                <span *ngIf="!star.shouldHighlight">&#9734;</span>
+                <span *ngIf="star.shouldHighlight">&#9733;</span>
+            </div>
+        </div>
+        <div class="title">{{data.title}}</div>
+        <div class="content">{{data.text}}</div>
+    </div>
+    <div class="right">
+        <div class="date">{{data.date | date}}</div>
+    </div>
+</div>
