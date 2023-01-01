@@ -2,7 +2,7 @@
     position: absolute;
     left: 5px;
     top: 55px;
-    padding: 20px 5px;
+    padding: 0px 5px 5px;
     width: 100%;
     max-width: 300px;
     display: flex;
@@ -10,7 +10,7 @@
     gap: 10px;
     align-items: flex-start;
     background-color: white;
-    height: calc(100vh - 65px);
+    height: calc(100vh - 55px);
     border-radius: 5px;
 }
 
@@ -27,7 +27,9 @@
 @keyframes open {
     from {
         left: -305px;
-    } to {
+    }
+
+    to {
         left: 5px;
     }
 }
@@ -35,7 +37,9 @@
 @keyframes close {
     from {
         left: 5px;
-    } to {
+    }
+
+    to {
         left: -305px;
     }
 }
@@ -77,17 +81,18 @@ hr {
     justify-content: space-between;
 }
 
-.delete > .img {
+.delete>.img {
     filter: none;
 }
 
 .apps-container {
-    width: 100%;
+    width: calc(100% + 10px);
     overflow: auto;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 0 5px 0 0;
+    margin: -5px;
+    padding: 5px;
 }
 
 .apps-container::-webkit-scrollbar {
@@ -99,13 +104,17 @@ hr {
     height: 45px;
     user-select: none;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 .apps .img {
     filter: none;
-    width: 45px;
-    height: 45px;
-    border-radius: 8px 0 0px 8px;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
 }
 
 .platform-img {

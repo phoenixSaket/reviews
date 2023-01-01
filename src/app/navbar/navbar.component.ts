@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DataService } from '../services/data.service';
 import { SidebarService } from '../sidebar/sidebar.service';
 
 @Component({
@@ -10,7 +11,7 @@ export class NavbarComponent implements OnInit {
   @Input() apps: any[] = [];
   public isSideBarOpen: boolean = false;
 
-  constructor(private sidebar: SidebarService) { }
+  constructor(private sidebar: SidebarService, public data: DataService) { }
 
   ngOnInit(): void {
   }

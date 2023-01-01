@@ -7,6 +7,8 @@
     position: fixed;
     top: 0;
     height: 50px;
+    background-color: white;
+    border-bottom: 1px solid #e7e7e7;
 }
 
 .left {
@@ -41,4 +43,21 @@
 
 .hamburger {
     font-size: 20px;
+}
+
+.rating {
+    font-size: 12px;
+}
+
+.platform-img {
+    width: 20px;
+    height: 20px;
+    filter: grayscale(100%);
+    border-radius: 50%;
+}
+
+.app {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }

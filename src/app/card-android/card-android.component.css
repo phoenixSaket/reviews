@@ -1,0 +1,57 @@
+.card {
+    width: 100%;
+    display: flex;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 3px 0px;
+    background-color: white;
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+    gap:2px;
+    width: 20%;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    width: 65%;
+    gap:2px;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+}
+
+.stars-container {
+    display: flex;
+}
+
+.rate span {
+    color: #818181;
+    font-size: 20px;
+    line-height: 20px;
+}
+
+.title {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.content, .date, .version {
+    color: #747474;
+}
+
+.content, .date, .author, .version {
+    font-size: 14px;
+}
+
+.user-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}

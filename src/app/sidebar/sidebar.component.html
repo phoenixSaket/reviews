@@ -1,4 +1,4 @@
-<div class="side-bar-container shadows open" id="sidebar">
+<div class="side-bar-container open" id="sidebar">
     <div class="link shadows" routerLink="/">
         <img class="img" src="assets/home.jpg" alt="pie">
         Home
@@ -13,8 +13,8 @@
     </div>
     <!-- <hr> -->
     <div class="apps-container">
-        <div class="apps" *ngFor="let app of apps" (click)="openApp(app)">
-            <div class="link shadows">
+        <div class="apps shadows" *ngFor="let app of apps" (click)="openApp(app)">
+            <div class="link">
                 <img [src]="app.icon" [alt]="app.name" class="img">
                 <div class="app">
                     <div class="name">{{app.name}}</div>
@@ -28,9 +28,10 @@
                 </div>
             </div>
         </div>
-        <!-- <hr> -->
-        <div class="link shadows delete">
-            <img class="img" src="assets/delete.jpg" alt="pie">
-            Delete Apps
-        </div>
     </div>
+    <!-- <hr> -->
+    <div class="link shadows delete">
+        <img class="img" src="assets/delete.jpg" alt="pie">
+        Delete Apps
+    </div>
+</div>
