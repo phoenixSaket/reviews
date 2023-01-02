@@ -23,6 +23,7 @@ export class AppComponent {
     let apps: any = localStorage.getItem("apps") || "{}";
     let iosApps = [];
     let androidApps = [];
+    localStorage.clear();
     if ((typeof (JSON.parse(apps)) == "object") && (JSON.parse(apps).length > 0)) {
 
     } else {
