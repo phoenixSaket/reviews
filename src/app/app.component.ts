@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { AndroidService } from './services/android.service';
 import { IosService } from './services/ios.service';
 import { SidebarService } from './sidebar/sidebar.service';
