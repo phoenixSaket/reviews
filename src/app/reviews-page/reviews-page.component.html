@@ -1,18 +1,24 @@
-<div class="top">
-    <div class="inner">
-        <div class="histogram">
-            <app-histogram ></app-histogram>
+<div class="loading" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!isLoading && !!data.getCurrentApp().name">
+    <div class="top">
+        <div class="inner">
+            <div class="histogram">
+                <app-histogram ></app-histogram>
+            </div>
+        </div>
+        <div class="filter">
+            <app-filters [versions]="versions" [years]="years" (version)="versionFilter($event)" (year)="yearFilter($event)" (searchKeyword)="searchSort($event)"></app-filters>
         </div>
     </div>
-    <div class="filter">
-        <app-filters></app-filters>
-    </div>
-</div>
-<div class="reviews-container">
-    <div class="apps-container" *ngFor="let review of androidReviews">
-        <app-card-android [data]="review"></app-card-android>
-    </div>
-    <div class="apps-container" *ngFor="let review of iosReviews">
-        <app-card-ios [data]="review"></app-card-ios>
+    <div class="reviews-container">
+        <div class="apps-container" *ngFor="let review of androidReviews">
+            <app-card-android [data]="review"></app-card-android>
+        </div>
+        <div class="apps-container" *ngFor="let review of iosReviews">
+            <app-card-ios [data]="review"></app-card-ios>
+        </div>
     </div>
 </div>

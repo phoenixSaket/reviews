@@ -15,6 +15,14 @@ import { HistogramComponent } from './histogram/histogram.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReviewsPageComponent } from './reviews-page/reviews-page.component';
 import { HomepageComponent } from './homepage/homepage.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatSelectModule } from "@angular/material/select";
+import { MatInputModule } from '@angular/material/input';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatListModule } from "@angular/material/list";
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -29,13 +37,20 @@ import { HomepageComponent } from './homepage/homepage.component';
     AddAppCardComponent,
     HistogramComponent,
     ReviewsPageComponent,
-    HomepageComponent,
-    
+    HomepageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatSnackBarModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatChipsModule,
+    MatListModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
