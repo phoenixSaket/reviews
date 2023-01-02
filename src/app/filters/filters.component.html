@@ -1,8 +1,55 @@
-<div class="ratings">
-    <div class="rating" *ngFor="let rate of ratings">
-        {{rate.text}}
-        <div class="selected">
-            <span class="check">&#10003;</span> 
-        </div>
+<div class="filter-container">
+
+    <div class="ratings div">
+        <!-- <div class="rating" *ngFor="let rate of ratings">
+            {{rate.text}}
+            <div class="selected">
+                <span class="check">&#10003;</span>
+            </div>
+        </div> -->
+
+
+        <mat-chip-list multiple>
+            <mat-chip color="primary" *ngFor="let rate of ratings" (click)="toggleRatingSelection(rate)"
+                selectable="true" [selected]="rate.isSelected">
+                <div class="rating-container">
+                    <div>{{rate.text}}</div>
+                    <div *ngIf="rate.isSelected">&#10003;</div>
+                </div>
+            </mat-chip>
+        </mat-chip-list>
+
     </div>
+
+    <div class="div">
+        <form class="example-form">
+            <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Search by keyword</mat-label>
+                <input matInput placeholder="Search" (keyup)="searchInput($event)">
+            </mat-form-field>
+        </form>
+    </div>
+
+    <div class="div">
+        <mat-form-field appearance="outline">
+            <mat-label>Version</mat-label>
+            <mat-select (selectionChange)="versionSelected($event)">
+                <mat-option *ngFor="let version of versions" [value]="version">
+                    {{version}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="div">
+        <mat-form-field appearance="outline">
+            <mat-label>Year</mat-label>
+            <mat-select (selectionChange)="yearSelected($event)">
+                <mat-option *ngFor="let year of years" [value]="year">
+                    {{year}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
 </div>
