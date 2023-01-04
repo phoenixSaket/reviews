@@ -11,6 +11,7 @@ import { SidebarService } from './sidebar/sidebar.service';
 export class AppComponent {
   title = 'Reviews Dashboard';
   public apps: any[] = [];
+  public width: number = screen.width;
 
   constructor(
     private ios: IosService,

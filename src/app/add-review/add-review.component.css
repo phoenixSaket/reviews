@@ -7,10 +7,11 @@
 }
 
 .example-form {
+    flex-wrap: wrap;
     display: flex;
     gap: 20px;
-    height: 40px;
     align-items: center;
+    justify-content: center;
 }
 
 .radio-group {
@@ -29,4 +30,66 @@
     display: flex;
     align-items: center;
     gap: 5px;
+}
+
+.bottom-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.app {
+    min-width: 250px;
+    max-width: 350px;
+    width: 100%;
+}
+
+.details {
+    padding: 5px;
+    background-color: rgb(238, 234, 228);
+    border-radius: 10px;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
+}
+
+.inner-container {
+    display: flex;
+    gap: 10px;
+}
+
+.image {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.inner-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.name {
+    font-size: 16px;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.grey {
+    color: #474747;
+}
+
+.italic {
+    font-style: italic;
 }

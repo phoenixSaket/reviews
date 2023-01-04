@@ -5,7 +5,7 @@
             <input matInput placeholder="App Name" [value]="appName" (change)="appNameChange($event)">
         </mat-form-field>
         <mat-radio-group aria-label="Select platform" class="radio-group" (change)="platformSelect($event)">
-            <mat-radio-button value="IOS">
+            <mat-radio-button value="IOS" checked>
                 <div class="platform">
                     <span class="name">IOS</span>
                     <span><img src="assets/apple.jpg" alt="apple" class="platform-img"></span>
@@ -25,4 +25,23 @@
             </div>
         </button>
     </form>
+</div>
+
+<div class="bottom-container">
+    <div class="app" *ngFor="let app of apps">
+        <div class="details">
+            <div class="inner-container">
+                <div class="image">
+                    <img [src]="app.icon" class="icon">
+                </div>
+                <div class="inner-details">
+                    <div class="bold name">{{app.title}}</div>
+                    <div class="grey">{{app.name}}</div>
+                    <div class="grey">{{app.appId}}</div>
+                    <div class="grey italic">{{app.developer}}</div>
+                    <div class="grey italic bold">{{(app.score).toFixed(2)}} / 5</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
