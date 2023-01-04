@@ -18,11 +18,9 @@ export class HistogramComponent implements OnInit {
       if (!!app) {
         if (app.isIOS) {
           this.ios.getAPPRatings(app.id).subscribe((response: any) => {
-            console.log("response", JSON.parse(response.result));
             this.histogram = JSON.parse(response.result).histogram;
           })
         } else {
-          console.log(this.android.getHistogram(app.name));
           this.histogram = this.android.getHistogram(app.name).histogram.histogram;
         }
 

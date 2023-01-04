@@ -1,39 +1,115 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
+import { AndroidService } from '../services/android.service';
+import { IosService } from '../services/ios.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
   public chart: any;
-  constructor() {}
+  private histogram: any = {};
+  public apps: any[] = [];
 
-  ngOnInit(): void {
-    this.createChart();
+  constructor( private android: AndroidService, private ios: IosService) { }
+
+  ngAfterViewInit(): void {
+    let iosApps = this.ios.iosAppsDefault;
+    let androidApps = this.android.androidAppsDefault;
+
+    iosApps.forEach((app, index: number) => {
+      this.apps.push(app);
+      this.ios.getAPPRatings(app).subscribe((response: any) => {
+        this.histogram = JSON.parse(response.result).histogram;
+        this.createChart(app);
+      })
+    });
+
+    androidApps.forEach(app => {
+      this.apps.push(this.getAppNameAndroid(app));
+    })
+
+    androidApps.forEach(appName => {
+      this.android.getApp(appName).subscribe((response: any) => {
+        let resp: any = JSON.parse(response.result);
+        this.histogram = resp.histogram;
+        this.createChart(this.getAppNameAndroid(appName));
+      });
+    })
   }
 
-  createChart() {
-    this.chart = new Chart('MyChart', {
-      type: 'polarArea',
+  createChart(app: string) {
+    this.chart = new Chart('' + app, {
+      type: 'pie',
       data: {
         // values on X-Axis
-        labels: ['Red', 'Green', 'Yellow', 'Grey', 'Blue'],
+        labels: ['1★', '2★', '3★', '4★', '5★'],
         datasets: [
           {
-            label: 'My First Dataset',
-            data: [11, 18, 7, 3, 14],
+            label: '' + app,
+
+            data: Object.values(this.histogram),
             backgroundColor: [
-              'rgb(255, 99, 132)',
-              'rgb(75, 192, 192)',
-              'rgb(255, 205, 86)',
-              'rgb(201, 203, 207)',
-              'rgb(54, 162, 235)',
+              '#e67474',
+              '#f5e050',
+              '#dffadf',
+              '#90ef90',
+              '#04c900',
             ],
           },
         ],
       },
     });
+  }
+
+  getAppName(app: any): string {
+    let name = "";
+    switch (app) {
+      case '584785907':
+        name = "IBX - IOS";
+        break;
+      case '1112137390':
+        name = "AHNJ On the Go - IOS";
+        break;
+      case '1337168006':
+        name = "myAHABenefits - IOS";
+        break;
+      case '1337166340':
+        name = "myIBXTPABenefits - IOS";
+        break;
+      case '1340456041':
+        name = "AHC Mobile - IOS";
+        break;
+      default:
+        name = app;
+        break;
+    }
+    return name;
+  }
+
+  getAppNameAndroid(app: string): string {
+    let name = "";
+    switch (app) {
+      case "com.ibx.ibxmobile":
+        name = "IBX - Android";
+        break;
+      case "com.ahnj.ahmobile":
+        name = "AHNJ On the Go - Android";
+        break;
+      case "com.ahatpa.ahamobile":
+        name = "myAHABenefits - Android";
+        break;
+      case "com.ibxtpa.iamobile":
+        name = "myIBXTPABenefits - Android";
+        break;
+      case "com.ahc.ahcmobile":
+        name = "AHC Mobile - Android";
+        break;
+      default:
+        break;
+    }
+    return name;
   }
 }

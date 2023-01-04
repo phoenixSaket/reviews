@@ -6,7 +6,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { ReviewsPageComponent } from './reviews-page/reviews-page.component';
 
 const routes: Routes = [
-  {path: "", component: HomepageComponent},
+  {path: "", component: DashboardComponent},
   {path: "dashboard", component: DashboardComponent},
   {path: "reviews", component: ReviewsPageComponent},
   {path: "add-app", component: AddReviewComponent}

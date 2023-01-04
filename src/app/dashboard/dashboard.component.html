@@ -1,5 +1,6 @@
-<p>dashboard works!</p>
-
-<div class="chart-container">
-  <canvas id="MyChart">{{ chart }}</canvas>
+<div class="container">
+  <div class="chart-container" [ngClass]="!!chart ? 'shadows': ''" *ngFor="let app of apps">
+    <div class="app-name" *ngIf="!!chart">{{getAppName(app)}}</div>
+    <canvas [id]="app">{{ chart }}</canvas>
+  </div>
 </div>

@@ -31,7 +31,6 @@ export class FiltersComponent implements OnInit {
   }
 
   toggleRatingSelection(rate: any) {
-    console.log(rate);
     this.ratings.find(rating => { return rating.text == rate.text }).isSelected = !this.ratings.find(rating => { return rating.text == rate.text }).isSelected;
   }
 

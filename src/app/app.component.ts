@@ -16,7 +16,7 @@ export class AppComponent {
     private ios: IosService,
     private android: AndroidService,
     private cdr: ChangeDetectorRef,
-    public sidebar: SidebarService
+    public sidebar: SidebarService,
   ) { }
 
   ngOnInit() {

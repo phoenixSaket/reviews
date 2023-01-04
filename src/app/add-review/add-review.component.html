@@ -1,1 +1,28 @@
-<p>add-review works!</p>
+<div class="top-container">
+    <form class="example-form">
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Search App</mat-label>
+            <input matInput placeholder="App Name" [value]="appName" (change)="appNameChange($event)">
+        </mat-form-field>
+        <mat-radio-group aria-label="Select platform" class="radio-group" (change)="platformSelect($event)">
+            <mat-radio-button value="IOS">
+                <div class="platform">
+                    <span class="name">IOS</span>
+                    <span><img src="assets/apple.jpg" alt="apple" class="platform-img"></span>
+                </div>
+            </mat-radio-button>
+            <mat-radio-button value="Android">
+                <div class="platform">
+                    <span class="name">Android</span>
+                    <span><img src="assets/android.jpg" alt="apple" class="platform-img"></span>
+                </div>
+            </mat-radio-button>
+        </mat-radio-group>
+        <button mat-flat-button color="accent" (click)="searchApp($event)">
+            <div class="platform">
+                <span>Search</span>
+                <mat-icon>search</mat-icon>
+            </div>
+        </button>
+    </form>
+</div>

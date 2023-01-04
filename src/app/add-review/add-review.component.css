@@ -1,0 +1,32 @@
+.top-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.example-form {
+    display: flex;
+    gap: 20px;
+    height: 40px;
+    align-items: center;
+}
+
+.radio-group {
+    display: flex;
+    gap: 20px;
+}
+
+.platform-img {
+    width: 20px;
+    height: 20px;
+    filter: grayscale(100%);
+    border-radius: 50%;
+}
+
+.platform {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
