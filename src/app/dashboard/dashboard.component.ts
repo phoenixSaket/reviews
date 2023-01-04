@@ -13,11 +13,21 @@ export class DashboardComponent {
   private histogram: any = {};
   public apps: any[] = [];
 
-  constructor( private android: AndroidService, private ios: IosService) { }
+  constructor(private android: AndroidService, private ios: IosService) { }
 
   ngAfterViewInit(): void {
-    let iosApps = this.ios.iosAppsDefault;
-    let androidApps = this.android.androidAppsDefault;
+    let iosApps: any[] = []; //this.ios.iosAppsDefault;
+    let androidApps: any[] = []; //this.android.androidAppsDefault;
+
+    let apps = JSON.parse(localStorage.getItem("apps-review") || "[]");
+
+    apps.forEach((app: any) => {
+      if (app.isIOS) {
+        iosApps.push(app.app);
+      } else {
+        androidApps.push(app.app);
+      }
+    })
 
     iosApps.forEach((app, index: number) => {
       this.apps.push(app);

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AndroidService } from '../services/android.service';
+import { DataService } from '../services/data.service';
 import { IosService } from '../services/ios.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class AddReviewComponent implements OnInit {
   public platform: string = "IOS";
   public apps: any[] = [];
 
-  constructor(private snackbar: MatSnackBar, private ios: IosService, private android: AndroidService) { }
+  constructor(private snackbar: MatSnackBar, private ios: IosService, private android: AndroidService, private data: DataService) { }
 
   ngOnInit(): void {
   }
@@ -46,8 +47,8 @@ export class AddReviewComponent implements OnInit {
           if (response.opstatus == 0) {
             this.apps = JSON.parse(response.result);
             this.snackbar.dismiss();
-            if(this.apps.length == 0) {
-              this.openSnackbar("No apps found with the name "+ this.appName);
+            if (this.apps.length == 0) {
+              this.openSnackbar("No apps found with the name " + this.appName);
             }
           } else {
             this.openSnackbar("Could not load " + this.appName)
@@ -63,8 +64,8 @@ export class AddReviewComponent implements OnInit {
           if (response.opstatus == 0) {
             this.apps = JSON.parse(response.result);
             this.snackbar.dismiss();
-            if(this.apps.length == 0) {
-              this.openSnackbar("No apps found with the name "+ this.appName);
+            if (this.apps.length == 0) {
+              this.openSnackbar("No apps found with the name " + this.appName);
             }
           } else {
             this.openSnackbar("Could not load " + this.appName);
@@ -85,4 +86,30 @@ export class AddReviewComponent implements OnInit {
     })
   }
 
+  addApp(app: any) {
+    this.openSnackbar("Adding app ...");
+    if (this.platform == "IOS") {
+      this.saveToLocalStorage({ app: app.id, isIOS: this.platform == "IOS" });
+      this.data.newAppAdded.next({ app: app.id, isIOS: this.platform == "IOS" });
+    } else {
+      this.saveToLocalStorage({ app: app.appId, isIOS: this.platform == "IOS" });
+      this.data.newAppAdded.next({ app: app.appId, isIOS: this.platform == "IOS" });
+    }
+  }
+
+  saveToLocalStorage(app: any) {
+    let apps = JSON.parse(localStorage.getItem("apps-review") || "[]");
+    console.log(apps.find((el: any) => { el.app == app.app }))
+
+    let check: boolean = false;
+    apps.forEach((el: any) => {
+      if (el.app == app.app) { check = true };
+    });
+
+    if (!check) {
+      apps.push(app);
+    }
+
+    localStorage.setItem("apps-review", JSON.stringify(apps));
+  }
 }

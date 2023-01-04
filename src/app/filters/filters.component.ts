@@ -27,6 +27,7 @@ export class FiltersComponent implements OnInit {
   }
 
   searchInput(event: any) {
+    event.preventDefault();
     this.searchKeyword.emit(event.target.value);
   }
 

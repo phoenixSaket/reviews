@@ -47,10 +47,11 @@
 }
 
 .details {
-    padding: 5px;
-    background-color: rgb(238, 234, 228);
+    padding: 10px;
+    background-color: rgb(255, 240, 240);
     border-radius: 10px;
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 }
 
 .inner-container {
@@ -88,6 +89,7 @@
 
 .grey {
     color: #474747;
+    word-wrap: break-word;
 }
 
 .italic {

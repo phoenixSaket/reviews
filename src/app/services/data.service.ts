@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class DataService {
   public currentApp: any = {};
   public appLoader: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  public newAppAdded: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   constructor() { }
 

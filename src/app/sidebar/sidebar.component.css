@@ -151,6 +151,41 @@ hr {
     gap: 5px;
 }
 
+.checkbox {
+    background-color: #ffffff;
+    width: 15px;
+    height: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 2px rgb(0 0 0 / 10%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inner-delete, .delete-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+    width: 100%;
+    align-items: center;
+}
+
+.inner-delete {
+    padding: 10px 0px;
+    border-radius: 5px;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.red {
+    background-color: #f1664e;
+}
+
+.green {
+    background-color: #23b66d;
+}
+
 @media (max-width: 500px) {
     .side-bar-container {
         max-width: 100%;

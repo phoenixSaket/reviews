@@ -29,7 +29,7 @@
 
 <div class="bottom-container">
     <div class="app" *ngFor="let app of apps">
-        <div class="details">
+        <div class="details" (click)="addApp(app)">
             <div class="inner-container">
                 <div class="image">
                     <img [src]="app.icon" class="icon">
