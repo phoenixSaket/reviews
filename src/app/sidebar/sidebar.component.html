@@ -4,11 +4,11 @@
         Home
     </div> -->
     <div class="link shadows" routerLink="/dashboard" (click)="closeSideBar()">
-        <img class="img" src="assets/pie-chart.jpg" alt="pie">
+        <mat-icon>dashboard</mat-icon>
         Dashboard
     </div>
     <div class="link shadows" routerLink="/add-app" (click)="closeSideBar()">
-        <img class="img" src="assets/plus.jpg" alt="pie">
+        <mat-icon>add</mat-icon>
         Add App
     </div>
     <!-- <hr> -->
@@ -29,11 +29,26 @@
                     <div class="checkbox" *ngIf="shouldDelete">
                         <mat-icon *ngIf="app.shouldDelete">check</mat-icon>
                     </div>
+                    
                 </div>
             </div>
         </div>
     </div>
     <!-- <hr> -->
+    <div class="link shadows compare" (click)="compareApp()" *ngIf="!shouldCompare">
+        <mat-icon class="dark-text">compare_arrows</mat-icon>
+        Compare Apps
+    </div>
+    <div class="delete-container" *ngIf="shouldCompare">
+        <div class="inner-delete grey" (click)="compareApp()">
+            <div>Close</div>
+            <mat-icon>close</mat-icon>
+        </div>
+        <div class="inner-delete green" (click)="reallyCompareApps()">
+            <div>Compare</div>
+            <mat-icon>compare_arrows</mat-icon>
+        </div>
+    </div>
     <div class="link shadows delete" (click)="deleteApp()" *ngIf="!shouldDelete">
         <img class="img" src="assets/delete.jpg" alt="delete">
         Delete Apps

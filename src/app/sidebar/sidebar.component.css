@@ -80,6 +80,16 @@ hr {
     justify-content: space-between;
 }
 
+.compare {
+    background-image: linear-gradient(to left, #23b66d 50%, white 80%);
+    color: white;
+    justify-content: space-between;
+}
+
+.dark-text {
+    color: black;
+}
+
 .delete>.img {
     filter: none;
 }
@@ -184,6 +194,11 @@ hr {
 
 .green {
     background-color: #23b66d;
+}
+
+
+.grey {
+    background-color: #757575;
 }
 
 @media (max-width: 500px) {

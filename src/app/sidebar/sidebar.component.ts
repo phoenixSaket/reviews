@@ -11,6 +11,7 @@ import { SidebarService } from './sidebar.service';
 export class SidebarComponent implements OnInit {
   @Input() apps: any[] = [];
   public shouldDelete: boolean = false;
+  public shouldCompare: boolean = false;
 
   constructor(private data: DataService, private router: Router, private sidebar: SidebarService) { }
 
@@ -57,5 +58,13 @@ export class SidebarComponent implements OnInit {
     localStorage.setItem("apps-review", JSON.stringify(appsToSave));
     this.shouldDelete = !this.shouldDelete;
     // window.location.reload();
+  }
+
+  compareApp() {
+    this.shouldCompare = !this.shouldCompare;
+  }
+
+  reallyCompareApps() {
+    this.router.navigate(["/compare"]);
   }
 }
