@@ -204,6 +204,14 @@ hr {
     pointer-events: none;
 }
 
+.active {
+    background-color: beige;
+}
+
+.active > * {
+    background-color: beige;
+}
+
 @media (max-width: 500px) {
     .side-bar-container {
         max-width: 100%;

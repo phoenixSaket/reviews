@@ -13,6 +13,8 @@ export class SidebarComponent implements OnInit {
   @Input() apps: any[] = [];
   public shouldDelete: boolean = false;
   public shouldCompare: boolean = false;
+  public selectedDashboard: boolean = false;
+  public selectedAddApp: boolean = false;
 
   constructor(private data: DataService, private router: Router, private sidebar: SidebarService, private snackBar: MatSnackBar) { }
 
@@ -20,17 +22,44 @@ export class SidebarComponent implements OnInit {
     this.apps.forEach((app: any) => {
       app.shouldDelete = false;
       app.shouldCompare = false;
+      app.isSelected = false;
     })
   }
 
   openApp(app: any) {
+    if (this.selectedAddApp) this.selectedAddApp = !this.selectedAddApp;
+    if (this.selectedDashboard) this.selectedDashboard = !this.selectedDashboard;
+    this.apps.forEach((app: any) => {
+      app.isSelected = false;
+    })
+    app.isSelected = true;
     this.data.setCurrentApp(app);
     this.router.navigate(["/reviews"]);
 
     this.closeSideBar();
   }
 
-  closeSideBar() {
+  closeSideBar(type?: string) {
+    if (type) {
+      switch (type) {
+        case "dashboard":
+          this.selectedDashboard = !this.selectedDashboard;
+          if (this.selectedAddApp) this.selectedAddApp = !this.selectedAddApp;
+          this.apps.forEach((app: any) => {
+            app.isSelected = false;
+          })
+          break;
+        case "addApp":
+          this.selectedAddApp = !this.selectedAddApp;
+          if (this.selectedDashboard) this.selectedDashboard = !this.selectedDashboard;
+          this.apps.forEach((app: any) => {
+            app.isSelected = false;
+          })
+          break;
+        default:
+          break;
+      }
+    }
     if (screen.width < 500) {
       this.sidebar.closeSidebar();
     }
@@ -74,7 +103,7 @@ export class SidebarComponent implements OnInit {
       }
     });
     if(tempCompareArray.length <= 1) {
-      this.snackBar.open('Atleast 2 apps are required for comparison.', 'close', {duration: 3000, horizontalPosition: 'end', verticalPosition: 'bottom'})
+      this.snackBar.open('Atleast 2 apps are required for comparison.', 'close', {duration: 3000, horizontalPosition: 'end', verticalPosition: 'bottom'});
     } else {
       this.data.compareAppAdded.next(tempCompareArray);
       this.router.navigate(["/compare"]);
@@ -108,5 +137,10 @@ export class SidebarComponent implements OnInit {
     } else {
       app.shouldCompare = !app.shouldCompare;
     }
+    this.apps.forEach((app: any) => {
+      app.isSelected = false;
+    })
+    if (this.selectedAddApp) this.selectedAddApp = !this.selectedAddApp;
+    if (this.selectedDashboard) this.selectedDashboard = !this.selectedDashboard;
   }
 }

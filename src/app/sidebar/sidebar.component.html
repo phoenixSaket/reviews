@@ -3,17 +3,20 @@
         <img class="img" src="assets/home.jpg" alt="pie">
         Home
     </div> -->
-    <div class="link shadows" routerLink="/dashboard" (click)="closeSideBar()">
+    <div class="link shadows" routerLink="/dashboard" [ngClass]="selectedDashboard ? 'active': ''"
+        (click)="closeSideBar('dashboard')">
         <mat-icon>dashboard</mat-icon>
         Dashboard
     </div>
-    <div class="link shadows" routerLink="/add-app" (click)="closeSideBar()">
+    <div class="link shadows" routerLink="/add-app" [ngClass]="selectedAddApp ? 'active': ''"
+        (click)="closeSideBar('addApp')">
         <mat-icon>add</mat-icon>
         Add App
     </div>
     <!-- <hr> -->
     <div class="apps-container">
-        <div class="apps shadows" *ngFor="let app of apps" (click)="deleteOrCompareApp(app)">
+        <div class="apps shadows" *ngFor="let app of apps" [ngClass]="app.isSelected ? 'active' : ''"
+            (click)="deleteOrCompareApp(app)">
             <div class="link">
                 <img [src]="app.icon" [alt]="app.name" class="img">
                 <div class="app">
@@ -37,7 +40,7 @@
     </div>
     <!-- <hr> -->
     <div class="link shadows compare" (click)="compareApp()" *ngIf="!shouldCompare"
-        [ngClass]="shouldDelete ? 'disable': ''">
+        [ngClass]="shouldDelete ? 'disable': '' ">
         <mat-icon class="dark-text">compare_arrows</mat-icon>
         Compare Apps
     </div>
@@ -52,7 +55,7 @@
         </div>
     </div>
     <div class="link shadows delete" (click)="deleteApp()" *ngIf="!shouldDelete"
-        [ngClass]="shouldCompare ? 'disable': ''">
+        [ngClass]="shouldCompare ? 'disable': '' ">
         <img class="img" src="assets/delete.jpg" alt="delete">
         Delete Apps
     </div>
