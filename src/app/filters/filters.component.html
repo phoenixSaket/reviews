@@ -34,8 +34,9 @@
         <mat-form-field appearance="outline">
             <mat-label>Version</mat-label>
             <mat-select (selectionChange)="versionSelected($event)">
-                <mat-option *ngFor="let version of versions" [value]="version">
-                    {{version}}
+                <mat-option value="-1">All Versions</mat-option>
+                <mat-option *ngFor="let version of versions" [value]="version" >
+                    {{version != null ? version : 'NA'}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
@@ -45,8 +46,9 @@
         <mat-form-field appearance="outline">
             <mat-label>Year</mat-label>
             <mat-select (selectionChange)="yearSelected($event)">
-                <mat-option *ngFor="let year of years" [value]="year">
-                    {{year}}
+                <mat-option value="-1">All Years</mat-option>
+                <mat-option *ngFor="let year of years" [value]="year" >
+                    {{year != null ? year : 'NA'}}
                 </mat-option>
             </mat-select>
         </mat-form-field>

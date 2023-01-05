@@ -115,10 +115,18 @@ export class ReviewsPageComponent implements OnInit {
 
   versionFilter(version: any) {
     if (this.app.isIOS) {
-      this.iosReviews = this.backup.filter(app => { return app["im:version"].label == version });
+      if (version == -1) {
+        this.iosReviews = this.backup;
+      } else {
+        this.iosReviews = this.backup.filter(app => { return app["im:version"].label == version });
+      }
       this.length = this.iosReviews.length;
     } else {
-      this.androidReviews = this.backup.filter(app => { return app.version == version });
+      if (version == -1) {
+        this.androidReviews = this.backup;
+      } else {
+        this.androidReviews = this.backup.filter(app => { return app.version == version });
+      }
       this.length = this.androidReviews.length;
     }
     this.sortSnackbar(this.length + " matching Reviews.");
@@ -126,10 +134,18 @@ export class ReviewsPageComponent implements OnInit {
 
   yearFilter(year: any) {
     if (this.app.isIOS) {
-      this.iosReviews = this.backup.filter(app => { return new Date(app.updated.label).getFullYear() == year });
+      if (year == -1) {
+        this.iosReviews = this.backup;
+      } else {
+        this.iosReviews = this.backup.filter(app => { return new Date(app.updated.label).getFullYear() == year });
+      }
       this.length = this.iosReviews.length;
     } else {
-      this.androidReviews = this.backup.filter(app => { return new Date(app.date).getFullYear() == year });
+      if (year == -1) {
+        this.iosReviews = this.backup;
+      } else {
+        this.androidReviews = this.backup.filter(app => { return new Date(app.date).getFullYear() == year });
+      }
       this.length = this.androidReviews.length;
     }
     this.sortSnackbar(this.length + " matching Reviews.");
@@ -151,5 +167,43 @@ export class ReviewsPageComponent implements OnInit {
       duration: 3000, horizontalPosition: "end",
       verticalPosition: "bottom",
     });
+  }
+
+  ratingFilter(ratingArray: any) {
+    console.log("rating", ratingArray);
+    console.log("backup", this.backup);
+
+    let array: any[] = ratingArray;
+    let temp: any = [];
+    let app = "";
+    let length: number = 0;
+    this.iosReviews = [];
+    this.androidReviews = [];
+
+    array.forEach((element: any) => {
+
+      if (element.isSelected) {
+
+        this.backup.forEach((el: any) => {
+          let rating = "";
+          if (!!el?.score) {
+            rating = el.score;
+            app = "android";
+          } else if (!!el["im:rating"]?.label) {
+            rating = el["im:rating"].label;
+            app = "ios";
+          }
+          if (rating == element.text) {
+            if (app == "ios") {
+              this.iosReviews.push(el);
+            } else {
+              this.androidReviews.push(el);
+            }
+          }
+        });
+      }
+    });
+    length = this.iosReviews.length + this.androidReviews.length;
+    this.sortSnackbar(length + " matching reviews");
   }
 }

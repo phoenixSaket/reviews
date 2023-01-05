@@ -24,8 +24,7 @@ export class FiltersComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   searchInput(event: any) {
     event.preventDefault();

@@ -1,12 +1,13 @@
 .container {
     display: flex;
     align-items: center;
-    width: max-content;
     height: 15px;
+    width: 105px;
+    justify-content: space-between;
 }
 
 .text {
-    width: 25px;
+    width: unset;
     line-height: 15px;
     font-size: 12px;
 }
@@ -21,4 +22,27 @@
         line-height: 12px;
         font-size: 12px;
     } 
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.number-container {
+    margin-top: 10px;
+    border-top: 1px solid black;
+    display: flex;
+    width: 105px;
+    flex-direction: column;
+}
+
+.number-container > div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
 }

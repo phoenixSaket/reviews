@@ -9,7 +9,9 @@ import { IosService } from '../services/ios.service';
   styleUrls: ['./histogram.component.css']
 })
 export class HistogramComponent implements OnInit {
+  @Input() reviewsNo: number = 0;
   public histogram: any = {};
+  public ratingsNo: number = 0;
 
   constructor(private data: DataService, private android: AndroidService, private ios: IosService) { }
 
@@ -19,13 +21,17 @@ export class HistogramComponent implements OnInit {
         if (app.isIOS) {
           this.ios.getAPPRatings(app.id).subscribe((response: any) => {
             this.histogram = JSON.parse(response.result).histogram;
+            let ratings: number[] = Object.values(this.histogram);
+            this.ratingsNo = ratings.reduce((a: number, b: number) => { return a + b })
           })
         } else {
           this.histogram = this.android.getHistogram(app.name).histogram.histogram;
+          let ratings: number[] = Object.values(this.histogram);
+          this.ratingsNo = ratings.reduce((a: number, b: number) => { return a + b })
         }
-
       }
     })
+
   }
 
 }
