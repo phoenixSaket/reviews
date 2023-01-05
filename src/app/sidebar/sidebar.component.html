@@ -13,13 +13,12 @@
     </div>
     <!-- <hr> -->
     <div class="apps-container">
-        <div class="apps shadows" *ngFor="let app of apps"
-            (click)="!shouldDelete ? openApp(app) : selectForDeleting(app)">
+        <div class="apps shadows" *ngFor="let app of apps" (click)="deleteOrCompareApp(app)">
             <div class="link">
                 <img [src]="app.icon" [alt]="app.name" class="img">
                 <div class="app">
                     <div class="name">{{app.name}}</div>
-                    <div class="device" *ngIf="!shouldDelete">
+                    <div class="device" *ngIf="!shouldDelete && !shouldCompare">
                         <div class="platform">
                             <img src="assets/android.jpg" *ngIf="!app.isIOS" alt="android" class="platform-img">
                             <img src="assets/apple.jpg" *ngIf="app.isIOS" alt="apple" class="platform-img">
@@ -29,13 +28,16 @@
                     <div class="checkbox" *ngIf="shouldDelete">
                         <mat-icon *ngIf="app.shouldDelete">check</mat-icon>
                     </div>
-                    
+                    <div class="checkbox" *ngIf="shouldCompare">
+                        <mat-icon *ngIf="app.shouldCompare">check</mat-icon>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- <hr> -->
-    <div class="link shadows compare" (click)="compareApp()" *ngIf="!shouldCompare">
+    <div class="link shadows compare" (click)="compareApp()" *ngIf="!shouldCompare"
+        [ngClass]="shouldDelete ? 'disable': ''">
         <mat-icon class="dark-text">compare_arrows</mat-icon>
         Compare Apps
     </div>
@@ -49,7 +51,8 @@
             <mat-icon>compare_arrows</mat-icon>
         </div>
     </div>
-    <div class="link shadows delete" (click)="deleteApp()" *ngIf="!shouldDelete">
+    <div class="link shadows delete" (click)="deleteApp()" *ngIf="!shouldDelete"
+        [ngClass]="shouldCompare ? 'disable': ''">
         <img class="img" src="assets/delete.jpg" alt="delete">
         Delete Apps
     </div>

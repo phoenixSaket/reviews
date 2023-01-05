@@ -8,6 +8,7 @@ export class DataService {
   public currentApp: any = {};
   public appLoader: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public newAppAdded: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  public compareAppAdded: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   constructor() { }
 
@@ -19,4 +20,6 @@ export class DataService {
   getCurrentApp(): any {
     return this.currentApp;
   }
+
+
 }
