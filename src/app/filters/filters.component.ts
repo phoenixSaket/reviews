@@ -12,6 +12,7 @@ export class FiltersComponent implements OnInit {
   @Output() searchKeyword: EventEmitter<string> = new EventEmitter<string>();
   @Output() version: EventEmitter<string> = new EventEmitter<string>();
   @Output() year: EventEmitter<string> = new EventEmitter<string>();
+  @Output() ratingFilter : EventEmitter<any> = new EventEmitter<any>();
 
   public ratings: any[] = [
     { text: 1, isSelected: true },
@@ -33,6 +34,7 @@ export class FiltersComponent implements OnInit {
 
   toggleRatingSelection(rate: any) {
     this.ratings.find(rating => { return rating.text == rate.text }).isSelected = !this.ratings.find(rating => { return rating.text == rate.text }).isSelected;
+    this.ratingFilter.emit(this.ratings);
   }
 
   versionSelected(event: any) {

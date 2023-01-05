@@ -26,6 +26,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from "@angular/material/button";
 import { MatRadioModule } from '@angular/material/radio';
 import { MatIconModule } from "@angular/material/icon";
+import { CompareAppsComponent } from './compare-apps/compare-apps.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { MatIconModule } from "@angular/material/icon";
     AddAppCardComponent,
     HistogramComponent,
     ReviewsPageComponent,
-    HomepageComponent
+    HomepageComponent,
+    CompareAppsComponent
   ],
   imports: [
     BrowserModule,
