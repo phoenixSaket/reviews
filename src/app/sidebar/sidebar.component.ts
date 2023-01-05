@@ -67,15 +67,18 @@ export class SidebarComponent implements OnInit {
   }
 
   reallyCompareApps() {
-
     let tempCompareArray: any[] = [];
     this.apps.forEach((app: any) => {
       if(app.shouldCompare) {
         tempCompareArray.push(app);
       }
-    })
-    this.data.compareAppAdded.next(tempCompareArray);
-    this.router.navigate(["/compare"]);
+    });
+    if(tempCompareArray.length <= 1) {
+      this.snackBar.open('Atleast 2 apps are required for comparison.', 'close', {duration: 3000, horizontalPosition: 'end', verticalPosition: 'bottom'})
+    } else {
+      this.data.compareAppAdded.next(tempCompareArray);
+      this.router.navigate(["/compare"]);
+    }
   }
 
   deleteOrCompareApp(app: any) {
