@@ -201,6 +201,14 @@ hr {
     background-color: #757575;
 }
 
+.active {
+    background-color: beige;
+}
+
+.active > * {
+    background-color: beige;
+}
+
 @media (max-width: 500px) {
     .side-bar-container {
         max-width: 100%;
