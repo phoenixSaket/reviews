@@ -1,1 +1,22 @@
-<p>compare-apps works!</p>
+<div class="outer">
+
+  <div class="flex-container" *ngIf="compareAppsArray.length != 0">
+    <div>App Details</div>
+    <div>Platform</div>
+    <div>Avg Rating</div>
+    <div>No. of Reviews</div>
+    <div>No. of Ratings</div>
+    <div>1<span class="stars">&#9733;</span> rating</div>
+    <div>2<span class="stars">&#9733;</span> rating</div>
+    <div>3<span class="stars">&#9733;</span> rating</div>
+    <div>4<span class="stars">&#9733;</span> rating</div>
+    <div>5<span class="stars">&#9733;</span> rating</div>
+  </div>
+
+  <div class="flex-container" *ngFor="let app of compareAppsArray">
+    <div><img [src]="[app.icon]" />&nbsp; &nbsp; {{ app.name }}</div>
+    <div>Platform</div>
+    <div>{{ app.rating | number : '1.1-1' }}</div>
+    <div></div>
+  </div>
+</div>

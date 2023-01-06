@@ -196,9 +196,12 @@ hr {
     background-color: #23b66d;
 }
 
-
 .grey {
     background-color: #757575;
+}
+
+.disable {
+    pointer-events: none;
 }
 
 .active {

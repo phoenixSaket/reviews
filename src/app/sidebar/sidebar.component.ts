@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { SidebarService } from './sidebar.service';
@@ -15,11 +16,12 @@ export class SidebarComponent implements OnInit {
   public selectedDashboard: boolean = false;
   public selectedAddApp: boolean = false;
 
-  constructor(private data: DataService, private router: Router, private sidebar: SidebarService) { }
+  constructor(private data: DataService, private router: Router, private sidebar: SidebarService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.apps.forEach((app: any) => {
       app.shouldDelete = false;
+      app.shouldCompare = false;
       app.isSelected = false;
     })
   }
@@ -94,13 +96,51 @@ export class SidebarComponent implements OnInit {
   }
 
   reallyCompareApps() {
+    let tempCompareArray: any[] = [];
+    this.apps.forEach((app: any) => {
+      if(app.shouldCompare) {
+        tempCompareArray.push(app);
+      }
+    });
+    if(tempCompareArray.length <= 1) {
+      this.snackBar.open('Atleast 2 apps are required for comparison.', 'close', {duration: 3000, horizontalPosition: 'end', verticalPosition: 'bottom'});
+    } else {
+      this.data.compareAppAdded.next(tempCompareArray);
+      this.router.navigate(["/compare"]);
+    }
+  }
+
+  deleteOrCompareApp(app: any) {
+    if(this.shouldDelete) {
+      this.selectForDeleting(app);
+      this.openApp(app);
+    } else if(this.shouldCompare) {
+      this.selectForComparing(app);
+    } else {
+      this.openApp(app);
+    }
+  }
+
+  selectForComparing(app: any) {
+    let length: number = 0;
+    this.apps.forEach((app: any) => {
+      if(app.shouldCompare) {
+        length = length + 1 ;
+      }
+    });
+    if(length >= 3) {
+      if(app.shouldCompare) {
+        app.shouldCompare = !app.shouldCompare;
+      } else {
+        this.snackBar.open('Cannot compare more than 3 apps.', 'close', {duration: 3000, horizontalPosition: 'end', verticalPosition: 'bottom'})
+      }
+    } else {
+      app.shouldCompare = !app.shouldCompare;
+    }
     this.apps.forEach((app: any) => {
       app.isSelected = false;
     })
     if (this.selectedAddApp) this.selectedAddApp = !this.selectedAddApp;
     if (this.selectedDashboard) this.selectedDashboard = !this.selectedDashboard;
-    
-    this.shouldCompare = !this.shouldCompare;
-    this.router.navigate(["/compare"]);
   }
 }
