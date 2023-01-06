@@ -1,0 +1,34 @@
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}
+
+.flex-container > div {
+  width: 100%;
+  margin: 10px;
+  text-align: center;
+  line-height: 75px;
+  font-size: 30px;
+}
+
+.flex-container > div > img {
+  width: 50px;
+  height: 50px;
+  vertical-align: middle;
+}
+
+.outer {
+  display: flex;
+  width: 100%;
+  padding: 20px;
+  background-color: #d5e7ff;
+}
+
+.stars {
+  opacity: 0.6;
+  font-size: 0.7em;
+  position: relative;
+  bottom: .1em;
+}
