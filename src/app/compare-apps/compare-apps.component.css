@@ -2,20 +2,21 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 10px;
+  gap: 2px;
 }
 
-.flex-container > div {
+.data-container > div {
   width: 100%;
-  margin: 10px;
+  font-size: 15px;
+}
+
+.text-center {
   text-align: center;
-  line-height: 75px;
-  font-size: 30px;
 }
 
 .flex-container > div > img {
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   vertical-align: middle;
 }
 
@@ -23,12 +24,53 @@
   display: flex;
   width: 100%;
   padding: 20px;
-  background-color: #d5e7ff;
+  /* background-color: #d5e7ff; */
 }
 
 .stars {
-  opacity: 0.6;
-  font-size: 0.7em;
-  position: relative;
-  bottom: .1em;
+  font-size: 20px;
+  color: #818181;
+}
+
+.header {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #dddddd;
+  font-weight: 700;
+}
+
+.item {
+  background-color: #e7e7e7;
+  padding: 8px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.large {
+  font-size: 17px;
+}
+
+.columns > .item {
+  background-color: #dddddd;
+}
+
+.chart-container {
+  padding: 20px;
+}
+
+.app-name {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: 700;
 }

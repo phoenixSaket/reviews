@@ -1,22 +1,43 @@
 <div class="outer">
 
-  <div class="flex-container" *ngIf="compareAppsArray.length != 0">
-    <div>App Details</div>
-    <div>Platform</div>
-    <div>Avg Rating</div>
-    <div>No. of Reviews</div>
-    <div>No. of Ratings</div>
-    <div>1<span class="stars">&#9733;</span> rating</div>
-    <div>2<span class="stars">&#9733;</span> rating</div>
-    <div>3<span class="stars">&#9733;</span> rating</div>
-    <div>4<span class="stars">&#9733;</span> rating</div>
-    <div>5<span class="stars">&#9733;</span> rating</div>
+  <div class="flex-container bold large columns" *ngIf="compareAppsArray.length != 0">
+    <div class="header text-center">App Details</div>
+    <div class="text-center item">Platform</div>
+    <div class="text-center item">Avg Rating</div>
+    <div class="text-center item">Developer</div>
+    <div class="text-center item">Genre</div>
+    <div class="text-center item">Current Version</div>
+    <div class="text-center item">Release Date</div>
+    <div class="text-center item">Last Updated</div>
+    <div class="text-center item">Number of Reviews</div>
+    <div class="text-center item">Number of Ratings</div>
+    <div class="text-center item">1&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
+    <div class="text-center item">2&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
+    <div class="text-center item">3&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
+    <div class="text-center item">4&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
+    <div class="text-center item">5&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
   </div>
 
-  <div class="flex-container" *ngFor="let app of compareAppsArray">
-    <div><img [src]="[app.icon]" />&nbsp; &nbsp; {{ app.name }}</div>
-    <div>Platform</div>
-    <div>{{ app.rating | number : '1.1-1' }}</div>
-    <div></div>
+  <div class="flex-container data-container" *ngFor="let app of compareAppsArray">
+    <div class="header text-center"><img [src]="[app.icon]" />&nbsp; &nbsp; {{ app.name }}</div>
+    <div class="text-center item">{{app.isIOS ? 'IOS' : 'Android'}}</div>
+    <div class="text-center item">{{app.rating | number : '1.1-1' }}</div>
+    <div class="text-center item">{{app.developer}}</div>
+    <div class="text-center item">{{app.genre}}</div>
+    <div class="text-center item">{{app.version}}</div>
+    <div class="text-center item">{{app.releaseDate | date}}</div>
+    <div class="text-center item">{{app.lastUpdated | date}}</div>
+    <div class="text-center item">{{app.reviews}}</div>
+    <div class="text-center item">{{app.ratings}}</div>
+    <div class="text-center item">{{app.oneStar}}</div>
+    <div class="text-center item">{{app.twoStar}}</div>
+    <div class="text-center item">{{app.threeStar}}</div>
+    <div class="text-center item">{{app.fourStar}}</div>
+    <div class="text-center item">{{app.fiveStar}}</div>
+
   </div>
+</div>
+<div class="chart-container">
+  <div class="app-name" *ngIf="!!chart">Ratings Comparison</div>
+  <canvas id="line-chart">{{ chart }}</canvas>
 </div>

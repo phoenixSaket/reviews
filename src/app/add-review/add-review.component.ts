@@ -43,7 +43,6 @@ export class AddReviewComponent implements OnInit {
         this.snackbar.dismiss();
         this.openSnackbar("Loading ...");
         this.ios.searchApp(term, num, lang, price).subscribe((response: any) => {
-          console.log("Search : ", response);
           if (response.opstatus == 0) {
             this.apps = JSON.parse(response.result);
             this.snackbar.dismiss();
@@ -60,7 +59,6 @@ export class AddReviewComponent implements OnInit {
         this.snackbar.dismiss();
         this.openSnackbar("Loading ...");
         this.android.searchApp(term, num, lang, price).subscribe((response: any) => {
-          console.log("Search : ", response);
           if (response.opstatus == 0) {
             this.apps = JSON.parse(response.result);
             this.snackbar.dismiss();
@@ -99,7 +97,6 @@ export class AddReviewComponent implements OnInit {
 
   saveToLocalStorage(app: any) {
     let apps = JSON.parse(localStorage.getItem("apps-review") || "[]");
-    console.log(apps.find((el: any) => { el.app == app.app }))
 
     let check: boolean = false;
     apps.forEach((el: any) => {

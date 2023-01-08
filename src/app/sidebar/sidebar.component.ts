@@ -70,7 +70,6 @@ export class SidebarComponent implements OnInit {
   }
 
   selectForDeleting(app: any) {
-    console.log(app);
     app.shouldDelete = !app.shouldDelete;
   }
 
@@ -106,6 +105,7 @@ export class SidebarComponent implements OnInit {
       this.snackBar.open('Atleast 2 apps are required for comparison.', 'close', {duration: 3000, horizontalPosition: 'end', verticalPosition: 'bottom'});
     } else {
       this.data.compareAppAdded.next(tempCompareArray);
+      this.compareApp();
       this.router.navigate(["/compare"]);
     }
   }

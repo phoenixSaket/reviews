@@ -121,7 +121,6 @@ export class AppComponent {
   saveToLocalStorage(app: any) {
     let apps = JSON.parse(localStorage.getItem("apps-review") || "[]");
 
-    console.log({ apps: apps, app: app })
     let check: boolean = false;
     apps.forEach((el: any) => {
       if (el.app == app.app) { check = true };

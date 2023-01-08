@@ -170,9 +170,6 @@ export class ReviewsPageComponent implements OnInit {
   }
 
   ratingFilter(ratingArray: any) {
-    console.log("rating", ratingArray);
-    console.log("backup", this.backup);
-
     let array: any[] = ratingArray;
     let temp: any = [];
     let app = "";
