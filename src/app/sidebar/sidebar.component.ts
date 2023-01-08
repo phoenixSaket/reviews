@@ -97,24 +97,27 @@ export class SidebarComponent implements OnInit {
   reallyCompareApps() {
     let tempCompareArray: any[] = [];
     this.apps.forEach((app: any) => {
-      if(app.shouldCompare) {
+      if (app.shouldCompare) {
         tempCompareArray.push(app);
       }
     });
-    if(tempCompareArray.length <= 1) {
-      this.snackBar.open('Atleast 2 apps are required for comparison.', 'close', {duration: 3000, horizontalPosition: 'end', verticalPosition: 'bottom'});
+    if (tempCompareArray.length <= 1) {
+      this.snackBar.open('Atleast 2 apps are required for comparison.', 'close', { duration: 3000, horizontalPosition: 'end', verticalPosition: 'bottom' });
     } else {
       this.data.compareAppAdded.next(tempCompareArray);
       this.compareApp();
+      if (screen.width < 500) {
+        this.sidebar.closeSidebar();
+      }
       this.router.navigate(["/compare"]);
     }
   }
 
   deleteOrCompareApp(app: any) {
-    if(this.shouldDelete) {
+    if (this.shouldDelete) {
       this.selectForDeleting(app);
       this.openApp(app);
-    } else if(this.shouldCompare) {
+    } else if (this.shouldCompare) {
       this.selectForComparing(app);
     } else {
       this.openApp(app);
@@ -122,17 +125,18 @@ export class SidebarComponent implements OnInit {
   }
 
   selectForComparing(app: any) {
+
     let length: number = 0;
     this.apps.forEach((app: any) => {
-      if(app.shouldCompare) {
-        length = length + 1 ;
+      if (app.shouldCompare) {
+        length = length + 1;
       }
     });
-    if(length >= 3) {
-      if(app.shouldCompare) {
+    if ((screen.width > 500 && length >= 3) || (screen.width < 500 && length >= 2)) {
+      if (app.shouldCompare) {
         app.shouldCompare = !app.shouldCompare;
       } else {
-        this.snackBar.open('Cannot compare more than 3 apps.', 'close', {duration: 3000, horizontalPosition: 'end', verticalPosition: 'bottom'})
+        this.snackBar.open('Cannot compare more than ' + length + ' apps.', 'close', { duration: 3000, horizontalPosition: 'end', verticalPosition: 'bottom' })
       }
     } else {
       app.shouldCompare = !app.shouldCompare;

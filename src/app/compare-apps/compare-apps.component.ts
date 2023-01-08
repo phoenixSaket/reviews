@@ -37,7 +37,7 @@ export class CompareAppsComponent implements OnInit {
               app.developer = data.developer;
               app.reviews = data.reviews;
               app.ratings = "NA";
-              app.genre = data.genres.join(",");
+              app.genre = data.genres.join(", ");
               app.version = data.version;
               app.releaseDate = data.released;
               app.lastUpdated = data.updated;
