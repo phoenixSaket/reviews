@@ -19,7 +19,10 @@
   </div>
 
   <div class="flex-container data-container" *ngFor="let app of compareAppsArray">
-    <div class="header text-center"><img [src]="[app.icon]" />&nbsp; &nbsp; {{ app.name }}</div>
+    <div class="header text-center">
+      <img [src]="[app.icon]" alt="app icon"/>
+      <div class="name">{{ app.name }}</div>
+    </div>
     <div class="text-center item">{{app.isIOS ? 'IOS' : 'Android'}}</div>
     <div class="text-center item">{{app.rating | number : '1.1-1' }}</div>
     <div class="text-center item">{{app.developer}}</div>
