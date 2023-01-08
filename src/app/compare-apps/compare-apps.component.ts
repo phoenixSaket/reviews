@@ -104,9 +104,9 @@ export class CompareAppsComponent implements OnInit {
 
     this.compareAppsArray.forEach((app: any) => {
       let data: any = { label: "", data: [] };
-      data.label = app.name + (app.isIOS ? '-IOS' : '-Android');
+      data.label = app.name + (app.isIOS ? ' - IOS' : ' - Android');
       data.data = (Object.values(app.histogram));
-
+      data.borderRadius = 10;
       dataSets.push(data);
     });
 
@@ -116,8 +116,8 @@ export class CompareAppsComponent implements OnInit {
       data: {
         // values on X-Axis
         labels: ['1★', '2★', '3★', '4★', '5★'],
-        datasets: dataSets,
-      },
+        datasets: dataSets
+      }
     });
   }
 
