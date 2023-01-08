@@ -106,7 +106,7 @@ export class CompareAppsComponent implements OnInit {
       let data: any = { label: "", data: [] };
       data.label = app.name + (app.isIOS ? ' - IOS' : ' - Android');
       data.data = (Object.values(app.histogram));
-      data.borderRadius = 10;
+      data.borderRadius = 2;
       dataSets.push(data);
     });
 
