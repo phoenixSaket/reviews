@@ -6,7 +6,8 @@
         </div>
         <div class="brand">Review Dashboard</div>
     </div>
-    <div class="app">{{data.getCurrentApp()?.name?.length > 0 ? data.getCurrentApp().name : "No app selected !"}}
+    <div class="app" *ngIf="this.data.getCurrentPage() != '-1'">
+        {{data.getCurrentApp()?.name?.length > 0 ? data.getCurrentApp().name : "No app selected !"}}
         <img *ngIf="data.getCurrentApp()?.isIOS" src="assets/apple.jpg" alt="apple" class="platform-img">
         <img *ngIf="data.getCurrentApp().isIOS !=undefined && data.getCurrentApp().isIOS !=null && !data.getCurrentApp()?.isIOS"
             src="assets/android.jpg" alt="apple" class="platform-img">

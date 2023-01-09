@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class DataService {
   public currentApp: any = {};
+  private currentPage: string = "";
   public appLoader: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public newAppAdded: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public compareAppAdded: BehaviorSubject<any> = new BehaviorSubject<any>(null);
@@ -19,6 +20,14 @@ export class DataService {
 
   getCurrentApp(): any {
     return this.currentApp;
+  }
+
+  getCurrentPage(): string {
+    return this.currentPage;
+  }
+
+  setCurrentPage(page: string) {
+    this.currentPage = page;
   }
 
 

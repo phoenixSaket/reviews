@@ -1,6 +1,18 @@
 <div class="container">
-  <div class="chart-container" [ngClass]="!!chart ? 'shadows': ''" *ngFor="let app of apps">
-    <div class="app-name" *ngIf="!!chart">{{getAppName(app)}}</div>
-    <canvas [id]="app">{{ chart }}</canvas>
+  <div class="chart-container" [ngClass]="!!chart ? 'shadows': ''" *ngFor="let app of apps; let i = index">
+    <div class="chart-inner">
+      <div class="app-name" *ngIf="!!chart">
+        {{getAppName(app.appName)}}
+        <div class="type" (click)="togglePage(i)">
+          <mat-icon *ngIf="app.type == 'bar'" > pie_chart</mat-icon>
+          <mat-icon *ngIf="app.type == 'pie'" > bar_chart</mat-icon>
+        </div>
+      </div>
+
+      <div class="canvas-container" [id]="'canvas'+i">
+        <canvas [id]="app.appName+'pie'">{{ chart }}</canvas>
+        <canvas [id]="app.appName+'bar'">{{ chart }}</canvas>
+      </div>
+    </div>
   </div>
 </div>

@@ -20,7 +20,12 @@
             <div class="link">
                 <img [src]="app.icon" [alt]="app.name" class="img">
                 <div class="app">
-                    <div class="name">{{app.name}}</div>
+                    <div class="name">{{app.name}}
+                        <div class="platform" *ngIf="shouldDelete || shouldCompare">
+                            <img src="assets/android.jpg" *ngIf="!app.isIOS" alt="android" class="platform-img">
+                            <img src="assets/apple.jpg" *ngIf="app.isIOS" alt="apple" class="platform-img">
+                        </div>
+                    </div>
                     <div class="device" *ngIf="!shouldDelete && !shouldCompare">
                         <div class="platform">
                             <img src="assets/android.jpg" *ngIf="!app.isIOS" alt="android" class="platform-img">

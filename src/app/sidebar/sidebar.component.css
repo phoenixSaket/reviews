@@ -172,7 +172,8 @@ hr {
     align-items: center;
 }
 
-.inner-delete, .delete-container {
+.inner-delete,
+.delete-container {
     display: flex;
     justify-content: space-around;
     gap: 10px;
@@ -202,46 +203,54 @@ hr {
 
 .disable {
     pointer-events: none;
+    opacity: 0.35;
 }
 
 .active {
     background-color: beige;
 }
 
-.active > * {
+.active>* {
     background-color: beige;
+}
+
+.name {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    flex-direction: row-reverse;
 }
 
 @media (max-width: 500px) {
     .side-bar-container {
         max-width: 100%;
     }
-    
+
     .open {
         left: 0px;
         animation: open 300ms forwards;
     }
-    
+
     .close {
         left: -100%;
         animation: close 300ms backwards;
     }
-    
+
     @keyframes open {
         from {
             left: -100%;
         }
-    
+
         to {
             left: 0px;
         }
     }
-    
+
     @keyframes close {
         from {
             left: 0px;
         }
-    
+
         to {
             left: -100%;
         }

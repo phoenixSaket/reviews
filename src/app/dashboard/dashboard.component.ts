@@ -12,10 +12,13 @@ export class DashboardComponent {
   public chart: any;
   private histogram: any = {};
   public apps: any[] = [];
+  private appNames: any[] = [];
+  public type: string = "pie";
 
   constructor(private android: AndroidService, private ios: IosService) { }
 
   ngAfterViewInit(): void {
+    this.chart?.destroy()
     let iosApps: any[] = []; //this.ios.iosAppsDefault;
     let androidApps: any[] = []; //this.android.androidAppsDefault;
 
@@ -30,96 +33,117 @@ export class DashboardComponent {
     })
 
     iosApps.forEach((app, index: number) => {
-      this.apps.push(app);
+      this.apps.push({appName: app, type: 'pie'});
+      this.ios.getApp(app).subscribe((resp: any) => {
+        this.appNames.push({ appName: JSON.parse(resp.result).title, isIOS: true, id: app });
+      })
       this.ios.getAPPRatings(app).subscribe((response: any) => {
         this.histogram = JSON.parse(response.result).histogram;
-        this.createChart(app);
+        this.createChart(app, "pie");
+        this.createChart(app, "bar");
       })
     });
 
     androidApps.forEach(app => {
-      this.apps.push(this.getAppNameAndroid(app));
+      this.apps.push({appName: app, type: 'pie'});
     })
 
     androidApps.forEach(appName => {
       this.android.getApp(appName).subscribe((response: any) => {
+        this.appNames.push({ appName: JSON.parse(response.result).title, isIOS: false, id: appName });
         let resp: any = JSON.parse(response.result);
         this.histogram = resp.histogram;
-        this.createChart(this.getAppNameAndroid(appName));
+        this.createChart(appName, "pie");
+        this.createChart(appName, "bar");
       });
     })
   }
 
-  createChart(app: string) {
-    this.chart = new Chart('' + app, {
-      type: 'pie',
-      data: {
-        // values on X-Axis
-        labels: ['1★', '2★', '3★', '4★', '5★'],
-        datasets: [
-          {
-            label: '' + app,
+  createChart(app: string, type: string) {
+    if (type == 'pie') {
+      this.chart = new Chart('' + app + 'pie', {
+        type: 'pie',
+        data: {
+          // values on X-Axis
+          labels: ['1★', '2★', '3★', '4★', '5★'],
+          datasets: [
+            {
+              label: '' + app,
 
-            data: Object.values(this.histogram),
-            backgroundColor: [
-              '#e67474',
-              '#f5e050',
-              '#dffadf',
-              '#90ef90',
-              '#04c900',
-            ],
-          },
-        ],
-      },
-    });
+              data: Object.values(this.histogram),
+              backgroundColor: [
+                '#e67474',
+                '#f5e050',
+                '#dffadf',
+                '#90ef90',
+                '#04c900',
+              ],
+            },
+          ],
+        },
+        
+      });
+    } else {
+      this.chart = new Chart('' + app + 'bar', {
+        type: 'bar',
+        data: {
+          // values on X-Axis
+          labels: ['1★', '2★', '3★', '4★', '5★'],
+          datasets: [
+            {
+              label: '' + app,
+              // labels: ['1★', '2★', '3★', '4★', '5★'],
+              data: Object.values(this.histogram),
+              backgroundColor: [
+                '#e67474',
+                '#f5e050',
+                '#dffadf',
+                '#90ef90',
+                '#04c900',
+              ],
+            },
+          ],
+        },
+        options: {
+          plugins: {
+            legend: {
+              display: false
+            }
+          }
+        }
+      });
+    }
   }
 
   getAppName(app: any): string {
-    let name = "";
-    switch (app) {
-      case '584785907':
-        name = "IBX - IOS";
-        break;
-      case '1112137390':
-        name = "AHNJ On the Go - IOS";
-        break;
-      case '1337168006':
-        name = "myAHABenefits - IOS";
-        break;
-      case '1337166340':
-        name = "myIBXTPABenefits - IOS";
-        break;
-      case '1340456041':
-        name = "AHC Mobile - IOS";
-        break;
-      default:
-        name = app;
-        break;
-    }
+    let name = app;
+    this.appNames.forEach(appInner => {
+      if (appInner.id == app) {
+        name = appInner.appName + (appInner.isIOS ? ' - IOS' : ' - Android');
+      }
+    })
     return name;
   }
 
-  getAppNameAndroid(app: string): string {
-    let name = "";
-    switch (app) {
-      case "com.ibx.ibxmobile":
-        name = "IBX - Android";
-        break;
-      case "com.ahnj.ahmobile":
-        name = "AHNJ On the Go - Android";
-        break;
-      case "com.ahatpa.ahamobile":
-        name = "myAHABenefits - Android";
-        break;
-      case "com.ibxtpa.iamobile":
-        name = "myIBXTPABenefits - Android";
-        break;
-      case "com.ahc.ahcmobile":
-        name = "AHC Mobile - Android";
-        break;
-      default:
-        break;
+  toggleChart() {
+    if (this.type == "pie") {
+      this.type = "bar";
+    } else {
+      this.type = "pie";
     }
-    return name;
   }
+
+  togglePage(index: number) {
+    let canvas =document.querySelector('#canvas'+index);
+    console.log(canvas)
+    console.log(canvas?.scrollLeft); 
+    if((canvas?.scrollLeft || 0) == 0) {
+      canvas?.scrollBy(300 , 0);
+      this.apps[index].type = "bar"; 
+    } else {
+      canvas?.scrollBy(-300 , 0);
+      this.apps[index].type = "pie"; 
+    }
+  }
+
 }

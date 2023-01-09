@@ -34,6 +34,7 @@ export class SidebarComponent implements OnInit {
     })
     app.isSelected = true;
     this.data.setCurrentApp(app);
+    this.data.setCurrentPage(app.name);
     this.router.navigate(["/reviews"]);
 
     this.closeSideBar();
@@ -48,6 +49,9 @@ export class SidebarComponent implements OnInit {
           this.apps.forEach((app: any) => {
             app.isSelected = false;
           })
+          this.shouldCompare = false;
+          this.shouldDelete = false;
+          this.data.setCurrentPage("-1");
           break;
         case "addApp":
           this.selectedAddApp = !this.selectedAddApp;
@@ -55,6 +59,9 @@ export class SidebarComponent implements OnInit {
           this.apps.forEach((app: any) => {
             app.isSelected = false;
           })
+          this.shouldCompare = false;
+          this.shouldDelete = false;
+          this.data.setCurrentPage("-1");
           break;
         default:
           break;
@@ -67,6 +74,10 @@ export class SidebarComponent implements OnInit {
 
   deleteApp() {
     this.shouldDelete = !this.shouldDelete;
+    this.apps.forEach(app => {
+      app.shouldDelete = false;
+      app.shouldCompare = false;
+    });
   }
 
   selectForDeleting(app: any) {
@@ -77,6 +88,10 @@ export class SidebarComponent implements OnInit {
     let temp: any[] = [];
     let temp2: any[] = [];
     this.apps.forEach((app: any) => {
+      if(app.shouldDelete && app.isSelected) {
+        this.router.navigate(["/"]);
+      }
+
       if (!app.shouldDelete) {
         temp.push({ app: app.isIOS ? app.id : app.appId, isIOS: app.isIOS == true });
         temp2.push(app);
@@ -87,11 +102,14 @@ export class SidebarComponent implements OnInit {
     this.apps = temp2;
     localStorage.setItem("apps-review", JSON.stringify(appsToSave));
     this.shouldDelete = !this.shouldDelete;
-    // window.location.reload();
   }
 
   compareApp() {
     this.shouldCompare = !this.shouldCompare;
+    this.apps.forEach(app => {
+      app.shouldDelete = false;
+      app.shouldCompare = false;
+    });
   }
 
   reallyCompareApps() {
@@ -116,7 +134,6 @@ export class SidebarComponent implements OnInit {
   deleteOrCompareApp(app: any) {
     if (this.shouldDelete) {
       this.selectForDeleting(app);
-      this.openApp(app);
     } else if (this.shouldCompare) {
       this.selectForComparing(app);
     } else {
