@@ -67,3 +67,31 @@ canvas {
     transition-duration: 300ms;
     cursor: pointer;
 }
+
+.loading-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 25px;
+}
+
+.progress-bar {
+    width: 75%;
+}
+
+.smaller {
+    font-size: 15px;
+}
+
+.title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px 0 15px 0;
+    font-size: 20px;
+}

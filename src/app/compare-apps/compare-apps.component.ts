@@ -105,7 +105,15 @@ export class CompareAppsComponent implements OnInit {
     this.compareAppsArray.forEach((app: any) => {
       let data: any = { label: "", data: [] };
       data.label = app.name + (app.isIOS ? ' - IOS' : ' - Android');
-      data.data = (Object.values(app.histogram));
+      let array: number[] = Object.values(app.histogram);
+      let total: number = array.reduce((a: number, b: number)=> {return a + b});
+      let percent: string[] = [];
+      for (let i = 0; i < array.length; i++) {
+        const element = array[i];
+        percent.push(((element * 100)/total).toFixed(2));
+      }
+
+      data.data = percent;
       data.borderRadius = 2;
       dataSets.push(data);
     });
