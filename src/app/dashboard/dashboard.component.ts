@@ -81,8 +81,6 @@ export class DashboardComponent {
       percent.push((element * 100 / total).toFixed());
     }
 
-    console.log(app, percent);
-
     if (type == 'pie') {
       this.chart = new Chart('' + app + 'pie', {
         type: 'pie',
