@@ -10,10 +10,32 @@
             </div>
         </div>
         <div class="filter">
-            <app-filters [versions]="versions" [years]="years" (version)="versionFilter($event)" (year)="yearFilter($event)" (searchKeyword)="searchSort($event)" (ratingFilter)="ratingFilter($event)"></app-filters>
+            <app-filters [versions]="versions" [years]="years" (version)="versionFilter($event)"
+                (year)="yearFilter($event)" (searchKeyword)="searchSort($event)"
+                (ratingFilter)="ratingFilter($event)" (sortBy)="sortByMobile($event)"></app-filters>
         </div>
     </div>
     <div class="reviews-container">
+        <div class="sorting-container">
+            <div class="sort-box left" (click)="sortBy('version')">
+                <div class="text">Version</div>
+                <mat-icon *ngIf="!versionSorted.sorted">sort</mat-icon>
+                <div *ngIf="versionSorted.sorted && versionSorted.type == 'A'">&#8642;</div>
+                <div *ngIf="versionSorted.sorted && versionSorted.type == 'D'">&#8638;</div>
+            </div>
+            <div class="sort-box center" (click)="sortBy('rating')">
+                <div class="text">Rating</div>
+                <mat-icon *ngIf="!ratingSorted.sorted">sort</mat-icon>
+                <div *ngIf="ratingSorted.sorted && ratingSorted.type == 'A'">&#8642;</div>
+                <div *ngIf="ratingSorted.sorted && ratingSorted.type == 'D'">&#8638;</div>
+            </div>
+            <div class="sort-box right" (click)="sortBy('date')">
+                <div class="text">Date</div>
+                <mat-icon *ngIf="!dateSorted.sorted">sort</mat-icon>
+                <div *ngIf="dateSorted.sorted && dateSorted.type == 'A'">&#8642;</div>
+                <div *ngIf="dateSorted.sorted && dateSorted.type == 'D'">&#8638;</div>
+            </div>
+        </div>
         <div class="apps-container" *ngFor="let review of androidReviews">
             <app-card-android [data]="review"></app-card-android>
         </div>

@@ -12,19 +12,28 @@ export class FiltersComponent implements OnInit {
   @Output() searchKeyword: EventEmitter<string> = new EventEmitter<string>();
   @Output() version: EventEmitter<string> = new EventEmitter<string>();
   @Output() year: EventEmitter<string> = new EventEmitter<string>();
-  @Output() ratingFilter : EventEmitter<any> = new EventEmitter<any>();
+  @Output() ratingFilter: EventEmitter<any> = new EventEmitter<any>();
+  @Output() sortBy: EventEmitter<string> = new EventEmitter<string>();
+
+  public showFilters: boolean = screen.width > 500 ? true : false;
+  public showFilterButton: boolean = screen.width < 500 ? true : false;
+  public sortingArray: any[] = [
+    {value: "date", text: "Date"},
+    {value: "rating", text: "Rating"},
+    {value: "version", text: "Version"}
+  ]
 
   public ratings: any[] = [
-    { text: 1, isSelected: true },
-    { text: 2, isSelected: true },
-    { text: 3, isSelected: true },
-    { text: 4, isSelected: true },
-    { text: 5, isSelected: true }
+    { text: "1★", isSelected: true },
+    { text: "2★", isSelected: true },
+    { text: "3★", isSelected: true },
+    { text: "4★", isSelected: true },
+    { text: "5★", isSelected: true }
   ];
 
   constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   searchInput(event: any) {
     event.preventDefault();
@@ -42,5 +51,13 @@ export class FiltersComponent implements OnInit {
 
   yearSelected(event: any) {
     this.year.emit(event.value);
+  }
+
+  toggleFilters() {
+    this.showFilters = !this.showFilters;
+  }
+
+  sortChange(event: any) {
+    this.sortBy.emit(event.value);
   }
 }
