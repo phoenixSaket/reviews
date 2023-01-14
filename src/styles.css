@@ -5,6 +5,11 @@
     font-family: Cabin, sans-serif;
 }
 
+:root {
+    --accent: #E9F5F3;
+    --active: #6DBCB7;
+}
+
 .body {
     background-color: #ededed;
     overflow: hidden;
@@ -51,4 +56,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     justify-content: center;
     align-items: center;
     font-weight: 800;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.filter-button span.mat-button-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
 }

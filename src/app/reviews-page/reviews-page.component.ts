@@ -19,6 +19,9 @@ export class ReviewsPageComponent implements OnInit {
   public years: number[] = [];
   private backup: any[] = [];
   private length: number = 0;
+  public versionSorted: any = { sorted: false, type: 'A' };
+  public dateSorted: any = { sorted: false, type: 'A' };
+  public ratingSorted: any = { sorted: false, type: 'A' };
 
   constructor(
     public data: DataService,
@@ -171,7 +174,6 @@ export class ReviewsPageComponent implements OnInit {
 
   ratingFilter(ratingArray: any) {
     let array: any[] = ratingArray;
-    let temp: any = [];
     let app = "";
     let length: number = 0;
     this.iosReviews = [];
@@ -202,5 +204,111 @@ export class ReviewsPageComponent implements OnInit {
     });
     length = this.iosReviews.length + this.androidReviews.length;
     this.sortSnackbar(length + " matching reviews");
+  }
+
+  sortBy(text: string) {
+    switch (text) {
+      case "version":
+        if (this.app.isIOS) {
+          this.iosReviews.sort((a: any, b: any) => {
+            let aVersion = a['im:version'].label.replaceAll('.', '');
+            let bVersion = b['im:version'].label.replaceAll('.', '');
+
+            if (this.versionSorted.type == 'A') return aVersion - bVersion;
+            else if (this.versionSorted.type == 'D') return bVersion - aVersion;
+
+            return 0;
+          });
+        } else {
+          this.androidReviews.sort((a: any, b: any) => {
+            let aVersion = a.version ? parseInt(a.version).toFixed(2) : '0';
+            let bVersion = b.version ? parseInt(b.version).toFixed(2) : '0';
+
+            if (a.version == '0') {
+              a.version = null;
+            }
+
+            if (b.version == '0') {
+              b.version = null;
+            }
+
+            if (this.versionSorted.type == 'A')
+              return parseInt(aVersion) - parseInt(bVersion);
+            else if (this.versionSorted.type == 'D')
+              return parseInt(bVersion) - parseInt(aVersion);
+
+            return 0;
+          });
+        }
+
+        this.versionSorted.type = this.versionSorted.type == 'A' ? 'D' : 'A';
+        this.versionSorted.sorted = true;
+        this.dateSorted.sorted = false;
+        this.ratingSorted.sorted = false;
+        break;
+      case "rating":
+        if (this.app.isIOS) {
+          this.iosReviews.sort((a: any, b: any) => {
+            return this.ratingSorted.type == 'D'
+              ? a['im:rating'].label > b['im:rating'].label
+                ? -1
+                : 1
+              : a['im:rating'].label > b['im:rating'].label
+                ? 1
+                : -1;
+          });
+        } else {
+          this.androidReviews.sort((a: any, b: any) => {
+            return this.ratingSorted.type == 'D'
+              ? a.score > b.score
+                ? -1
+                : 1
+              : a.score > b.score
+                ? 1
+                : -1;
+          });
+        }
+
+        this.ratingSorted.type = this.ratingSorted.type == 'A' ? 'D' : 'A';
+        this.ratingSorted.sorted = true;
+        this.dateSorted.sorted = false;
+        this.versionSorted.sorted = false;
+        break;
+      case "date":
+        if (this.app.isIOS) {
+          this.iosReviews.sort((a: any, b: any) => {
+            return this.dateSorted.type == 'D'
+              ? new Date(a.updated.label) > new Date(b.updated.label)
+                ? -1
+                : 1
+              : new Date(a.updated.label) > new Date(b.updated.label)
+                ? 1
+                : -1;
+          });
+        } else {
+          this.androidReviews.sort((a: any, b: any) => {
+            return this.dateSorted.type == 'D'
+              ? new Date(a.date) > new Date(b.date)
+                ? -1
+                : 1
+              : new Date(a.date) > new Date(b.date)
+                ? 1
+                : -1;
+          });
+        }
+
+        this.dateSorted.type = this.dateSorted.type == 'A' ? 'D' : 'A';
+        this.dateSorted.sorted = true;
+        this.ratingSorted.sorted = false;
+        this.versionSorted.sorted = false;
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  sortByMobile(event: any) {
+    this.sortBy(event)
   }
 }

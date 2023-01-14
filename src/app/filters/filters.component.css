@@ -17,13 +17,17 @@
     color: white;
 }
 
-.div > mat-form-field {
-    width: 120px;
+.filter-div > mat-form-field {
+    width: 200px;
 } 
 
 .ratings {
     display: flex;
     gap: 5px;
+}
+
+.mat-rating.mat-chip-selected {
+    background-color: var(--active);
 }
 
 .rating {
@@ -40,6 +44,14 @@
     position: relative;
     width: 0%;
     height: 100%;
+}
+
+.filter-div {
+    width: 200px;
+}
+
+.example-full-width {
+    width: 100%;
 }
 
 .check {
@@ -59,4 +71,27 @@
     .filter-container {
         gap: 2px;
     }
+}
+
+.mobile-filters {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    gap: 2px;
+    align-items: center;
+}
+
+.filter-button {
+    display: flex;
+    align-items: center;
+    background-color: var(--active);
+    width: 200px;
+    justify-content: space-between;
+}
+
+.filter-img {
+    width: 20px;
+    height: 25px;
+    filter: invert(1);
 }

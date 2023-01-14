@@ -9,7 +9,7 @@
     flex-direction: column;
     gap: 10px;
     align-items: flex-start;
-    background-color: #d5e7ff;
+    background-color: var(--accent);
     height: calc(100vh - 50px);
 }
 
@@ -75,13 +75,13 @@ hr {
 }
 
 .delete {
-    background-image: linear-gradient(to left, red 50%, white 80%);
+    background-image: linear-gradient(to left, rgb(225, 136, 136) 50%, white 80%);
     color: white;
     justify-content: space-between;
 }
 
 .compare {
-    background-image: linear-gradient(to left, #23b66d 50%, white 80%);
+    background-image: linear-gradient(to left, #6cc297 50%, white 80%);
     color: white;
     justify-content: space-between;
 }
@@ -207,11 +207,18 @@ hr {
 }
 
 .active {
-    background-color: beige;
+    background-color: var(--active);
+    color: white;
 }
 
 .active>* {
-    background-color: beige;
+    background-color: var(--active);
+    color: white;
+}
+
+.active  .app {
+    font-size: 17px;
+    font-weight: 900;
 }
 
 .name {
