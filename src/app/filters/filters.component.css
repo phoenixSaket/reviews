@@ -97,3 +97,7 @@
     height: 25px;
     filter: invert(1);
 }
+
+.text {
+    color: white;
+}
