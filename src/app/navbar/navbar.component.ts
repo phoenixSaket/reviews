@@ -11,7 +11,7 @@ export class NavbarComponent implements OnInit {
   @Input() apps: any[] = [];
   public isSideBarOpen: boolean = false;
 
-  constructor(private sidebar: SidebarService, public data: DataService) { }
+  constructor(public sidebar: SidebarService, public data: DataService) { }
 
   ngOnInit(): void {
   }
@@ -21,8 +21,8 @@ export class NavbarComponent implements OnInit {
   }
 
   toggleSideBar() {
-    this.isSideBarOpen = !this.isSideBarOpen;
-    if(this.isSideBarOpen) {
+    // this.isSideBarOpen = !this.isSideBarOpen;
+    if(this.sidebar.getIsSidebarOpen()) {
       this.sidebar.closeSidebar();
     } else {
       this.sidebar.openSidebar();

@@ -56,7 +56,7 @@ export class ReviewsPageComponent implements OnInit {
   }
 
   getAndroidReviews(app: any) {
-    this.android.getAppReviews(app.appId).subscribe((response: any) => {
+    this.android.getAppReviews(app.appId, true).subscribe((response: any) => {
       this.androidReviews = JSON.parse(response.result).data;
       this.androidReviews.forEach((review: any) => {
         if (!this.versions.includes(review.version)) {
@@ -68,20 +68,41 @@ export class ReviewsPageComponent implements OnInit {
       })
       this.backup = JSON.parse(JSON.stringify(this.androidReviews));
       this.stopLoading();
+    }, error=> {
+      this.android.getAppReviews(app.appId).subscribe((response: any) => {
+        this.androidReviews = JSON.parse(response.result).data;
+        this.androidReviews.forEach((review: any) => {
+          if (!this.versions.includes(review.version)) {
+            this.versions.push(review.version);
+          }
+          if (!this.years.includes(new Date(review.date).getFullYear())) {
+            this.years.push(new Date(review.date).getFullYear());
+          }
+        })
+        this.backup = JSON.parse(JSON.stringify(this.androidReviews));
+        this.stopLoading();
+      })
     })
   }
 
   getIOSReviews(app: any, page: number = 1) {
-    this.ios.getAppReviews(app.id, 1).subscribe((response: any) => {
+    this.ios.getAppReviews(app.id, 1, true).subscribe((response: any) => {
       const max = this.getMaxPages(JSON.parse(response.result).feed.link);
       for (let i = 1; i <= max; i++) {
         this.storeIOSReviews(app.id, i);
       }
+    }, error => {
+      this.ios.getAppReviews(app.id, 1).subscribe((response: any) => {
+        const max = this.getMaxPages(JSON.parse(response.result).feed.link);
+        for (let i = 1; i <= max; i++) {
+          this.storeIOSReviews(app.id, i);
+        }
+      });
     });
   }
 
   storeIOSReviews(appId: string, page: number) {
-    this.ios.getAppReviews(appId, page).subscribe((response: any) => {
+    this.ios.getAppReviews(appId, page, true).subscribe((response: any) => {
       JSON.parse(response.result).feed.entry.forEach((entry: any) => {
         this.iosReviews.push(entry);
         if (!this.versions.includes(entry["im:version"].label)) {
@@ -93,6 +114,20 @@ export class ReviewsPageComponent implements OnInit {
       });
       this.backup = JSON.parse(JSON.stringify(this.iosReviews));
       this.stopLoading();
+    }, error => {
+      this.ios.getAppReviews(appId, page).subscribe((response: any) => {
+        JSON.parse(response.result).feed.entry.forEach((entry: any) => {
+          this.iosReviews.push(entry);
+          if (!this.versions.includes(entry["im:version"].label)) {
+            this.versions.push(entry["im:version"].label);
+          }
+          if (!this.years.includes(new Date(entry.updated.label).getFullYear())) {
+            this.years.push(new Date(entry.updated.label).getFullYear());
+          }
+        });
+        this.backup = JSON.parse(JSON.stringify(this.iosReviews));
+        this.stopLoading();
+      });
     });
   }
 

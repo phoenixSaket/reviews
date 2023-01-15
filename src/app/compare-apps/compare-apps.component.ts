@@ -32,7 +32,7 @@ export class CompareAppsComponent implements OnInit {
 
         this.compareAppsArray.forEach((app: any, index: number) => {
           if (app.isIOS) {
-            this.ios.getApp(app.id).subscribe((iosResponse: any) => {
+            this.ios.getApp(app.id, true).subscribe((iosResponse: any) => {
               const data = JSON.parse(iosResponse.result);
               app.developer = data.developer;
               app.reviews = data.reviews;
@@ -53,7 +53,7 @@ export class CompareAppsComponent implements OnInit {
                 }
               });
 
-              this.ios.getAPPRatings(app.id).subscribe((ratingResponse: any) => {
+              this.ios.getAPPRatings(app.id, true).subscribe((ratingResponse: any) => {
                 const iosRatings = JSON.parse(ratingResponse.result)
                 app.ratings = iosRatings.ratings;
                 app.oneStar = iosRatings.histogram["1"];
@@ -65,10 +65,74 @@ export class CompareAppsComponent implements OnInit {
 
                 chartNumber = chartNumber + 1;
                 this.loadChart.next(chartNumber);
+              }, error => {
+                this.ios.getAPPRatings(app.id).subscribe((ratingResponse: any) => {
+                  const iosRatings = JSON.parse(ratingResponse.result)
+                  app.ratings = iosRatings.ratings;
+                  app.oneStar = iosRatings.histogram["1"];
+                  app.twoStar = iosRatings.histogram["2"];
+                  app.threeStar = iosRatings.histogram["3"];
+                  app.fourStar = iosRatings.histogram["4"];
+                  app.fiveStar = iosRatings.histogram["5"];
+                  app.histogram = iosRatings.histogram;
+
+                  chartNumber = chartNumber + 1;
+                  this.loadChart.next(chartNumber);
+                })
               });
+            }, error => {
+              this.ios.getApp(app.id).subscribe((iosResponse: any) => {
+                const data = JSON.parse(iosResponse.result);
+                app.developer = data.developer;
+                app.reviews = data.reviews;
+                app.ratings = "NA";
+                app.genre = data.genres.join(", ");
+                app.version = data.version;
+                app.releaseDate = data.released;
+                app.lastUpdated = data.updated;
+
+                let length = 0;
+                this.ios.getAppReviews(app.id, 1).subscribe((response: any) => {
+                  const max = this.getMaxPages(JSON.parse(response.result).feed.link);
+                  for (let i = 1; i <= max; i++) {
+                    this.ios.getAppReviews(app.id, i).subscribe((response: any) => {
+                      length += JSON.parse(response.result).feed.entry.length;
+                      app.reviews = length;
+                    });
+                  }
+                });
+
+                this.ios.getAPPRatings(app.id).subscribe((ratingResponse: any) => {
+                  const iosRatings = JSON.parse(ratingResponse.result)
+                  app.ratings = iosRatings.ratings;
+                  app.oneStar = iosRatings.histogram["1"];
+                  app.twoStar = iosRatings.histogram["2"];
+                  app.threeStar = iosRatings.histogram["3"];
+                  app.fourStar = iosRatings.histogram["4"];
+                  app.fiveStar = iosRatings.histogram["5"];
+                  app.histogram = iosRatings.histogram;
+
+                  chartNumber = chartNumber + 1;
+                  this.loadChart.next(chartNumber);
+                }, error => {
+                  this.ios.getAPPRatings(app.id).subscribe((ratingResponse: any) => {
+                    const iosRatings = JSON.parse(ratingResponse.result)
+                    app.ratings = iosRatings.ratings;
+                    app.oneStar = iosRatings.histogram["1"];
+                    app.twoStar = iosRatings.histogram["2"];
+                    app.threeStar = iosRatings.histogram["3"];
+                    app.fourStar = iosRatings.histogram["4"];
+                    app.fiveStar = iosRatings.histogram["5"];
+                    app.histogram = iosRatings.histogram;
+
+                    chartNumber = chartNumber + 1;
+                    this.loadChart.next(chartNumber);
+                  })
+                });
+              })
             })
           } else {
-            this.android.getApp(app.appId).subscribe((androidResponse: any) => {
+            this.android.getApp(app.appId, true).subscribe((androidResponse: any) => {
               const data = JSON.parse(androidResponse.result);
               app.developer = data.developer;
               app.reviews = data.reviews;
@@ -86,7 +150,27 @@ export class CompareAppsComponent implements OnInit {
 
               chartNumber = chartNumber + 1;
               this.loadChart.next(chartNumber);
-            })
+            }, error => {
+              this.android.getApp(app.appId).subscribe((androidResponse: any) => {
+                const data = JSON.parse(androidResponse.result);
+                app.developer = data.developer;
+                app.reviews = data.reviews;
+                app.genre = data.genre;
+                app.version = data.version;
+                app.ratings = data.ratings;
+                app.releaseDate = data.released;
+                app.lastUpdated = new Date(data.updated);
+                app.oneStar = data.histogram["1"];
+                app.twoStar = data.histogram["2"];
+                app.threeStar = data.histogram["3"];
+                app.fourStar = data.histogram["4"];
+                app.fiveStar = data.histogram["5"];
+                app.histogram = data.histogram;
+
+                chartNumber = chartNumber + 1;
+                this.loadChart.next(chartNumber);
+              })
+            });
           }
         });
 
@@ -106,11 +190,11 @@ export class CompareAppsComponent implements OnInit {
       let data: any = { label: "", data: [] };
       data.label = app.name + (app.isIOS ? ' - IOS' : ' - Android');
       let array: number[] = Object.values(app.histogram);
-      let total: number = array.reduce((a: number, b: number)=> {return a + b});
+      let total: number = array.reduce((a: number, b: number) => { return a + b });
       let percent: string[] = [];
       for (let i = 0; i < array.length; i++) {
         const element = array[i];
-        percent.push(((element * 100)/total).toFixed(2));
+        percent.push(((element * 100) / total).toFixed(2));
       }
 
       data.data = percent;

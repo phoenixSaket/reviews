@@ -10,7 +10,7 @@
 .left {
     display: flex;
     flex-direction: column;
-    gap:2px;
+    gap: 2px;
     width: 20%;
 }
 
@@ -18,7 +18,7 @@
     display: flex;
     flex-direction: column;
     width: 65%;
-    gap:2px;
+    gap: 2px;
 }
 
 .right {
@@ -42,11 +42,16 @@
     font-size: 16px;
 }
 
-.content, .date, .version {
+.content,
+.date,
+.version {
     color: #747474;
 }
 
-.content, .date, .author, .version {
+.content,
+.date,
+.author,
+.version {
     font-size: 14px;
 }
 
@@ -54,4 +59,58 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
+}
+
+@media (max-width: 500px) {
+    .right {
+        width: 100%;
+        align-items: end;
+    }
+
+    .left {
+        width: 100;
+        flex-direction: row;
+    }
+
+    .center {
+        width: 100%
+    }
+
+    .card {
+        flex-direction: column;
+    }
+
+    .d-flex {
+        display: flex;
+    }
+
+    .column {
+        flex-direction: column;
+    }
+
+    .gap-10 {
+        gap: 10px;
+    }
+
+    .w-100 {
+        width: 100%
+    }
+
+    .image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .m-b-10 {
+        margin-bottom: 10px;
+    }
+
+    .space-between {
+        justify-content: space-between;
+    }
+
+    .align-center {
+        align-items: center;
+    }
 }

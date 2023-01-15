@@ -28,7 +28,7 @@
     display: flex;
     justify-content: center;
     padding: 5px 0;
-    background-color: beige;
+    background-color: var(--accent);
     font-weight: 700;
 }
 
@@ -63,9 +63,10 @@ canvas {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: lightblue;
+    background-color: var(--active);
     transition-duration: 300ms;
     cursor: pointer;
+    border-radius: 0 5px 0 0;
 }
 
 .loading-container {

@@ -1,5 +1,6 @@
 .filter-container {
     width: 100%;
+    height: 100%;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
@@ -70,6 +71,7 @@
 @media (max-width: 500px) {
     .filter-container {
         gap: 2px;
+        height: unset;
     }
 }
 
