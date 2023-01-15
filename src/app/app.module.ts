@@ -28,6 +28,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatIconModule } from "@angular/material/icon";
 import { CompareAppsComponent } from './compare-apps/compare-apps.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { WordcloudComponent } from './wordcloud/wordcloud.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     HistogramComponent,
     ReviewsPageComponent,
     HomepageComponent,
-    CompareAppsComponent
+    CompareAppsComponent,
+    WordcloudComponent
   ],
   imports: [
     BrowserModule,

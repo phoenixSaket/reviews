@@ -13,6 +13,11 @@
         <mat-icon>add</mat-icon>
         Add App
     </div>
+    <div class="link shadows" *ngIf="isNotMobile" routerLink="/word-cloud" [ngClass]="selectedWordCloud ? 'active': ''"
+        (click)="closeSideBar('wordcloud')">
+        <mat-icon>cloud</mat-icon>
+        Genearte Word-Cloud
+    </div>
     <!-- <hr> -->
     <div class="apps-container">
         <div class="apps shadows" *ngFor="let app of apps" [ngClass]="app.isSelected ? 'active' : ''"
