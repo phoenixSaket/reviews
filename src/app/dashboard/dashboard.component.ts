@@ -47,10 +47,16 @@ export class DashboardComponent {
         iosApps.forEach((app, index: number) => {
           this.apps.push({ appName: app, type: 'pie' });
 
-          this.ios.getAPPRatings(app).subscribe((response: any) => {
+          this.ios.getAPPRatings(app, true).subscribe((response: any) => {
             this.histogram = JSON.parse(response.result).histogram;
             this.createChart(app, "pie");
             this.createChart(app, "bar");
+          }, error => {
+            this.ios.getAPPRatings(app).subscribe((response: any) => {
+              this.histogram = JSON.parse(response.result).histogram;
+              this.createChart(app, "pie");
+              this.createChart(app, "bar");
+            })
           })
         });
 
@@ -59,11 +65,20 @@ export class DashboardComponent {
         })
 
         androidApps.forEach(appName => {
-          this.android.getApp(appName).subscribe((response: any) => {
+          this.android.getApp(appName, true).subscribe((response: any) => {
             let resp: any = JSON.parse(response.result);
             this.histogram = resp.histogram;
             this.createChart(appName, "pie");
             this.createChart(appName, "bar");
+          }, error=> {
+            androidApps.forEach(appName => {
+              this.android.getApp(appName).subscribe((response: any) => {
+                let resp: any = JSON.parse(response.result);
+                this.histogram = resp.histogram;
+                this.createChart(appName, "pie");
+                this.createChart(appName, "bar");
+              });
+            })
           });
         })
       }

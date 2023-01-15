@@ -42,7 +42,7 @@ export class AddReviewComponent implements OnInit {
       if (this.platform == "IOS") {
         this.snackbar.dismiss();
         this.openSnackbar("Loading ...");
-        this.ios.searchApp(term, num, lang, price).subscribe((response: any) => {
+        this.ios.searchApp(term, num, lang, price, true).subscribe((response: any) => {
           if (response.opstatus == 0) {
             this.apps = JSON.parse(response.result);
             this.snackbar.dismiss();
@@ -53,12 +53,24 @@ export class AddReviewComponent implements OnInit {
             this.openSnackbar("Could not load " + this.appName)
           }
         }, error => {
-          this.openSnackbar("Could not find " + this.appName);
+          this.ios.searchApp(term, num, lang, price).subscribe((response: any) => {
+            if (response.opstatus == 0) {
+              this.apps = JSON.parse(response.result);
+              this.snackbar.dismiss();
+              if (this.apps.length == 0) {
+                this.openSnackbar("No apps found with the name " + this.appName);
+              }
+            } else {
+              this.openSnackbar("Could not load " + this.appName)
+            }
+          }, error => {
+            this.openSnackbar("Could not find " + this.appName);
+          });
         });
       } else if (this.platform == "Android") {
         this.snackbar.dismiss();
         this.openSnackbar("Loading ...");
-        this.android.searchApp(term, num, lang, price).subscribe((response: any) => {
+        this.android.searchApp(term, num, lang, price, true).subscribe((response: any) => {
           if (response.opstatus == 0) {
             this.apps = JSON.parse(response.result);
             this.snackbar.dismiss();
@@ -69,7 +81,17 @@ export class AddReviewComponent implements OnInit {
             this.openSnackbar("Could not load " + this.appName);
           }
         }, error => {
-          this.openSnackbar("Could not find " + this.appName)
+          this.android.searchApp(term, num, lang, price).subscribe((response: any) => {
+            if (response.opstatus == 0) {
+              this.apps = JSON.parse(response.result);
+              this.snackbar.dismiss();
+              if (this.apps.length == 0) {
+                this.openSnackbar("No apps found with the name " + this.appName);
+              }
+            } else {
+              this.openSnackbar("Could not load " + this.appName);
+            }
+          })
         });
       } else {
         this.openSnackbar("Please select a platform !");

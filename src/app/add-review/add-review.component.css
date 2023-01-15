@@ -48,7 +48,7 @@
 
 .details {
     padding: 10px;
-    background-color: rgb(255, 240, 240);
+    background-color: var(--accent);
     border-radius: 10px;
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
     cursor: pointer;
@@ -94,4 +94,9 @@
 
 .italic {
     font-style: italic;
+}
+
+.mat-custom {
+    background-color: var(--active);
+    color: white;
 }

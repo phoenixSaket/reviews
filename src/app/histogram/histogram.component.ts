@@ -19,11 +19,18 @@ export class HistogramComponent implements OnInit {
     this.data.appLoader.subscribe((app: any) => {
       if (!!app) {
         if (app.isIOS) {
-          this.ios.getAPPRatings(app.id).subscribe((response: any) => {
+          this.ios.getAPPRatings(app.id, true).subscribe((response: any) => {
             this.histogram = JSON.parse(response.result).histogram;
             let ratings: number[] = Object.values(this.histogram);
             this.ratingsNo = ratings.reduce((a: number, b: number) => { return a + b })
+          }, error=> {
+            this.ios.getAPPRatings(app.id).subscribe((response: any) => {
+              this.histogram = JSON.parse(response.result).histogram;
+              let ratings: number[] = Object.values(this.histogram);
+              this.ratingsNo = ratings.reduce((a: number, b: number) => { return a + b })
+            });
           })
+          
         } else {
           this.histogram = this.android.getHistogram(app.name).histogram.histogram;
           let ratings: number[] = Object.values(this.histogram);
