@@ -15,6 +15,8 @@ export class SidebarComponent implements OnInit {
   public shouldCompare: boolean = false;
   public selectedDashboard: boolean = false;
   public selectedAddApp: boolean = false;
+  public selectedWordCloud: boolean = false;
+  public isNotMobile: boolean = screen.availWidth > 500;
 
   constructor(private data: DataService, private router: Router, private sidebar: SidebarService, private snackBar: MatSnackBar) { }
 
@@ -29,6 +31,7 @@ export class SidebarComponent implements OnInit {
   openApp(app: any) {
     if (this.selectedAddApp) this.selectedAddApp = !this.selectedAddApp;
     if (this.selectedDashboard) this.selectedDashboard = !this.selectedDashboard;
+    if (this.selectedWordCloud) this.selectedWordCloud = !this.selectedWordCloud;
     this.apps.forEach((app: any) => {
       app.isSelected = false;
     })
@@ -45,6 +48,7 @@ export class SidebarComponent implements OnInit {
       switch (type) {
         case "dashboard":
           this.selectedDashboard = !this.selectedDashboard;
+          if (this.selectedWordCloud) this.selectedWordCloud = !this.selectedWordCloud;
           if (this.selectedAddApp) this.selectedAddApp = !this.selectedAddApp;
           this.apps.forEach((app: any) => {
             app.isSelected = false;
@@ -55,6 +59,7 @@ export class SidebarComponent implements OnInit {
           break;
         case "addApp":
           this.selectedAddApp = !this.selectedAddApp;
+          if (this.selectedWordCloud) this.selectedWordCloud = !this.selectedWordCloud;
           if (this.selectedDashboard) this.selectedDashboard = !this.selectedDashboard;
           this.apps.forEach((app: any) => {
             app.isSelected = false;
@@ -63,6 +68,17 @@ export class SidebarComponent implements OnInit {
           this.shouldDelete = false;
           this.data.setCurrentPage("-1");
           break;
+        case "wordcloud":
+          this.selectedWordCloud = !this.selectedWordCloud;
+          if (this.selectedAddApp) this.selectedAddApp = !this.selectedAddApp;
+          if (this.selectedDashboard) this.selectedDashboard = !this.selectedDashboard;
+          this.apps.forEach((app: any) => {
+            app.isSelected = false;
+          })
+          this.shouldCompare = false;
+          this.shouldDelete = false;
+          this.data.setCurrentPage("-1");
+          break
         default:
           break;
       }
@@ -88,7 +104,7 @@ export class SidebarComponent implements OnInit {
     let temp: any[] = [];
     let temp2: any[] = [];
     this.apps.forEach((app: any) => {
-      if(app.shouldDelete && app.isSelected) {
+      if (app.shouldDelete && app.isSelected) {
         this.router.navigate(["/"]);
       }
 

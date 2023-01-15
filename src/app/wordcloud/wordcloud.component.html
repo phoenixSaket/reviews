@@ -1,0 +1,18 @@
+<div class="top-container">
+    <mat-form-field appearance="outline">
+        <mat-label>Select App</mat-label>
+        <mat-select (selectionChange)="appSelected($event)">
+            <mat-option *ngFor="let app of apps" [value]="app">
+                {{app.appName}} - {{app.isIOS ? 'IOS': 'Android'}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
+<div class="loading-container" *ngIf="loading">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+
+<div class="canvas-container">
+    <canvas id="canvas">{{chart}}</canvas>
+</div>
