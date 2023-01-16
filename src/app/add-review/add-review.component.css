@@ -100,3 +100,37 @@
     background-color: var(--active);
     color: white;
 }
+
+.hover {
+    position: absolute;
+    background-color: #6dbcb7c9;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    max-height: 120px;
+    max-width: 350px;
+    min-width: 250px;
+    display: none;
+    border-radius: 10px;
+    transition-property: all;
+    transition-duration: 3000ms;
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.app:hover > .hover {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    opacity: 1;
+}
+
+.text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 5px; 
+}

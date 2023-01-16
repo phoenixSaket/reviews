@@ -172,7 +172,7 @@ export class AppComponent {
             this.loadedApps += 1;
             this.data.loadedApps.next(this.loadedApps);
             this.saveToLocalStorage({ app: data.app, isIOS: true });
-            this.snackbar.open(data.app.toString() + " added !", "Close", {
+            this.snackbar.open(data.appName.toString() + " added", "Close", {
               duration: 300, horizontalPosition: "end",
               verticalPosition: "bottom"
             });
@@ -186,7 +186,7 @@ export class AppComponent {
               this.loadedApps += 1;
               this.data.loadedApps.next(this.loadedApps);
               this.saveToLocalStorage({ app: data.app, isIOS: true });
-              this.snackbar.open(data.app.toString() + " added !", "Close", {
+              this.snackbar.open(data.appName.toString() + " added", "Close", {
                 duration: 300, horizontalPosition: "end",
                 verticalPosition: "bottom"
               });

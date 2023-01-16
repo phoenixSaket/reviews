@@ -22,15 +22,20 @@ export class WordcloudComponent implements OnInit {
   public loading: boolean = false;
   public selectedApp: any = null;
   public words: any[] = [];
+  public shouldWait: boolean = true;
+  public currentApp: number = 0;
+  public totalApps: number = 0;
 
   constructor(private data: DataService, private ios: IosService, private android: AndroidService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     Chart.register(WordCloudController, WordElement);
-    const apps = JSON.parse(localStorage.getItem("apps-review") || "[]");
+    this.totalApps = this.data.getTotalApps();
 
     this.data.loadedApps.subscribe((data: any) => {
-      if (data == apps.length) {
+      this.currentApp = data;
+      if (data == this.totalApps) {
+        this.shouldWait = false;
         this.appNames = (this.data.getAppName());
         this.appNames.forEach((appData: any) => {
           this.apps.push(appData);
@@ -45,7 +50,6 @@ export class WordcloudComponent implements OnInit {
   appSelected(app: any) {
     this.chart?.destroy();
     this.selectedApp = app;
-    console.log(this.selectedApp);
     this.reviews = [];
     this.array = [];
     this.loading = true;
@@ -100,7 +104,6 @@ export class WordcloudComponent implements OnInit {
   }
 
   getAndroidReviews(app: any) {
-    console.log(app);
     this.android.getAppReviews(app.id, true).subscribe((response: any) => {
       const resp = JSON.parse(response.result).data;
       resp.forEach((review: any) => {
@@ -212,16 +215,12 @@ export class WordcloudComponent implements OnInit {
       z = temp;
     }
 
-    console.log(z);
     this.words = z;
 
     let length = z[0].number;
-    console.log(length)
     let multlipicant = (1024) / (length * 9);
-    console.log(multlipicant)
     multlipicant = multlipicant > 0.5 ? multlipicant : 1 - multlipicant;
     multlipicant = multlipicant < 20 ? multlipicant : 20;
-    console.log(multlipicant)
     this.generateWordCloud(z, multlipicant);
   }
 
