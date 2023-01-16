@@ -42,4 +42,9 @@ export class DataService {
     this.appNames.push(appName);
   }
 
+  getTotalApps() {
+    this.totalApps = JSON.parse(localStorage.getItem("apps-review") || "[]").length;
+    return this.totalApps;
+  }
+
 }

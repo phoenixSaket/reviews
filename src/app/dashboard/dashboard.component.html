@@ -24,7 +24,7 @@
 </div>
 
 <div class="loading-container" *ngIf="loading">
-  Loading Dashboard ... <span class="smaller">{{appLoading}} apps loaded out of {{this.data.totalApps == 0 ? 10 : this.data.totalApps}} apps.</span>
+  Loading Dashboard ... <span class="smaller">{{appLoading}} apps loaded out of {{this.dataService.getTotalApps() == 0 ? 10 : this.dataService.getTotalApps()}} apps.</span>
   <div class="progress-bar">
     <mat-progress-bar mode="determinate" [value]="loadingPercent"></mat-progress-bar>
   </div>

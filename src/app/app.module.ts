@@ -29,6 +29,8 @@ import { MatIconModule } from "@angular/material/icon";
 import { CompareAppsComponent } from './compare-apps/compare-apps.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { WordcloudComponent } from './wordcloud/wordcloud.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { WordDialogComponent } from './word-dialog/word-dialog.component';
 
 
 @NgModule({
@@ -46,7 +48,8 @@ import { WordcloudComponent } from './wordcloud/wordcloud.component';
     ReviewsPageComponent,
     HomepageComponent,
     CompareAppsComponent,
-    WordcloudComponent
+    WordcloudComponent,
+    WordDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +66,8 @@ import { WordcloudComponent } from './wordcloud/wordcloud.component';
     MatButtonModule,
     MatRadioModule,
     MatIconModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

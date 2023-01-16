@@ -1,0 +1,27 @@
+.close-button {
+    background-color: var(--active);
+    height: 50px;
+    color: white;
+}
+
+.word-container-outer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+    flex-wrap: wrap;
+    padding: 5px 0;
+}
+
+.word-container {
+    display: flex;
+    width: 20%;
+    justify-content: space-between;
+    border: 2px solid var(--accent)
+}
+
+.left, .right {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,12 @@
+<h2 mat-dialog-title class="title">Word Report</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="word-container-outer">
+        <div class="word-container" *ngFor="let word of data">
+            <div class="left">{{word.text}}</div>
+            <div class="right">{{word.number}}</div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="action">
+    <button mat-button mat-dialog-close class="close-button">Close</button>
+</mat-dialog-actions>

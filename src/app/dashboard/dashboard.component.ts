@@ -18,13 +18,13 @@ export class DashboardComponent {
   public appLoading: number = 0;
   public loadingPercent: number = 0;
 
-  constructor(public data: DataService, private android: AndroidService, private ios: IosService) { }
+  constructor(public dataService: DataService, private android: AndroidService, private ios: IosService) { }
 
   ngAfterViewInit(): void {
-    this.data.loadedApps.subscribe((data: number) => {
+    this.dataService.loadedApps.subscribe((data: number) => {
       this.appLoading = data;
-      this.loadingPercent = (data * 100) / (this.data.totalApps == 0 ? 10 : this.data.totalApps);
-      if (!!data && data > -1 && (data == (this.data.totalApps == 0 ? 10 : this.data.totalApps) - this.data.failedApps)) {
+      this.loadingPercent = (data * 100) / (this.dataService.getTotalApps() == 0 ? 10 : this.dataService.getTotalApps());
+      if (!!data && data > -1 && (data == (this.dataService.getTotalApps() == 0 ? 10 : this.dataService.getTotalApps()) - this.dataService.failedApps)) {
 
         setTimeout(() => {
           this.loading = false;
@@ -152,7 +152,7 @@ export class DashboardComponent {
 
   getAppName(app: any): string {
     let name = app;
-    this.data.getAppName().forEach(appInner => {
+    this.dataService.getAppName().forEach(appInner => {
       if (appInner.id == app) {
         name = appInner.appName + (appInner.isIOS ? ' - IOS' : ' - Android');
       }

@@ -5,6 +5,8 @@ import { WordCloudController, WordElement } from 'chartjs-chart-wordcloud';
 import { DataService } from '../services/data.service';
 import { IosService } from '../services/ios.service';
 import { AndroidService } from '../services/android.service';
+import { MatDialog } from '@angular/material/dialog';
+import { WordDialogComponent } from '../word-dialog/word-dialog.component';
 
 @Component({
   selector: 'app-wordcloud',
@@ -18,8 +20,10 @@ export class WordcloudComponent implements OnInit {
   private array: any[] = [];
   private reviews: any[] = [];
   public loading: boolean = false;
+  public selectedApp: any = null;
+  public words: any[] = [];
 
-  constructor(private data: DataService, private ios: IosService, private android: AndroidService) { }
+  constructor(private data: DataService, private ios: IosService, private android: AndroidService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     Chart.register(WordCloudController, WordElement);
@@ -34,12 +38,14 @@ export class WordcloudComponent implements OnInit {
       }
     })
 
-    this.loading= false;
+    this.loading = false;
 
   }
 
   appSelected(app: any) {
     this.chart?.destroy();
+    this.selectedApp = app;
+    console.log(this.selectedApp);
     this.reviews = [];
     this.array = [];
     this.loading = true;
@@ -125,7 +131,7 @@ export class WordcloudComponent implements OnInit {
               fit: false,
               maintainAspectRatio: true,
               // size in pixel
-              data: data.map((d) => (d.number) * (multlipicant > 1 ? multlipicant : 2)),
+              data: data.map((d) => (d.number) * (multlipicant)),
             },
           ]
         }
@@ -160,7 +166,7 @@ export class WordcloudComponent implements OnInit {
   getKeywordData(dataForExtraction: any[], isIos: boolean) {
     this.array = [];
     dataForExtraction.forEach((ent: any) => {
-      if(isIos) {
+      if (isIos) {
         this.array.push(ent?.content?.label);
       } else {
         this.array.push(ent);
@@ -186,14 +192,46 @@ export class WordcloudComponent implements OnInit {
       });
       if (check) {
         z[i].number = z[i].number + 1
-      } else {
+      } else if (el !== 'app' && el != "apps" && el != this.selectedApp.value.appName.toLowerCase()) {
         z.push({ text: el, number: 1 })
       }
     });
 
-    let length = z.length;
-    let multlipicant = (screen.width - 305) / length;
+    if (z.length > 100) {
+      z.sort((a: any, b: any) => {
+        return b.number - a.number;
+      });
+
+      let temp: any[] = [];
+      z.forEach((el: any, index: number) => {
+        if (index < 150) {
+          temp.push(el);
+        }
+      });
+
+      z = temp;
+    }
+
+    console.log(z);
+    this.words = z;
+
+    let length = z[0].number;
+    console.log(length)
+    let multlipicant = (1024) / (length * 9);
+    console.log(multlipicant)
+    multlipicant = multlipicant > 0.5 ? multlipicant : 1 - multlipicant;
+    multlipicant = multlipicant < 20 ? multlipicant : 20;
+    console.log(multlipicant)
     this.generateWordCloud(z, multlipicant);
   }
 
+
+  redraw() {
+    this.chart?.destroy();
+    this.appSelected(this.selectedApp);
+  }
+
+  getWordReport() {
+    const dialogRef = this.dialog.open(WordDialogComponent, { data: this.words });
+  }
 }

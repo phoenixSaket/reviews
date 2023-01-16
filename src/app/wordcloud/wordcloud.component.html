@@ -7,6 +7,8 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
+    <button mat-raised-button class="shuffle-button" *ngIf="!!selectedApp && !loading" (click)="redraw()">Shuffle</button>
+    <button mat-raised-button class="shuffle-button" *ngIf="!!selectedApp && !loading" (click)="getWordReport()">Get Word Report</button>
 </div>
 
 <div class="loading-container" *ngIf="loading">
