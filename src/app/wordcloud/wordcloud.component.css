@@ -1,6 +1,7 @@
 .canvas-container {
     width: 100%;
     height: calc(100% - 70px);
+    pointer-events: none;
 }
 
 .top-container {
