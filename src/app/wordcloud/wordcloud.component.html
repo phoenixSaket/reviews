@@ -1,14 +1,16 @@
 <div class="top-container">
     <mat-form-field appearance="outline">
-        <mat-label>Select App</mat-label>
+        <mat-label>{{shouldWait ? 'Loading apps '+currentApp + ' / '+totalApps :'Select App'}}</mat-label>
         <mat-select (selectionChange)="appSelected($event)">
             <mat-option *ngFor="let app of apps" [value]="app">
                 {{app.appName}} - {{app.isIOS ? 'IOS': 'Android'}}
             </mat-option>
         </mat-select>
     </mat-form-field>
-    <button mat-raised-button class="shuffle-button" *ngIf="!!selectedApp && !loading" (click)="redraw()">Shuffle</button>
-    <button mat-raised-button class="shuffle-button" *ngIf="!!selectedApp && !loading" (click)="getWordReport()">Get Word Report</button>
+    <button mat-raised-button class="shuffle-button" *ngIf="!!selectedApp && !loading"
+        (click)="redraw()">Shuffle</button>
+    <button mat-raised-button class="shuffle-button" *ngIf="!!selectedApp && !loading" (click)="getWordReport()">Get
+        Word Report</button>
 </div>
 
 <div class="loading-container" *ngIf="loading">

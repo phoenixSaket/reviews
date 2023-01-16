@@ -13,7 +13,6 @@ export class WordDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data)
   }
 
 }

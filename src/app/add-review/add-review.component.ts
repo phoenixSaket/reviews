@@ -107,22 +107,32 @@ export class AddReviewComponent implements OnInit {
   }
 
   addApp(app: any) {
-    this.openSnackbar("Adding app ...");
+    this.openSnackbar("Adding " + app.title);
+    let shouldAddApp: boolean;
     if (this.platform == "IOS") {
-      this.saveToLocalStorage({ app: app.id, isIOS: this.platform == "IOS" });
-      this.data.newAppAdded.next({ app: app.id, isIOS: this.platform == "IOS" });
+      shouldAddApp = this.saveToLocalStorage({ app: app.id, isIOS: this.platform == "IOS" });
+      if (shouldAddApp) {
+        this.data.newAppAdded.next({ app: app.id, isIOS: this.platform == "IOS", appName: app.title });
+      } else {
+        this.openSnackbar("App already present");
+      }
     } else {
-      this.saveToLocalStorage({ app: app.appId, isIOS: this.platform == "IOS" });
-      this.data.newAppAdded.next({ app: app.appId, isIOS: this.platform == "IOS" });
+      shouldAddApp = this.saveToLocalStorage({ app: app.appId, isIOS: this.platform == "IOS" });
+      if (shouldAddApp) {
+        this.data.newAppAdded.next({ app: app.appId, isIOS: this.platform == "IOS", appName: app.title });
+      } else {
+        this.openSnackbar("App already present");
+      }
     }
   }
 
   saveToLocalStorage(app: any) {
+    let shouldAddApp: boolean = true;
     let apps = JSON.parse(localStorage.getItem("apps-review") || "[]");
 
     let check: boolean = false;
     apps.forEach((el: any) => {
-      if (el.app == app.app) { check = true };
+      if (el.app == app.app) { check = true; shouldAddApp = false; };
     });
 
     if (!check) {
@@ -130,5 +140,6 @@ export class AddReviewComponent implements OnInit {
     }
 
     localStorage.setItem("apps-review", JSON.stringify(apps));
+    return shouldAddApp;
   }
 }

@@ -21,17 +21,17 @@ export class AndroidService {
 
   getApp(app: string, useBackup: boolean = false) {
     let url = (useBackup ? this.backupUrl : this.url) + "app";
-    return this.http.post(url, { name: app });
+    return this.http.post(url, { name: app.toLowerCase() });
   }
 
   getAppReviews(app: string, useBackup: boolean = false) {
     let url = (useBackup ? this.backupUrl : this.url) + "review";
-    return this.http.post(url, { name: app });
+    return this.http.post(url, { name: app.toLowerCase() });
   }
 
   searchApp(term: string, num: number, lang: string, price: string, useBackup: boolean = false) {
     let url = (useBackup ? this.backupUrl : this.url) + "search";
-    return this.http.post(url, { term: term, num: num, lang: lang, price: price })
+    return this.http.post(url, { term: term.toLowerCase(), num: num, lang: lang, price: price })
   }
 
   setHistogram(app: any, histogram: any) {
