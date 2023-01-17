@@ -120,17 +120,20 @@
     cursor: pointer;
 }
 
-.app:hover > .hover {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    opacity: 1;
-}
+@media (min-width: 500px) {
 
-.text {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    padding: 5px; 
+    .app:hover > .hover {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        opacity: 1;
+    }
+    
+    .text {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        padding: 5px; 
+    }
 }

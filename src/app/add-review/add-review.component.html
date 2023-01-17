@@ -34,7 +34,7 @@
                 <mat-icon>ads_click</mat-icon><span>Click to add</span>
             </div>
         </div>
-        <div class="details">
+        <div class="details" (click)="addApp(app)">
             <div class="inner-container">
                 <div class="image">
                     <img [src]="app.icon" class="icon">
