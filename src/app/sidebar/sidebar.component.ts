@@ -15,6 +15,8 @@ export class SidebarComponent implements OnInit {
   public shouldCompare: boolean = false;
   public selectedDashboard: boolean = false;
   public selectedAddApp: boolean = false;
+  public selectedWordCloud: boolean = false;
+  public isNotMobile: boolean = screen.availWidth > 500;
 
   constructor(private data: DataService, private router: Router, private sidebar: SidebarService, private snackBar: MatSnackBar) { }
 
@@ -29,11 +31,13 @@ export class SidebarComponent implements OnInit {
   openApp(app: any) {
     if (this.selectedAddApp) this.selectedAddApp = !this.selectedAddApp;
     if (this.selectedDashboard) this.selectedDashboard = !this.selectedDashboard;
+    if (this.selectedWordCloud) this.selectedWordCloud = !this.selectedWordCloud;
     this.apps.forEach((app: any) => {
       app.isSelected = false;
     })
     app.isSelected = true;
     this.data.setCurrentApp(app);
+    this.data.setCurrentPage(app.name);
     this.router.navigate(["/reviews"]);
 
     this.closeSideBar();
@@ -44,18 +48,37 @@ export class SidebarComponent implements OnInit {
       switch (type) {
         case "dashboard":
           this.selectedDashboard = !this.selectedDashboard;
+          if (this.selectedWordCloud) this.selectedWordCloud = !this.selectedWordCloud;
           if (this.selectedAddApp) this.selectedAddApp = !this.selectedAddApp;
           this.apps.forEach((app: any) => {
             app.isSelected = false;
           })
+          this.shouldCompare = false;
+          this.shouldDelete = false;
+          this.data.setCurrentPage("-1");
           break;
         case "addApp":
           this.selectedAddApp = !this.selectedAddApp;
+          if (this.selectedWordCloud) this.selectedWordCloud = !this.selectedWordCloud;
           if (this.selectedDashboard) this.selectedDashboard = !this.selectedDashboard;
           this.apps.forEach((app: any) => {
             app.isSelected = false;
           })
+          this.shouldCompare = false;
+          this.shouldDelete = false;
+          this.data.setCurrentPage("-1");
           break;
+        case "wordcloud":
+          this.selectedWordCloud = !this.selectedWordCloud;
+          if (this.selectedAddApp) this.selectedAddApp = !this.selectedAddApp;
+          if (this.selectedDashboard) this.selectedDashboard = !this.selectedDashboard;
+          this.apps.forEach((app: any) => {
+            app.isSelected = false;
+          })
+          this.shouldCompare = false;
+          this.shouldDelete = false;
+          this.data.setCurrentPage("-1");
+          break
         default:
           break;
       }
@@ -67,10 +90,13 @@ export class SidebarComponent implements OnInit {
 
   deleteApp() {
     this.shouldDelete = !this.shouldDelete;
+    this.apps.forEach(app => {
+      app.shouldDelete = false;
+      app.shouldCompare = false;
+    });
   }
 
   selectForDeleting(app: any) {
-    console.log(app);
     app.shouldDelete = !app.shouldDelete;
   }
 
@@ -78,6 +104,10 @@ export class SidebarComponent implements OnInit {
     let temp: any[] = [];
     let temp2: any[] = [];
     this.apps.forEach((app: any) => {
+      if (app.shouldDelete && app.isSelected) {
+        this.router.navigate(["/"]);
+      }
+
       if (!app.shouldDelete) {
         temp.push({ app: app.isIOS ? app.id : app.appId, isIOS: app.isIOS == true });
         temp2.push(app);
@@ -88,33 +118,39 @@ export class SidebarComponent implements OnInit {
     this.apps = temp2;
     localStorage.setItem("apps-review", JSON.stringify(appsToSave));
     this.shouldDelete = !this.shouldDelete;
-    // window.location.reload();
   }
 
   compareApp() {
     this.shouldCompare = !this.shouldCompare;
+    this.apps.forEach(app => {
+      app.shouldDelete = false;
+      app.shouldCompare = false;
+    });
   }
 
   reallyCompareApps() {
     let tempCompareArray: any[] = [];
     this.apps.forEach((app: any) => {
-      if(app.shouldCompare) {
+      if (app.shouldCompare) {
         tempCompareArray.push(app);
       }
     });
-    if(tempCompareArray.length <= 1) {
-      this.snackBar.open('Atleast 2 apps are required for comparison.', 'close', {duration: 3000, horizontalPosition: 'end', verticalPosition: 'bottom'});
+    if (tempCompareArray.length <= 1) {
+      this.snackBar.open('Atleast 2 apps are required for comparison.', 'close', { duration: 3000, horizontalPosition: 'end', verticalPosition: 'bottom' });
     } else {
       this.data.compareAppAdded.next(tempCompareArray);
+      this.compareApp();
+      if (screen.width < 500) {
+        this.sidebar.closeSidebar();
+      }
       this.router.navigate(["/compare"]);
     }
   }
 
   deleteOrCompareApp(app: any) {
-    if(this.shouldDelete) {
+    if (this.shouldDelete) {
       this.selectForDeleting(app);
-      this.openApp(app);
-    } else if(this.shouldCompare) {
+    } else if (this.shouldCompare) {
       this.selectForComparing(app);
     } else {
       this.openApp(app);
@@ -122,17 +158,18 @@ export class SidebarComponent implements OnInit {
   }
 
   selectForComparing(app: any) {
+
     let length: number = 0;
     this.apps.forEach((app: any) => {
-      if(app.shouldCompare) {
-        length = length + 1 ;
+      if (app.shouldCompare) {
+        length = length + 1;
       }
     });
-    if(length >= 3) {
-      if(app.shouldCompare) {
+    if ((screen.width > 500 && length >= 3) || (screen.width < 500 && length >= 2)) {
+      if (app.shouldCompare) {
         app.shouldCompare = !app.shouldCompare;
       } else {
-        this.snackBar.open('Cannot compare more than 3 apps.', 'close', {duration: 3000, horizontalPosition: 'end', verticalPosition: 'bottom'})
+        this.snackBar.open('Cannot compare more than ' + length + ' apps.', 'close', { duration: 3000, horizontalPosition: 'end', verticalPosition: 'bottom' })
       }
     } else {
       app.shouldCompare = !app.shouldCompare;

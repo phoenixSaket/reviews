@@ -1,9 +1,14 @@
 <div class="card">
-    <div class="left">
-        <div class="author">{{data.author.name.label}}</div>
-        <div class="version">
-            <span class="versionText">Version : </span>
-            <span class="versionNumber">{{data["im:version"].label}}</span>
+    <div class="left d-flex gap-10 w-100 m-b-10">
+        <div class="image">
+            <img src="assets/avatar.jpg" alt="userImage" class="user-img">
+        </div>
+        <div class="d-flex w-100 space-between align-center">
+            <div class="author">{{data.author.name.label}}</div>
+            <div class="version">
+                <span class="versionText">Version : </span>
+                <span class="versionNumber">{{data["im:version"].label}}</span>
+            </div>
         </div>
     </div>
     <div class="center">

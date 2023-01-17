@@ -18,7 +18,7 @@
                 </div>
             </mat-radio-button>
         </mat-radio-group>
-        <button mat-flat-button color="accent" (click)="searchApp($event)">
+        <button mat-raised-button color="custom" (click)="searchApp($event)">
             <div class="platform">
                 <span>Search</span>
                 <mat-icon>search</mat-icon>
@@ -29,6 +29,11 @@
 
 <div class="bottom-container">
     <div class="app" *ngFor="let app of apps">
+        <div class="hover" (click)="addApp(app)">
+            <div class="text">
+                <mat-icon>ads_click</mat-icon><span>Click to add</span>
+            </div>
+        </div>
         <div class="details" (click)="addApp(app)">
             <div class="inner-container">
                 <div class="image">

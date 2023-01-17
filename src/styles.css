@@ -5,13 +5,19 @@
     font-family: Cabin, sans-serif;
 }
 
+:root {
+    --accent: #E9F5F3;
+    --active: #6DBCB7;
+}
+
 .body {
     background-color: #ededed;
     overflow: hidden;
 }
 
-.shadow, .shadows {
-    box-shadow: 0 0 5px 2px rgba(0,0,0,0.1);
+.shadow,
+.shadows {
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -34,8 +40,12 @@
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
 /* html, body { height: 100%; } */
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 .mat-form-field-wrapper {
     padding-bottom: 0;
@@ -45,10 +55,43 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     justify-content: center;
 }
 
-.checkbox > .material-icons {
+.checkbox>.material-icons {
     font-size: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: 800;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.filter-button span.mat-button-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle,
+.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple),
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
+.mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+    background-color: var(--active);
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: var(--active);
+}
+
+.mat-focused {
+    border-color: var(--active);
+    color: black;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-start,
+.mat-form-field-appearance-outline .mat-form-field-outline-end {
+    border: 1px solid var(--active);
 }

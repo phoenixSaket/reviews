@@ -27,6 +27,10 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatRadioModule } from '@angular/material/radio';
 import { MatIconModule } from "@angular/material/icon";
 import { CompareAppsComponent } from './compare-apps/compare-apps.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { WordcloudComponent } from './wordcloud/wordcloud.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { WordDialogComponent } from './word-dialog/word-dialog.component';
 
 
 @NgModule({
@@ -43,7 +47,9 @@ import { CompareAppsComponent } from './compare-apps/compare-apps.component';
     HistogramComponent,
     ReviewsPageComponent,
     HomepageComponent,
-    CompareAppsComponent
+    CompareAppsComponent,
+    WordcloudComponent,
+    WordDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +65,9 @@ import { CompareAppsComponent } from './compare-apps/compare-apps.component';
     MatProgressSpinnerModule,
     MatButtonModule,
     MatRadioModule,
-    MatIconModule
+    MatIconModule,
+    MatProgressBarModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -9,7 +9,7 @@
     flex-direction: column;
     gap: 10px;
     align-items: flex-start;
-    background-color: #d5e7ff;
+    background-color: var(--accent);
     height: calc(100vh - 50px);
 }
 
@@ -75,13 +75,13 @@ hr {
 }
 
 .delete {
-    background-image: linear-gradient(to left, red 50%, white 80%);
+    background-image: linear-gradient(to left, rgb(225, 136, 136) 50%, white 80%);
     color: white;
     justify-content: space-between;
 }
 
 .compare {
-    background-image: linear-gradient(to left, #23b66d 50%, white 80%);
+    background-image: linear-gradient(to left, #6cc297 50%, white 80%);
     color: white;
     justify-content: space-between;
 }
@@ -172,7 +172,8 @@ hr {
     align-items: center;
 }
 
-.inner-delete, .delete-container {
+.inner-delete,
+.delete-container {
     display: flex;
     justify-content: space-around;
     gap: 10px;
@@ -202,46 +203,61 @@ hr {
 
 .disable {
     pointer-events: none;
+    opacity: 0.35;
 }
 
 .active {
-    background-color: beige;
+    background-color: var(--active);
+    color: white;
 }
 
-.active > * {
-    background-color: beige;
+.active>* {
+    background-color: var(--active);
+    color: white;
+}
+
+.active  .app {
+    font-size: 17px;
+    font-weight: 900;
+}
+
+.name {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    flex-direction: row-reverse;
 }
 
 @media (max-width: 500px) {
     .side-bar-container {
         max-width: 100%;
     }
-    
+
     .open {
         left: 0px;
         animation: open 300ms forwards;
     }
-    
+
     .close {
         left: -100%;
         animation: close 300ms backwards;
     }
-    
+
     @keyframes open {
         from {
             left: -100%;
         }
-    
+
         to {
             left: 0px;
         }
     }
-    
+
     @keyframes close {
         from {
             left: 0px;
         }
-    
+
         to {
             left: -100%;
         }

@@ -1,4 +1,4 @@
-<div class="filter-container">
+<div class="filter-container" *ngIf="showFilters">
 
     <div class="ratings div">
         <!-- <div class="rating" *ngFor="let rate of ratings">
@@ -10,18 +10,18 @@
 
 
         <mat-chip-list multiple>
-            <mat-chip color="primary" *ngFor="let rate of ratings" (click)="toggleRatingSelection(rate)"
+            <mat-chip color="rating" *ngFor="let rate of ratings" (click)="toggleRatingSelection(rate)"
                 selectable="true" [selected]="rate.isSelected">
                 <div class="rating-container">
                     <div>{{rate.text}}</div>
-                    <div *ngIf="rate.isSelected">&#10003;</div>
+                    <div class="bold" *ngIf="rate.isSelected">&#10003;</div>
                 </div>
             </mat-chip>
         </mat-chip-list>
 
     </div>
 
-    <div class="div">
+    <div class="filter-div">
         <form class="example-form">
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Search by keyword</mat-label>
@@ -30,28 +30,43 @@
         </form>
     </div>
 
-    <div class="div">
+    <div class="filter-div">
         <mat-form-field appearance="outline">
             <mat-label>Version</mat-label>
             <mat-select (selectionChange)="versionSelected($event)">
                 <mat-option value="-1">All Versions</mat-option>
-                <mat-option *ngFor="let version of versions" [value]="version" >
+                <mat-option *ngFor="let version of versions" [value]="version">
                     {{version != null ? version : 'NA'}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
     </div>
 
-    <div class="div">
+    <div class="filter-div">
         <mat-form-field appearance="outline">
             <mat-label>Year</mat-label>
             <mat-select (selectionChange)="yearSelected($event)">
                 <mat-option value="-1">All Years</mat-option>
-                <mat-option *ngFor="let year of years" [value]="year" >
+                <mat-option *ngFor="let year of years" [value]="year">
                     {{year != null ? year : 'NA'}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
     </div>
 
+</div>
+
+<div class="mobile-filters" *ngIf="showFilterButton" [ngStyle]="{'height' : showFilters ? 'unset' : '100%'}">
+    <mat-form-field appearance="outline">
+        <mat-label>Sort By</mat-label>
+        <mat-select (selectionChange)="sortChange($event)">
+            <mat-option *ngFor="let sort of sortingArray" [value]="sort.value">
+                {{sort.text}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <button mat-flat-button color="primary" class="filter-button" (click)="toggleFilters()">
+        <img class="filter-img" src="assets/filter.png" alt="filter">
+        <div class="text">{{showFilters ? 'Hide' :'Show'}} Filters</div>
+    </button>
 </div>

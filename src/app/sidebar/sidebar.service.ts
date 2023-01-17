@@ -19,4 +19,8 @@ export class SidebarService {
     document.getElementById("sidebar")?.classList.add("close");
     this.isSidebarOpen = false;
   }
+
+  getIsSidebarOpen() {
+    return this.isSidebarOpen;
+  }
 }

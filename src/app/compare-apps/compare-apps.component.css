@@ -2,20 +2,21 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 10px;
+  gap: 2px;
 }
 
-.flex-container > div {
+.data-container>div {
   width: 100%;
-  margin: 10px;
-  text-align: center;
-  line-height: 75px;
-  font-size: 30px;
+  font-size: 15px;
 }
 
-.flex-container > div > img {
-  width: 50px;
-  height: 50px;
+.text-center {
+  text-align: center;
+}
+
+.flex-container>div>img {
+  width: 30px;
+  height: 30px;
   vertical-align: middle;
 }
 
@@ -23,12 +24,97 @@
   display: flex;
   width: 100%;
   padding: 20px;
-  background-color: #d5e7ff;
 }
 
 .stars {
-  opacity: 0.6;
-  font-size: 0.7em;
-  position: relative;
-  bottom: .1em;
+  font-size: 20px;
+  color: #818181;
+}
+
+.header {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #dddddd;
+  font-weight: 700;
+  gap: 5px;
+}
+
+.item {
+  background-color: #e7e7e7;
+  padding: 8px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.large {
+  font-size: 17px;
+}
+
+.columns>.item {
+  background-color: #dddddd;
+}
+
+.chart-container {
+  padding: 20px;
+}
+
+.app-name {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.smaller {
+    font-size: 15px;
+}
+
+@media (max-width: 500px) {
+  .flex-container>div>img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .outer {
+    padding: 0px;
+  }
+
+  .chart-container {
+    padding: 0px;
+    margin-top: 20px;
+  }
+
+  .large {
+    font-size: 15px;
+  }
+
+  .stars {
+    font-size: 15px;
+    color: #818181;
+  }
+
+  .data-container>div {
+    font-size: 12px;
+  }
+
+  .header {
+    height: 70px;
+    flex-direction: column;
+    gap: 0px;
+  }
+
+  .item {
+    height: 50px;
+    padding: 8px 4px;
+  }
 }

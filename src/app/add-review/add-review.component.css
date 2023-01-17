@@ -48,7 +48,7 @@
 
 .details {
     padding: 10px;
-    background-color: rgb(255, 240, 240);
+    background-color: var(--accent);
     border-radius: 10px;
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
     cursor: pointer;
@@ -94,4 +94,46 @@
 
 .italic {
     font-style: italic;
+}
+
+.mat-custom {
+    background-color: var(--active);
+    color: white;
+}
+
+.hover {
+    position: absolute;
+    background-color: #6dbcb7c9;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    max-height: 120px;
+    max-width: 350px;
+    min-width: 250px;
+    display: none;
+    border-radius: 10px;
+    transition-property: all;
+    transition-duration: 3000ms;
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+@media (min-width: 500px) {
+
+    .app:hover > .hover {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        opacity: 1;
+    }
+    
+    .text {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        padding: 5px; 
+    }
 }
