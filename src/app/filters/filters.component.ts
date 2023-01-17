@@ -3,7 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-filters',
   templateUrl: './filters.component.html',
-  styleUrls: ['./filters.component.css']
+  styleUrls: ['./filters.component.css'],
 })
 export class FiltersComponent implements OnInit {
   @Input() versions: any[] = [];
@@ -18,22 +18,22 @@ export class FiltersComponent implements OnInit {
   public showFilters: boolean = screen.width > 500 ? true : false;
   public showFilterButton: boolean = screen.width < 500 ? true : false;
   public sortingArray: any[] = [
-    {value: "date", text: "Date"},
-    {value: "rating", text: "Rating"},
-    {value: "version", text: "Version"}
-  ]
-
-  public ratings: any[] = [
-    { text: "1★", isSelected: true },
-    { text: "2★", isSelected: true },
-    { text: "3★", isSelected: true },
-    { text: "4★", isSelected: true },
-    { text: "5★", isSelected: true }
+    { value: 'date', text: 'Date' },
+    { value: 'rating', text: 'Rating' },
+    { value: 'version', text: 'Version' },
   ];
 
-  constructor() { }
+  public ratings: any[] = [
+    { text: '1★', value: '1', isSelected: true },
+    { text: '2★', value: '2', isSelected: true },
+    { text: '3★', value: '3', isSelected: true },
+    { text: '4★', value: '4', isSelected: true },
+    { text: '5★', value: '5', isSelected: true },
+  ];
 
-  ngOnInit(): void { }
+  constructor() {}
+
+  ngOnInit(): void {}
 
   searchInput(event: any) {
     event.preventDefault();
@@ -41,7 +41,11 @@ export class FiltersComponent implements OnInit {
   }
 
   toggleRatingSelection(rate: any) {
-    this.ratings.find(rating => { return rating.text == rate.text }).isSelected = !this.ratings.find(rating => { return rating.text == rate.text }).isSelected;
+    this.ratings.find((rating) => {
+      return rating.text == rate.text;
+    }).isSelected = !this.ratings.find((rating) => {
+      return rating.text == rate.text;
+    }).isSelected;
     this.ratingFilter.emit(this.ratings);
   }
 

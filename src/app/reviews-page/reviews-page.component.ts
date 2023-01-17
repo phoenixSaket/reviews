@@ -227,7 +227,7 @@ export class ReviewsPageComponent implements OnInit {
             rating = el["im:rating"].label;
             app = "ios";
           }
-          if (rating == element.text) {
+          if (rating == element.value) {
             if (app == "ios") {
               this.iosReviews.push(el);
             } else {
