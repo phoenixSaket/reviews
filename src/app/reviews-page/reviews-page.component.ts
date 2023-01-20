@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AndroidService } from '../services/android.service';
@@ -7,7 +8,7 @@ import { IosService } from '../services/ios.service';
 @Component({
   selector: 'app-reviews-page',
   templateUrl: './reviews-page.component.html',
-  styleUrls: ['./reviews-page.component.css']
+  styleUrls: ['./reviews-page.component.css'],
 })
 export class ReviewsPageComponent implements OnInit {
   public iosReviews: any[] = [];
@@ -28,7 +29,7 @@ export class ReviewsPageComponent implements OnInit {
     private android: AndroidService,
     private ios: IosService,
     private snackBar: MatSnackBar
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.data.appLoader.subscribe((app: any) => {
@@ -37,9 +38,10 @@ export class ReviewsPageComponent implements OnInit {
         this.versions = [];
         this.years = [];
         this.backup = [];
-        this.snackBar.open("Reviews loading ...", "Close", {
-          duration: 3000, horizontalPosition: "end",
-          verticalPosition: "bottom",
+        this.snackBar.open('Reviews loading ...', 'Close', {
+          duration: 3000,
+          horizontalPosition: 'end',
+          verticalPosition: 'bottom',
         });
         this.app = app;
         this.androidReviews = [];
@@ -52,24 +54,12 @@ export class ReviewsPageComponent implements OnInit {
           this.getAndroidReviews(app);
         }
       }
-    })
+    });
   }
 
   getAndroidReviews(app: any) {
-    this.android.getAppReviews(app.appId, true).subscribe((response: any) => {
-      this.androidReviews = JSON.parse(response.result).data;
-      this.androidReviews.forEach((review: any) => {
-        if (!this.versions.includes(review.version)) {
-          this.versions.push(review.version);
-        }
-        if (!this.years.includes(new Date(review.date).getFullYear())) {
-          this.years.push(new Date(review.date).getFullYear());
-        }
-      })
-      this.backup = JSON.parse(JSON.stringify(this.androidReviews));
-      this.stopLoading();
-    }, error=> {
-      this.android.getAppReviews(app.appId).subscribe((response: any) => {
+    this.android.getAppReviews(app.appId, true).subscribe(
+      (response: any) => {
         this.androidReviews = JSON.parse(response.result).data;
         this.androidReviews.forEach((review: any) => {
           if (!this.versions.includes(review.version)) {
@@ -78,76 +68,107 @@ export class ReviewsPageComponent implements OnInit {
           if (!this.years.includes(new Date(review.date).getFullYear())) {
             this.years.push(new Date(review.date).getFullYear());
           }
-        })
+        });
         this.backup = JSON.parse(JSON.stringify(this.androidReviews));
         this.stopLoading();
-      })
-    })
+      },
+      (error) => {
+        this.android.getAppReviews(app.appId).subscribe((response: any) => {
+          this.androidReviews = JSON.parse(response.result).data;
+          this.androidReviews.forEach((review: any) => {
+            if (!this.versions.includes(review.version)) {
+              this.versions.push(review.version);
+            }
+            if (!this.years.includes(new Date(review.date).getFullYear())) {
+              this.years.push(new Date(review.date).getFullYear());
+            }
+          });
+          this.backup = JSON.parse(JSON.stringify(this.androidReviews));
+          this.stopLoading();
+        });
+      }
+    );
   }
 
   getIOSReviews(app: any, page: number = 1) {
-    this.ios.getAppReviews(app.id, 1, true).subscribe((response: any) => {
-      const max = this.getMaxPages(JSON.parse(response.result).feed.link);
-      for (let i = 1; i <= max; i++) {
-        this.storeIOSReviews(app.id, i);
-      }
-    }, error => {
-      this.ios.getAppReviews(app.id, 1).subscribe((response: any) => {
+    this.ios.getAppReviews(app.id, 1, true).subscribe(
+      (response: any) => {
         const max = this.getMaxPages(JSON.parse(response.result).feed.link);
         for (let i = 1; i <= max; i++) {
           this.storeIOSReviews(app.id, i);
         }
-      });
-    });
+      },
+      (error) => {
+        this.ios.getAppReviews(app.id, 1).subscribe((response: any) => {
+          const max = this.getMaxPages(JSON.parse(response.result).feed.link);
+          for (let i = 1; i <= max; i++) {
+            this.storeIOSReviews(app.id, i);
+          }
+        });
+      }
+    );
   }
 
   storeIOSReviews(appId: string, page: number) {
-    this.ios.getAppReviews(appId, page, true).subscribe((response: any) => {
-      JSON.parse(response.result).feed.entry.forEach((entry: any) => {
-        this.iosReviews.push(entry);
-        if (!this.versions.includes(entry["im:version"].label)) {
-          this.versions.push(entry["im:version"].label);
-        }
-        if (!this.years.includes(new Date(entry.updated.label).getFullYear())) {
-          this.years.push(new Date(entry.updated.label).getFullYear());
-        }
-      });
-      this.backup = JSON.parse(JSON.stringify(this.iosReviews));
-      this.stopLoading();
-    }, error => {
-      this.ios.getAppReviews(appId, page).subscribe((response: any) => {
+    this.ios.getAppReviews(appId, page, true).subscribe(
+      (response: any) => {
         JSON.parse(response.result).feed.entry.forEach((entry: any) => {
           this.iosReviews.push(entry);
-          if (!this.versions.includes(entry["im:version"].label)) {
-            this.versions.push(entry["im:version"].label);
+          if (!this.versions.includes(entry['im:version'].label)) {
+            this.versions.push(entry['im:version'].label);
           }
-          if (!this.years.includes(new Date(entry.updated.label).getFullYear())) {
+          if (
+            !this.years.includes(new Date(entry.updated.label).getFullYear())
+          ) {
             this.years.push(new Date(entry.updated.label).getFullYear());
           }
         });
         this.backup = JSON.parse(JSON.stringify(this.iosReviews));
         this.stopLoading();
-      });
-    });
+      },
+      (error) => {
+        this.ios.getAppReviews(appId, page).subscribe((response: any) => {
+          JSON.parse(response.result).feed.entry.forEach((entry: any) => {
+            this.iosReviews.push(entry);
+            if (!this.versions.includes(entry['im:version'].label)) {
+              this.versions.push(entry['im:version'].label);
+            }
+            if (
+              !this.years.includes(new Date(entry.updated.label).getFullYear())
+            ) {
+              this.years.push(new Date(entry.updated.label).getFullYear());
+            }
+          });
+          this.backup = JSON.parse(JSON.stringify(this.iosReviews));
+          this.stopLoading();
+        });
+      }
+    );
   }
 
   getMaxPages(links: any[]) {
     let maxPage = 0;
     links.forEach((link: any) => {
-      if (link.attributes.rel == "last") {
+      if (link.attributes.rel == 'last') {
         const lk = link.attributes.href;
-        const page = lk.toString().substring(lk.toString().indexOf("page=") + 5, lk.toString().indexOf("/", lk.toString().indexOf("page=") + 5));
+        const page = lk
+          .toString()
+          .substring(
+            lk.toString().indexOf('page=') + 5,
+            lk.toString().indexOf('/', lk.toString().indexOf('page=') + 5)
+          );
         maxPage = page;
       }
-    })
+    });
     return maxPage;
   }
 
   stopLoading() {
     this.isLoading = false;
-    this.snackBar.open("Reviews loaded", "Close", {
-      duration: 3000, horizontalPosition: "end",
-      verticalPosition: "bottom",
+    this.snackBar.open('Reviews loaded', 'Close', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
     });
   }
 
@@ -156,18 +177,22 @@ export class ReviewsPageComponent implements OnInit {
       if (version == -1) {
         this.iosReviews = this.backup;
       } else {
-        this.iosReviews = this.backup.filter(app => { return app["im:version"].label == version });
+        this.iosReviews = this.backup.filter((app) => {
+          return app['im:version'].label == version;
+        });
       }
       this.length = this.iosReviews.length;
     } else {
       if (version == -1) {
         this.androidReviews = this.backup;
       } else {
-        this.androidReviews = this.backup.filter(app => { return app.version == version });
+        this.androidReviews = this.backup.filter((app) => {
+          return app.version == version;
+        });
       }
       this.length = this.androidReviews.length;
     }
-    this.sortSnackbar(this.length + " matching Reviews.");
+    this.sortSnackbar(this.length + ' matching Reviews.');
   }
 
   yearFilter(year: any) {
@@ -175,60 +200,74 @@ export class ReviewsPageComponent implements OnInit {
       if (year == -1) {
         this.iosReviews = this.backup;
       } else {
-        this.iosReviews = this.backup.filter(app => { return new Date(app.updated.label).getFullYear() == year });
+        this.iosReviews = this.backup.filter((app) => {
+          return new Date(app.updated.label).getFullYear() == year;
+        });
       }
       this.length = this.iosReviews.length;
     } else {
       if (year == -1) {
         this.iosReviews = this.backup;
       } else {
-        this.androidReviews = this.backup.filter(app => { return new Date(app.date).getFullYear() == year });
+        this.androidReviews = this.backup.filter((app) => {
+          return new Date(app.date).getFullYear() == year;
+        });
       }
       this.length = this.androidReviews.length;
     }
-    this.sortSnackbar(this.length + " matching Reviews.");
+    this.sortSnackbar(this.length + ' matching Reviews.');
   }
 
   searchSort(keyword: any) {
     if (this.app.isIOS) {
-      this.iosReviews = this.backup.filter(app => { if (app.content.label.includes(keyword) || app.title.label.includes(keyword)) { return app } });
+      this.iosReviews = this.backup.filter((app) => {
+        if (
+          app.content.label.includes(keyword) ||
+          app.title.label.includes(keyword)
+        ) {
+          return app;
+        }
+      });
       this.length = this.iosReviews.length;
     } else {
-      this.androidReviews = this.backup.filter(app => { if (app.text.includes(keyword) || app.title.includes(keyword)) { return app } });
-      this.length = this.iosReviews.length;
+      this.androidReviews = this.backup.filter((app) => {
+        if (app.text.includes(keyword)) {
+          return app;
+        }
+      });
+      this.length = this.androidReviews.length;
     }
-    this.sortSnackbar(this.length + " matching Reviews.");
+    this.sortSnackbar(this.length + ' matching Reviews.');
   }
 
   sortSnackbar(message: string) {
-    this.snackBar.open(message, "Close", {
-      duration: 3000, horizontalPosition: "end",
-      verticalPosition: "bottom",
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
     });
   }
 
   ratingFilter(ratingArray: any) {
     let array: any[] = ratingArray;
-    let app = "";
+    let app = '';
     let length: number = 0;
     this.iosReviews = [];
     this.androidReviews = [];
 
     array.forEach((element: any) => {
-
       if (element.isSelected) {
-
         this.backup.forEach((el: any) => {
-          let rating = "";
+          let rating = '';
           if (!!el?.score) {
             rating = el.score;
-            app = "android";
-          } else if (!!el["im:rating"]?.label) {
-            rating = el["im:rating"].label;
-            app = "ios";
+            app = 'android';
+          } else if (!!el['im:rating']?.label) {
+            rating = el['im:rating'].label;
+            app = 'ios';
           }
           if (rating == element.text) {
-            if (app == "ios") {
+            if (app == 'ios') {
               this.iosReviews.push(el);
             } else {
               this.androidReviews.push(el);
@@ -238,12 +277,12 @@ export class ReviewsPageComponent implements OnInit {
       }
     });
     length = this.iosReviews.length + this.androidReviews.length;
-    this.sortSnackbar(length + " matching reviews");
+    this.sortSnackbar(length + ' matching reviews');
   }
 
   sortBy(text: string) {
     switch (text) {
-      case "version":
+      case 'version':
         if (this.app.isIOS) {
           this.iosReviews.sort((a: any, b: any) => {
             let aVersion = a['im:version'].label.replaceAll('.', '');
@@ -281,7 +320,7 @@ export class ReviewsPageComponent implements OnInit {
         this.dateSorted.sorted = false;
         this.ratingSorted.sorted = false;
         break;
-      case "rating":
+      case 'rating':
         if (this.app.isIOS) {
           this.iosReviews.sort((a: any, b: any) => {
             return this.ratingSorted.type == 'D'
@@ -289,8 +328,8 @@ export class ReviewsPageComponent implements OnInit {
                 ? -1
                 : 1
               : a['im:rating'].label > b['im:rating'].label
-                ? 1
-                : -1;
+              ? 1
+              : -1;
           });
         } else {
           this.androidReviews.sort((a: any, b: any) => {
@@ -299,8 +338,8 @@ export class ReviewsPageComponent implements OnInit {
                 ? -1
                 : 1
               : a.score > b.score
-                ? 1
-                : -1;
+              ? 1
+              : -1;
           });
         }
 
@@ -309,7 +348,7 @@ export class ReviewsPageComponent implements OnInit {
         this.dateSorted.sorted = false;
         this.versionSorted.sorted = false;
         break;
-      case "date":
+      case 'date':
         if (this.app.isIOS) {
           this.iosReviews.sort((a: any, b: any) => {
             return this.dateSorted.type == 'D'
@@ -317,8 +356,8 @@ export class ReviewsPageComponent implements OnInit {
                 ? -1
                 : 1
               : new Date(a.updated.label) > new Date(b.updated.label)
-                ? 1
-                : -1;
+              ? 1
+              : -1;
           });
         } else {
           this.androidReviews.sort((a: any, b: any) => {
@@ -327,8 +366,8 @@ export class ReviewsPageComponent implements OnInit {
                 ? -1
                 : 1
               : new Date(a.date) > new Date(b.date)
-                ? 1
-                : -1;
+              ? 1
+              : -1;
           });
         }
 
@@ -344,6 +383,6 @@ export class ReviewsPageComponent implements OnInit {
   }
 
   sortByMobile(event: any) {
-    this.sortBy(event)
+    this.sortBy(event);
   }
 }
