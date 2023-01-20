@@ -2,7 +2,7 @@
     <form class="example-form">
         <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Search App</mat-label>
-            <input matInput placeholder="App Name" [value]="appName" (change)="appNameChange($event)">
+            <input matInput placeholder="App Name" [value]="appName" (change)="appNameChange($event)" autocomplete="off">
         </mat-form-field>
         <mat-radio-group aria-label="Select platform" class="radio-group" (change)="platformSelect($event)">
             <mat-radio-button value="IOS" checked>
