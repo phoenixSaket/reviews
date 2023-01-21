@@ -13,6 +13,31 @@ export class WordDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    let positiveArray = this.data.sentiments.positive;
+    let negativeArray = this.data.sentiments.negative;
+
+    this.data.words.forEach((word: any) => {
+      if (positiveArray.find((wordInner: any) => {
+        let check: boolean = false;
+        if (wordInner.text == word.text) {
+          check = true;
+        }
+        return check
+      })) {
+        word.isPositive = true
+      }
+
+      if (negativeArray.find((wordInner: any) => {
+        let check: boolean = false;
+        if (wordInner.text == word.text) {
+          check = true;
+        }
+        return check
+      })) {
+        word.isPositive = false
+      }
+    })
   }
 
 }

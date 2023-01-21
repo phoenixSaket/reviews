@@ -28,6 +28,7 @@
                 <mat-icon *ngIf="!ratingSorted.sorted">sort</mat-icon>
                 <div *ngIf="ratingSorted.sorted && ratingSorted.type == 'A'">&#8642;</div>
                 <div *ngIf="ratingSorted.sorted && ratingSorted.type == 'D'">&#8638;</div>
+                
             </div>
             <div class="sort-box right" (click)="sortBy('date')">
                 <div class="text">Date</div>

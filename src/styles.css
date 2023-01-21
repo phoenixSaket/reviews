@@ -8,6 +8,8 @@
 :root {
     --accent: #E9F5F3;
     --active: #6DBCB7;
+    --green: #6cc297;
+    --red: #e18888;
 }
 
 .body {

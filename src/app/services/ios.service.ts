@@ -8,6 +8,7 @@ export class IosService {
   public url = "https://review-un6v.onrender.com/ios/";
   public backupUrl = "https://reviews-be.cyclic.app/ios/";
 
+
   public iosAppsDefault = ['584785907', '1112137390', '1337168006', '1337166340', '1340456041'];
 
   constructor(private http: HttpClient) { }
@@ -30,5 +31,10 @@ export class IosService {
   searchApp(term: string, num: number, lang: string, price: string, useBackup: boolean = false) {
     let url = (useBackup ? this.backupUrl : this.url) + "search";
     return this.http.post(url, { term: term, num: num, lang: lang, price: price })
+  }
+
+  sentimentAnalysis(text: string[]) {
+    let url = this.backupUrl + "sentiment";
+    return this.http.post(url, {string: text});
   }
 }

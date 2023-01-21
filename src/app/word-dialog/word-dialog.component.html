@@ -1,9 +1,32 @@
 <h2 mat-dialog-title class="title">Word Report</h2>
 <mat-dialog-content class="mat-typography">
-    <div class="word-container-outer">
-        <div class="word-container" *ngFor="let word of data">
-            <div class="left">{{word.text}}</div>
-            <div class="right">{{word.number}}</div>
+    <div class="word-container-top-outer">
+        <div class="word-container-outer basic">
+            Top words from reviews ( max 150 ) 
+        </div>
+        <div class="word-container-outer">
+            <div class="word-container" *ngFor="let word of data.words" >
+                <div class="left" [ngClass]="word.isPositive == null ? '' : (word.isPositive ? 'green-text': 'red-text')">{{word.text}}</div>
+                <div class="right">{{word.number}}</div>
+            </div>
+        </div>
+        <div class="word-container-outer green">
+            Top Positive words from reviews ( max 150 ) 
+        </div>
+        <div class="word-container-outer">
+            <div class="word-container" *ngFor="let word of data.sentiments.positive">
+                <div class="left green-text">{{word.text}}</div>
+                <div class="right">{{word.number}}</div>
+            </div>
+        </div>
+        <div class="word-container-outer red">
+            Top negative words from reviews ( max 150 )
+        </div>
+        <div class="word-container-outer">
+            <div class="word-container" *ngFor="let word of data.sentiments.negative">
+                <div class="left red-text">{{word.text}}</div>
+                <div class="right">{{word.number}}</div>
+            </div>
         </div>
     </div>
 </mat-dialog-content>

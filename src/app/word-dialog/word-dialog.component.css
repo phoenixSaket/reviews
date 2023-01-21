@@ -25,3 +25,25 @@
     display: flex;
     justify-content: center;
 }
+
+.red, .green, .basic {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 18px;
+    line-height: 18px;
+    border-top: 0.5px dashed var(--active);
+    border-bottom: 0.5px dashed var(--active);
+    padding: 10px 0;
+}
+
+.basic {
+    color: var(--active);
+}
+
+.green, .green-text {
+    color: var(--green);
+}
+
+.red, .red-text {
+    color: var(--red);
+}

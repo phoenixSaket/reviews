@@ -28,7 +28,7 @@ export class ReviewsPageComponent implements OnInit {
     private android: AndroidService,
     private ios: IosService,
     private snackBar: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.data.appLoader.subscribe((app: any) => {
@@ -57,8 +57,21 @@ export class ReviewsPageComponent implements OnInit {
   }
 
   getAndroidReviews(app: any) {
-    this.android.getAppReviews(app.appId, true).subscribe(
-      (response: any) => {
+    this.android.getAppReviews(app.appId, true).subscribe((response: any) => {
+      this.androidReviews = JSON.parse(response.result).data;
+      this.androidReviews.forEach((review: any) => {
+        if (!this.versions.includes(review.version)) {
+          this.versions.push(review.version);
+        }
+        if (!this.years.includes(new Date(review.date).getFullYear())) {
+          this.years.push(new Date(review.date).getFullYear());
+        }
+      })
+      this.backup = JSON.parse(JSON.stringify(this.androidReviews));
+      this.doSentimentAnalysis();
+      this.stopLoading();
+    }, error => {
+      this.android.getAppReviews(app.appId).subscribe((response: any) => {
         this.androidReviews = JSON.parse(response.result).data;
         this.androidReviews.forEach((review: any) => {
           if (!this.versions.includes(review.version)) {
@@ -69,48 +82,63 @@ export class ReviewsPageComponent implements OnInit {
           }
         });
         this.backup = JSON.parse(JSON.stringify(this.androidReviews));
+        this.doSentimentAnalysis();
         this.stopLoading();
       },
-      (error) => {
-        this.android.getAppReviews(app.appId).subscribe((response: any) => {
-          this.androidReviews = JSON.parse(response.result).data;
-          this.androidReviews.forEach((review: any) => {
-            if (!this.versions.includes(review.version)) {
-              this.versions.push(review.version);
-            }
-            if (!this.years.includes(new Date(review.date).getFullYear())) {
-              this.years.push(new Date(review.date).getFullYear());
-            }
+        (error) => {
+          this.android.getAppReviews(app.appId).subscribe((response: any) => {
+            this.androidReviews = JSON.parse(response.result).data;
+            this.androidReviews.forEach((review: any) => {
+              if (!this.versions.includes(review.version)) {
+                this.versions.push(review.version);
+              }
+              if (!this.years.includes(new Date(review.date).getFullYear())) {
+                this.years.push(new Date(review.date).getFullYear());
+              }
+            });
+            this.backup = JSON.parse(JSON.stringify(this.androidReviews));
+            this.doSentimentAnalysis();
+            this.stopLoading();
           });
-          this.backup = JSON.parse(JSON.stringify(this.androidReviews));
-          this.stopLoading();
-        });
-      }
-    );
+        }
+      );
+    });
   }
 
   getIOSReviews(app: any, page: number = 1) {
-    this.ios.getAppReviews(app.id, 1, true).subscribe(
-      (response: any) => {
+    this.ios.getAppReviews(app.id, 1, true).subscribe((response: any) => {
+      const max = this.getMaxPages(JSON.parse(response.result).feed.link);
+      for (let i = 1; i <= max; i++) {
+        this.storeIOSReviews(app.id, i, max);
+      }
+    }, error => {
+      this.ios.getAppReviews(app.id, 1).subscribe((response: any) => {
         const max = this.getMaxPages(JSON.parse(response.result).feed.link);
         for (let i = 1; i <= max; i++) {
-          this.storeIOSReviews(app.id, i);
+          this.storeIOSReviews(app.id, i, max);
         }
-      },
-      (error) => {
-        this.ios.getAppReviews(app.id, 1).subscribe((response: any) => {
-          const max = this.getMaxPages(JSON.parse(response.result).feed.link);
-          for (let i = 1; i <= max; i++) {
-            this.storeIOSReviews(app.id, i);
-          }
-        });
-      }
-    );
+      });
+    });
   }
 
-  storeIOSReviews(appId: string, page: number) {
-    this.ios.getAppReviews(appId, page, true).subscribe(
-      (response: any) => {
+  storeIOSReviews(appId: string, page: number, max: number) {
+    this.ios.getAppReviews(appId, page, true).subscribe((response: any) => {
+      JSON.parse(response.result).feed.entry.forEach((entry: any) => {
+        this.iosReviews.push(entry);
+        if (!this.versions.includes(entry["im:version"].label)) {
+          this.versions.push(entry["im:version"].label);
+        }
+        if (!this.years.includes(new Date(entry.updated.label).getFullYear())) {
+          this.years.push(new Date(entry.updated.label).getFullYear());
+        }
+      });
+      this.backup = JSON.parse(JSON.stringify(this.iosReviews));
+      if (page == max) {
+        this.stopLoading();
+        this.doSentimentAnalysis()
+      }
+    }, error => {
+      this.ios.getAppReviews(appId, page).subscribe((response: any) => {
         JSON.parse(response.result).feed.entry.forEach((entry: any) => {
           this.iosReviews.push(entry);
           if (!this.versions.includes(entry['im:version'].label)) {
@@ -123,26 +151,12 @@ export class ReviewsPageComponent implements OnInit {
           }
         });
         this.backup = JSON.parse(JSON.stringify(this.iosReviews));
-        this.stopLoading();
-      },
-      (error) => {
-        this.ios.getAppReviews(appId, page).subscribe((response: any) => {
-          JSON.parse(response.result).feed.entry.forEach((entry: any) => {
-            this.iosReviews.push(entry);
-            if (!this.versions.includes(entry['im:version'].label)) {
-              this.versions.push(entry['im:version'].label);
-            }
-            if (
-              !this.years.includes(new Date(entry.updated.label).getFullYear())
-            ) {
-              this.years.push(new Date(entry.updated.label).getFullYear());
-            }
-          });
-          this.backup = JSON.parse(JSON.stringify(this.iosReviews));
+        if (page == max) {
           this.stopLoading();
-        });
-      }
-    );
+          this.doSentimentAnalysis()
+        }
+      });
+    });
   }
 
   getMaxPages(links: any[]) {
@@ -327,8 +341,8 @@ export class ReviewsPageComponent implements OnInit {
                 ? -1
                 : 1
               : a['im:rating'].label > b['im:rating'].label
-              ? 1
-              : -1;
+                ? 1
+                : -1;
           });
         } else {
           this.androidReviews.sort((a: any, b: any) => {
@@ -337,8 +351,8 @@ export class ReviewsPageComponent implements OnInit {
                 ? -1
                 : 1
               : a.score > b.score
-              ? 1
-              : -1;
+                ? 1
+                : -1;
           });
         }
 
@@ -355,8 +369,8 @@ export class ReviewsPageComponent implements OnInit {
                 ? -1
                 : 1
               : new Date(a.updated.label) > new Date(b.updated.label)
-              ? 1
-              : -1;
+                ? 1
+                : -1;
           });
         } else {
           this.androidReviews.sort((a: any, b: any) => {
@@ -365,8 +379,8 @@ export class ReviewsPageComponent implements OnInit {
                 ? -1
                 : 1
               : new Date(a.date) > new Date(b.date)
-              ? 1
-              : -1;
+                ? 1
+                : -1;
           });
         }
 
@@ -383,5 +397,39 @@ export class ReviewsPageComponent implements OnInit {
 
   sortByMobile(event: any) {
     this.sortBy(event);
+  }
+
+
+  doSentimentAnalysis() {
+    let total: string[] = [];
+    if (this.isIOS) {
+      this.iosReviews.forEach((el: any) => {
+        total.push(el.content.label);
+      });
+      this.ios.sentimentAnalysis(total).subscribe((resp: any) => {
+        let array = resp.message;
+        this.iosReviews.forEach((review: any) => {
+          array.forEach((sentiment: any) => {
+            if (review.content.label == sentiment.string) {
+              review.sentiment = sentiment.sentiments;
+            }
+          })
+        })
+      });
+    } else {
+      this.androidReviews.forEach((review: any) => {
+        total.push(review.text);
+      });
+      this.android.sentimentAnalysis(total).subscribe((resp: any) => {
+        let array = resp.message;
+        this.androidReviews.forEach((review: any) => {
+          array.forEach((sentiment: any) => {
+            if (review.text == sentiment.string) {
+              review.sentiment = sentiment.sentiments;
+            }
+          })
+        })
+      })
+    }
   }
 }

@@ -20,6 +20,17 @@
         </div>
         <div class="title">{{data.title.label}}</div>
         <div class="content">{{data.content.label}}</div>
+        <div class="sentiment-container">
+            <div class="chip" [ngClass]="data.sentiment?.score == 0 ? 'basic': (data.sentiment?.score > 0 ? 'green' : 'red')">
+                Sentiment Score : {{data.sentiment?.score}}
+            </div>
+            <div class="chip green" *ngFor="let positve of data.sentiment?.positive">
+                {{positve}}
+            </div>
+            <div class="chip red" *ngFor="let negative of data.sentiment?.negative">
+                {{negative}}
+            </div>
+        </div>
     </div>
     <div class="right">
         <div class="date">{{data.updated.label | date}}</div>

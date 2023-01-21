@@ -11,12 +11,27 @@
         (click)="redraw()">Shuffle</button>
     <button mat-raised-button class="shuffle-button" *ngIf="!!selectedApp && !loading" (click)="getWordReport()">Get
         Word Report</button>
+        <button mat-raised-button class="shuffle-button" *ngIf="!!selectedApp && !loading" (click)="separateClouds()">
+            {{showOne ? "Split Clouds" : "Merge Clouds"}}
+        </button>
 </div>
 
 <div class="loading-container" *ngIf="loading">
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>
 
-<div class="canvas-container">
-    <canvas id="canvas">{{chart}}</canvas>
+<div class="contain">
+    <div class="canvas-container" >
+        <div class="title" *ngIf="!!selectedApp && !loading">Top keywords (max 150)</div>
+        <canvas id="canvas">{{chart}}</canvas>
+    </div>
+    
+    <div class="canvas-container" *ngIf="!showOne">
+        <div class="title" *ngIf="!!selectedApp && !loading">Sentiment keywords (max 150)</div>
+        <canvas id="positive-canvas">{{positiveChart}}</canvas>
+    </div>
 </div>
+
+<!-- <div class="canvas-container">
+    <canvas id="negative-canvas">{{negativeChart}}</canvas>
+</div> -->

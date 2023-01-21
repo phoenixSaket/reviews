@@ -43,4 +43,9 @@ export class AndroidService {
   getHistogram(appName: string): any {
     return this.histograms.find(app => { return app.app == appName });
   }
+
+  sentimentAnalysis(text: string[]) {
+    let url = this.backupUrl + "sentiment";
+    return this.http.post(url, {string: text});
+  }
 }
