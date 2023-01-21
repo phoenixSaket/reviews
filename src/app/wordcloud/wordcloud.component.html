@@ -21,12 +21,12 @@
 </div>
 
 <div class="contain">
-    <div class="canvas-container" >
+    <div class="canvas-container" [ngStyle]="{'width': showOne ? '100%': '50%'}">
         <div class="title" *ngIf="!!selectedApp && !loading">Top keywords (max 150)</div>
         <canvas id="canvas">{{chart}}</canvas>
     </div>
     
-    <div class="canvas-container" *ngIf="!showOne">
+    <div class="canvas-container" *ngIf="!showOne" [ngStyle]="{'width': '50%'}">
         <div class="title" *ngIf="!!selectedApp && !loading">Sentiment keywords (max 150)</div>
         <canvas id="positive-canvas">{{positiveChart}}</canvas>
     </div>
