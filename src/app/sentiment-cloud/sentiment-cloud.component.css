@@ -1,0 +1,47 @@
+.canvas-container {
+    width: 100%;
+    height: calc(100%);
+    pointer-events: none;
+}
+
+.top-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+}
+
+.loading-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.shuffle-button {
+    background-color: var(--active);
+    height: 50px;
+    color: white;
+}
+
+.contain {
+    width: 100%;
+    height: calc(100% - 100px);
+    display: flex;
+    justify-content: space-between;
+}
+
+.title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 15px 0;
+    color: var(--active);
+}

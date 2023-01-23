@@ -5,6 +5,7 @@ import { CompareAppsComponent } from './compare-apps/compare-apps.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { ReviewsPageComponent } from './reviews-page/reviews-page.component';
+import { SentimentCloudComponent } from './sentiment-cloud/sentiment-cloud.component';
 import { WordcloudComponent } from './wordcloud/wordcloud.component';
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path: "dashboard", component: DashboardComponent},
   {path: "reviews", component: ReviewsPageComponent},
   {path: "add-app", component: AddReviewComponent},
-  {path: "word-cloud", component: WordcloudComponent}
+  {path: "word-cloud", component: WordcloudComponent},
+  {path: "sentiment-cloud", component: SentimentCloudComponent},
 ];
 
 @NgModule({

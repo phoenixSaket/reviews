@@ -10,20 +10,20 @@
                 <div class="right">{{word.number}}</div>
             </div>
         </div>
-        <div class="word-container-outer green">
+        <div class="word-container-outer green" *ngIf="data.sentiments?.positive">
             Top Positive words from reviews ( max 150 ) 
         </div>
         <div class="word-container-outer">
-            <div class="word-container" *ngFor="let word of data.sentiments.positive">
+            <div class="word-container" *ngFor="let word of data.sentiments?.positive">
                 <div class="left green-text">{{word.text}}</div>
                 <div class="right">{{word.number}}</div>
             </div>
         </div>
-        <div class="word-container-outer red">
+        <div class="word-container-outer red" *ngIf="data.sentiments?.negative">
             Top negative words from reviews ( max 150 )
         </div>
         <div class="word-container-outer">
-            <div class="word-container" *ngFor="let word of data.sentiments.negative">
+            <div class="word-container" *ngFor="let word of data.sentiments?.negative">
                 <div class="left red-text">{{word.text}}</div>
                 <div class="right">{{word.number}}</div>
             </div>

@@ -31,6 +31,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { WordcloudComponent } from './wordcloud/wordcloud.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { WordDialogComponent } from './word-dialog/word-dialog.component';
+import { SentimentCloudComponent } from './sentiment-cloud/sentiment-cloud.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { WordDialogComponent } from './word-dialog/word-dialog.component';
     HomepageComponent,
     CompareAppsComponent,
     WordcloudComponent,
-    WordDialogComponent
+    WordDialogComponent,
+    SentimentCloudComponent
   ],
   imports: [
     BrowserModule,
