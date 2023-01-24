@@ -31,6 +31,11 @@
             </div>
         </div>
     </div>
+    <div class="link shadows"
+        (click)="openEmailDialog()">
+        <mat-icon>mail</mat-icon>
+        Get Emails
+    </div>
     <!-- <hr> -->
     <div class="apps-container">
         <div class="apps shadows" *ngFor="let app of apps" [ngClass]="app.isSelected ? 'active' : ''"

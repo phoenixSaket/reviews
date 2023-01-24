@@ -1,0 +1,46 @@
+.top {
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 20px 0;
+    padding: 10px 0;
+    font-size: 18px;
+    letter-spacing: 2px;
+    border-bottom: 0.5px solid var(--accent);
+    border-top: 0.5px solid var(--accent);
+}
+
+.apps {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.app {
+    width: 250px;
+    display: flex;
+    align-items: center;
+    margin: 5px;
+    padding: 10px;
+    cursor: pointer;
+    padding: 10px;
+    border: 0.5px solid var(--accent);
+}
+
+.platform-img {
+    width: 25px;
+    height: 25px;
+}
+
+.name {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.email {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

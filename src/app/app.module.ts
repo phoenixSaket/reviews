@@ -10,7 +10,6 @@ import { CardIosComponent } from './card-ios/card-ios.component';
 import { FiltersComponent } from './filters/filters.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AddReviewComponent } from './add-review/add-review.component';
-import { AddAppCardComponent } from './add-app-card/add-app-card.component';
 import { HistogramComponent } from './histogram/histogram.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReviewsPageComponent } from './reviews-page/reviews-page.component';
@@ -32,6 +31,9 @@ import { WordcloudComponent } from './wordcloud/wordcloud.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { WordDialogComponent } from './word-dialog/word-dialog.component';
 import { SentimentCloudComponent } from './sentiment-cloud/sentiment-cloud.component';
+import { GetEmailComponent } from './get-email/get-email.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -44,14 +46,14 @@ import { SentimentCloudComponent } from './sentiment-cloud/sentiment-cloud.compo
     FiltersComponent,
     DashboardComponent,
     AddReviewComponent,
-    AddAppCardComponent,
     HistogramComponent,
     ReviewsPageComponent,
     HomepageComponent,
     CompareAppsComponent,
     WordcloudComponent,
     WordDialogComponent,
-    SentimentCloudComponent
+    SentimentCloudComponent,
+    GetEmailComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +71,9 @@ import { SentimentCloudComponent } from './sentiment-cloud/sentiment-cloud.compo
     MatRadioModule,
     MatIconModule,
     MatProgressBarModule,
-    MatDialogModule
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,33 @@
+<h2 mat-dialog-title class="title">Get Emails</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="content">
+        <div class="email">
+            <form class="email">
+                <mat-form-field class="email">
+                    <mat-label>Email</mat-label>
+                    <input type="email" matInput [formControl]="emailFormControl" placeholder="Ex. pat@example.com">
+                    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                        Please enter a valid email address
+                    </mat-error>
+                    <mat-error *ngIf="emailFormControl.hasError('required')">
+                        Email is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+            </form>
+        </div>
+        <div class="top email">Select apps</div>
+        <div class="apps">
+            <div class="app" *ngFor="let app of data.apps" [formGroup]="appsForm">
+                <mat-checkbox class="name" [formControlName]="app.name">
+                    {{app.name}}
+                    <img src="assets/android.jpg" *ngIf="!app.isIOS" alt="android" class="platform-img">
+                    <img src="assets/apple.jpg" *ngIf="app.isIOS" alt="apple" class="platform-img">
+                </mat-checkbox>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="action">
+    <button mat-button class="close-button" (click)="saveApps()">Subscribe</button>
+    <button mat-button mat-dialog-close class="close-button">Close</button>
+</mat-dialog-actions>
