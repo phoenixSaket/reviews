@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddAppCardComponent } from './add-app-card.component';
+import { ErrorDialogComponent } from './error-dialog.component';
 
-describe('AddAppCardComponent', () => {
-  let component: AddAppCardComponent;
-  let fixture: ComponentFixture<AddAppCardComponent>;
+describe('ErrorDialogComponent', () => {
+  let component: ErrorDialogComponent;
+  let fixture: ComponentFixture<ErrorDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddAppCardComponent ]
+      declarations: [ ErrorDialogComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AddAppCardComponent);
+    fixture = TestBed.createComponent(ErrorDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

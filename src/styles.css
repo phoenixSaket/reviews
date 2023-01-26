@@ -97,3 +97,15 @@ body {
 .mat-form-field-appearance-outline .mat-form-field-outline-end {
     border: 1px solid var(--active);
 }
+
+.email > .mat-form-field-wrapper {
+    width: 100%;
+    max-width: 400px;
+}
+
+span.mat-checkbox-label {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}

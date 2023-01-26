@@ -3,6 +3,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { SidebarService } from './sidebar.service';
+import { MatDialog } from '@angular/material/dialog';
+import { GetEmailComponent } from '../get-email/get-email.component';
 
 @Component({
   selector: 'app-sidebar',
@@ -23,8 +25,9 @@ export class SidebarComponent implements OnInit {
     private data: DataService,
     private router: Router,
     private sidebar: SidebarService,
-    private snackBar: MatSnackBar
-  ) {}
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.apps.forEach((app: any) => {
@@ -250,6 +253,13 @@ export class SidebarComponent implements OnInit {
     });
     if (this.selectedAddApp) this.selectedAddApp = !this.selectedAddApp;
     if (this.selectedDashboard)
-      this.selectedDashboard = !this.selectedDashboard;
+      this
+        .selectedDashboard = !this.selectedDashboard;
+  }
+
+  openEmailDialog() {
+    const dialogRef = this.dialog.open(GetEmailComponent, {
+      data: { apps: this.apps },
+    });
   }
 }
