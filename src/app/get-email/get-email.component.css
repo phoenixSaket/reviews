@@ -24,6 +24,11 @@
     cursor: pointer;
     padding: 10px;
     border: 0.5px solid var(--accent);
+    border-radius: 5px;
+}
+
+.active {
+    border: 2px solid var(--active);
 }
 
 .platform-img {

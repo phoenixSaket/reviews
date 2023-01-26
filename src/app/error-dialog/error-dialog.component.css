@@ -1,0 +1,7 @@
+.content {
+    padding: 25px 75px;
+}
+
+.error, .title {
+    color: var(--red);
+}

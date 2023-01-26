@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
@@ -15,7 +16,7 @@ export class DataService {
   public newAppAdded: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public compareAppAdded: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   setCurrentApp(app: any) {
     this.currentApp = app;
@@ -34,7 +35,7 @@ export class DataService {
     this.currentPage = page;
   }
 
-  getAppName():any[] {
+  getAppName(): any[] {
     return this.appNames;
   }
 
@@ -45,6 +46,13 @@ export class DataService {
   getTotalApps() {
     this.totalApps = JSON.parse(localStorage.getItem("apps-review") || "[]").length;
     return this.totalApps;
+  }
+
+  sendMailApi(email: string, apps: any[]) {
+    console.log(email);
+    console.log(apps);
+    let payload = { email: email, apps: JSON.stringify(apps) }
+    return this.http.post("https://sleepy-fox-wrap.cyclic.app/save-apps", payload);
   }
 
 }

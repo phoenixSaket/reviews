@@ -17,12 +17,13 @@
         </div>
         <div class="top email">Select apps</div>
         <div class="apps">
-            <div class="app" *ngFor="let app of data.apps" [formGroup]="appsForm">
-                <mat-checkbox class="name" [formControlName]="app.name">
+            <div class="app" *ngFor="let app of data.apps" [ngClass]="app.isSelectedForEmail ? 'active' : ''"
+                (click)="addApp(app)">
+                <div class="name">
                     {{app.name}}
                     <img src="assets/android.jpg" *ngIf="!app.isIOS" alt="android" class="platform-img">
                     <img src="assets/apple.jpg" *ngIf="app.isIOS" alt="apple" class="platform-img">
-                </mat-checkbox>
+                </div>
             </div>
         </div>
     </div>

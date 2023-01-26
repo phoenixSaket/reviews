@@ -29,11 +29,14 @@ import { CompareAppsComponent } from './compare-apps/compare-apps.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { WordcloudComponent } from './wordcloud/wordcloud.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import {  } from '@angular/material/dialog';
 import { WordDialogComponent } from './word-dialog/word-dialog.component';
 import { SentimentCloudComponent } from './sentiment-cloud/sentiment-cloud.component';
 import { GetEmailComponent } from './get-email/get-email.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
+
 
 
 @NgModule({
@@ -53,7 +56,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     WordcloudComponent,
     WordDialogComponent,
     SentimentCloudComponent,
-    GetEmailComponent
+    GetEmailComponent,
+    ErrorDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +77,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatProgressBarModule,
     MatDialogModule,
     ReactiveFormsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
