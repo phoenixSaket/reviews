@@ -84,7 +84,7 @@ export class DataService {
 
   sendMailApi(email: string, apps: any[]) {
     let payload = { email: email, apps: JSON.stringify(apps) }
-    return this.http.post("https://sleepy-fox-wrap.cyclic.app/save-apps", payload);
+    return this.http.post("https://reviews-be.cyclic.app/ios/save-apps", payload);
     // return this.http.post("http://localhost:8000/save-apps", payload);
   }
 
@@ -182,7 +182,7 @@ export class DataService {
 
   sendEmail(message: string, email: string) {
     let payload = { email: email, message: message }
-    // return this.http.post("https://sleepy-fox-wrap.cyclic.app/save-apps", payload);
-    return this.http.post("https://sleepy-fox-wrap.cyclic.app/mail/send", payload);
+    // return this.http.post("https://reviews-be.cyclic.app/ios/save-apps", payload);
+    return this.http.post("https://reviews-be.cyclic.app/ios/mail/send", payload);
   }
 }

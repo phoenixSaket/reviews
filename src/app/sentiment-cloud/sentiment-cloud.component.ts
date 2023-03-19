@@ -301,7 +301,6 @@ export class SentimentCloudComponent implements OnInit {
     if(type == "single"){
       this.generateWordCloud(z, multlipicant);
     }
-    console.log(this.array.length);
     let tempArr: any[] = [];
     if (this.array.length > 150) {
       this.array.forEach((el, index) => {
@@ -384,7 +383,6 @@ export class SentimentCloudComponent implements OnInit {
       });
 
       tempArray = temp;
-      console.log(tempArray);
 
       arrayNew["negative"] = tempArray;
       this.sentiments = arrayNew;
@@ -433,8 +431,6 @@ export class SentimentCloudComponent implements OnInit {
         }
       })
 
-      console.log(z)
-      console.log(type);
       if (type == "single") {
         this.showOne = false;
         let length = result[0].number;
@@ -463,7 +459,6 @@ export class SentimentCloudComponent implements OnInit {
   }
 
   separateClouds() {
-    console.log(this.showOne)
     if(this.showOne) {
       this.appSelected(this.selectedApp, "single");
     } else {
