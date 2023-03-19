@@ -1,0 +1,38 @@
+.app-title {
+    width: 100%;
+    background-color: var(--accent);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+
+.bold {
+    font-weight: 700;
+}
+
+.app {
+    border: 2px solid var(--accent);
+    margin: 5px 0;
+}
+
+.no-height {
+    border: none;
+    height: 0px;
+    display: none;
+}
+
+.green {
+    background-color: var(--accent-dark);
+    color: var(--accent);
+}
+
+.red {
+    background-color: var(--red);
+    color: var(--accent);
+}
+
+.action {
+    gap: 10px;
+}

@@ -241,6 +241,10 @@ export class AppComponent {
     })
   }
 
+  ngAfterViewInit() {
+    this.data.newReviewsCheck();
+  }
+
   saveToLocalStorage(app: any) {
     let apps = JSON.parse(localStorage.getItem("apps-review") || "[]");
 

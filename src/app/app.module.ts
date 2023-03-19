@@ -36,6 +36,7 @@ import { GetEmailComponent } from './get-email/get-email.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
+import { NewReviewsComponent } from './new-reviews/new-reviews.component';
 
 
 
@@ -57,7 +58,8 @@ import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
     WordDialogComponent,
     SentimentCloudComponent,
     GetEmailComponent,
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    NewReviewsComponent
   ],
   imports: [
     BrowserModule,

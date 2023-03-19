@@ -1,7 +1,7 @@
 <div class="card">
     <div class="left d-flex gap-10 w-100 m-b-10">
         <div class="image">
-            <img [src]="data.userImage" alt="userImage" class="user-img">
+            <img [src]="data.userImage" alt="userImage" class="user-img" (error)="data.userImage = 'assets/avatar.jpg'">
         </div>
         <div class="d-flex w-100 space-between align-center">
             <div class="author">{{data.userName}}</div>
