@@ -7,11 +7,27 @@
 
 :root {
     --accent: #E9F5F3;
+    --accent-dark: #198b83;
+    --accent-other: #1ca58e;
     --active: #6DBCB7;
     --green: #6cc297;
     --red: #e18888;
+    --mat-mdc-snack-bar-button-color: var(--accent) !important;
+    --mdc-snackbar-container-color: var(--active) !important;
 }
 
+.mat-snack-bar-container {
+    color: white;
+    background: var(--accent-dark);
+}
+
+.mat-simple-snackbar-action {
+    color: var(--accent);
+}
+
+.mat-simple-snackbar {
+    font-size: 16px;
+}
 .body {
     background-color: #ededed;
     overflow: hidden;
@@ -98,7 +114,7 @@ body {
     border: 1px solid var(--active);
 }
 
-.email > .mat-form-field-wrapper {
+.email>.mat-form-field-wrapper {
     width: 100%;
     max-width: 400px;
 }
