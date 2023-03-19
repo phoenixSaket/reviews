@@ -24,7 +24,6 @@ export class NewReviewsComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dataService: DataService, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
-    console.log(this.data);
   }
 
   mailReviews() {

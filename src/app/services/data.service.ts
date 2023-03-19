@@ -30,9 +30,23 @@ export class DataService {
       if (values == 1) {
         x += 1;
         if (x == this.getTotalApps()) {
-          this.openNewReviewDialog();
           let date = new Date().toString();
           localStorage.setItem("lastDate-reviews", date);
+          let shouldShow: boolean = false;
+          this.newAndroidReviews.forEach(el=> {
+            if(el.reviews.length > 0) {
+              shouldShow = true;
+            }
+          });
+          this.newIOSReviews.forEach(el=> {
+            if(el.reviews.length > 0) {
+              shouldShow = true;
+            }
+          })
+
+          if(shouldShow) {
+            this.openNewReviewDialog();
+          }
         }
       }
     })
@@ -69,8 +83,6 @@ export class DataService {
   }
 
   sendMailApi(email: string, apps: any[]) {
-    console.log(email);
-    console.log(apps);
     let payload = { email: email, apps: JSON.stringify(apps) }
     return this.http.post("https://sleepy-fox-wrap.cyclic.app/save-apps", payload);
     // return this.http.post("http://localhost:8000/save-apps", payload);
@@ -91,7 +103,6 @@ export class DataService {
               let id = app.app;
               if (app.isIOS) {
                 this.ios.getAppReviews(id, 1).subscribe((response: any) => {
-                  // console.log("Last IOS", JSON.parse(response.result.feed.entry));
                   let reviews = this.iosAlerts(JSON.parse(response.result).feed.entry);
                   let names = this.getAppName();
                   let name = names.find((el: any) => { return (el.id == id) ? el.appName : "" })
@@ -106,7 +117,6 @@ export class DataService {
                 })
               } else {
                 this.android.getAppReviews(id).subscribe((response: any) => {
-                  // console.log("Last Android", JSON.parse(response.result).data);
                   let reviews = this.androidAlerts(JSON.parse(response.result).data);
                   let names = this.getAppName();
                   let name = names.find((el: any) => { return (el.id == id) ? el.appName : "" })
@@ -134,7 +144,7 @@ export class DataService {
   }
 
   iosAlerts(reviews: any): any[] {
-    let lastDate = new Date(localStorage.getItem("lastDate") || "");
+    let lastDate = new Date(localStorage.getItem("lastDate-reviews") || "");
     let iosReviews: any[] = [];
 
     reviews.forEach((rev: any) => {
@@ -146,7 +156,7 @@ export class DataService {
   }
 
   androidAlerts(reviews: any) {
-    let lastDate = new Date(localStorage.getItem("lastDate") || "");
+    let lastDate = new Date(localStorage.getItem("lastDate-reviews") || "");
     let androidReviews: any[] = [];
 
     reviews.forEach((rev: any) => {

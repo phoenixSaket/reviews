@@ -82,7 +82,7 @@ export class AppComponent {
               this.data.loadedApps.next(this.loadedApps);
               this.cdr.detectChanges();
               // this.saveToLocalStorage({ app: app, isIOS: false });
-  
+
               let appAndroid = { name: resp.title, icon: resp.icon, rating: resp.score, isIOS: false, appId: resp.appId }
               let histogram = { reviews: resp.reviews, ratings: resp.ratings, histogram: resp.histogram }
               this.android.setHistogram(appAndroid, histogram);
@@ -147,7 +147,7 @@ export class AppComponent {
             this.saveToLocalStorage({ app: app, isIOS: false });
             this.loadedApps += 1;
             this.data.loadedApps.next(this.loadedApps);
-  
+
             let appAndroid = { name: resp.title, icon: resp.icon, rating: resp.score, isIOS: false, appId: resp.appId }
             let histogram = { reviews: resp.reviews, ratings: resp.ratings, histogram: resp.histogram }
             this.android.setHistogram(appAndroid, histogram);
@@ -227,7 +227,7 @@ export class AppComponent {
                 duration: 300, horizontalPosition: "end",
                 verticalPosition: "bottom"
               });
-  
+
               let appAndroid = { name: resp.title, icon: resp.icon, rating: resp.score, isIOS: false, appId: resp.appId }
               let histogram = { reviews: resp.reviews, ratings: resp.ratings, histogram: resp.histogram }
               this.android.setHistogram(appAndroid, histogram);

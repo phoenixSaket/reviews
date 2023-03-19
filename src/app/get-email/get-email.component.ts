@@ -23,7 +23,6 @@ export class GetEmailComponent implements OnInit {
   }
 
   addApp(app: any) {
-    console.log(app);
     app.isSelectedForEmail = !app.isSelectedForEmail;
   }
 
@@ -41,24 +40,20 @@ export class GetEmailComponent implements OnInit {
 
     if (this.emailFormControl.errors == null && this.emailFormControl.value != "" && isSelected) {
       // call API
-      console.log(selectedApps);
       let appsToSend: any[] = [];
 
       selectedApps.forEach((appInner: any) => {
         appsToSend.push({ name: appInner.name, isIOS: appInner.isIOS, id: appInner.isIOS ? appInner.id : appInner.appId });
       });
 
-      console.log(appsToSend);
 
       this.dataService.sendMailApi((this.emailFormControl.value || ""), appsToSend).subscribe((resp: any) => {
-        console.log(resp);
       })
     } else {
       // Show Error
       const dialogRef = this.dialog.open(ErrorDialogComponent);
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log(`Dialog result: ${result}`);
       });
     }
   }
