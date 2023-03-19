@@ -2,13 +2,13 @@
 <mat-dialog-content class="mat-typography">
     <div class="content" id="review-content">
         <div class="app" *ngFor="let app of data.ios" [ngClass]="app.reviews.length <= 0 ? 'no-height': ''">
-            <div class="app-inner" *ngIf="app.reviews.length > 0">
+            <div class="app-inner" *ngIf="app.reviews.length > 0 && app.reviews.length < 6">
                 <div class="app-title"><span class="bold">{{app.name.appName}}</span>&nbsp;&nbsp;IOS</div>
                 <app-card-ios [data]="review" *ngFor="let review of app.reviews"></app-card-ios>
             </div>
         </div>
         <div class="app" *ngFor="let app of data.android" [ngClass]="app.reviews.length <= 0 ? 'no-height': ''">
-            <div class="app-inner" *ngIf="app.reviews.length > 0">
+            <div class="app-inner" *ngIf="app.reviews.length > 0 && app.reviews.length < 6">
                 <div class="app-title"><span class="bold">{{app.name.appName}}</span>&nbsp;&nbsp;Android</div>
                 <app-card-android [data]="review" *ngFor="let review of app.reviews"></app-card-android>
             </div>
