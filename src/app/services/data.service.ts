@@ -23,6 +23,7 @@ export class DataService {
   public newReviewCount: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   private newIOSReviews: any[] = [];
   private newAndroidReviews: any[] = [];
+  public isSnackbarOpen: boolean = false;
 
   constructor(private http: HttpClient, private android: AndroidService, private ios: IosService, public dialog: MatDialog, private snackBar: MatSnackBar) {
     let x = 0;
@@ -169,15 +170,20 @@ export class DataService {
   }
 
   openNewReviewDialog() {
-    // this.snackBar.open('New Reviews found !', 'Show', {
-    //   duration: 100000000,
-    //   horizontalPosition: 'end',
-    //   verticalPosition: 'bottom',
-    // }).onAction().subscribe(res => {
-    this.dialog.open(NewReviewsComponent, {
-      data: { ios: this.newIOSReviews, android: this.newAndroidReviews },
-    });
-    // });
+    this.isSnackbarOpen = true;
+    this.snackBar
+      .open('New Reviews found !', 'Show', {
+        duration: 5000,
+        horizontalPosition: 'end',
+        verticalPosition: 'bottom',
+      })
+      .onAction()
+      .subscribe((res) => {
+        this.isSnackbarOpen = false;
+        this.dialog.open(NewReviewsComponent, {
+          data: { ios: this.newIOSReviews, android: this.newAndroidReviews },
+        });
+      });
   }
 
   sendEmail(message: string, email: string) {

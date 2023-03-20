@@ -37,11 +37,13 @@ export class ReviewsPageComponent implements OnInit {
         this.versions = [];
         this.years = [];
         this.backup = [];
-        this.snackBar.open('Reviews loading ...', 'Close', {
-          duration: 3000,
-          horizontalPosition: 'end',
-          verticalPosition: 'bottom',
-        });
+        if (!this.data.isSnackbarOpen) {
+          this.snackBar.open('Reviews loading ...', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'end',
+            verticalPosition: 'bottom',
+          });
+        }
         this.app = app;
         this.androidReviews = [];
         this.iosReviews = [];
@@ -178,11 +180,13 @@ export class ReviewsPageComponent implements OnInit {
 
   stopLoading() {
     this.isLoading = false;
-    this.snackBar.open('Reviews loaded', 'Close', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: 'bottom',
-    });
+    if (!this.data.isSnackbarOpen) {
+      this.snackBar.open('Reviews loaded', 'Close', {
+        duration: 3000,
+        horizontalPosition: 'end',
+        verticalPosition: 'bottom',
+      });
+    }
   }
 
   versionFilter(version: any) {
@@ -254,11 +258,13 @@ export class ReviewsPageComponent implements OnInit {
   }
 
   sortSnackbar(message: string) {
-    this.snackBar.open(message, 'Close', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: 'bottom',
-    });
+    if (!this.data.isSnackbarOpen) {
+      this.snackBar.open(message, 'Close', {
+        duration: 3000,
+        horizontalPosition: 'end',
+        verticalPosition: 'bottom',
+      });
+    }
   }
 
   ratingFilter(ratingArray: any) {
