@@ -170,20 +170,20 @@ export class DataService {
   }
 
   openNewReviewDialog() {
-    this.isSnackbarOpen = true;
-    this.snackBar
-      .open('New Reviews found !', 'Show', {
-        duration: 5000,
-        horizontalPosition: 'end',
-        verticalPosition: 'bottom',
-      })
-      .onAction()
-      .subscribe((res) => {
-        this.isSnackbarOpen = false;
+    // this.isSnackbarOpen = true;
+    // this.snackBar
+    //   .open('New Reviews found !', 'Show', {
+    //     duration: 5000,
+    //     horizontalPosition: 'end',
+    //     verticalPosition: 'bottom',
+    //   })
+    //   .onAction()
+    //   .subscribe((res) => {
+    //     this.isSnackbarOpen = false;
         this.dialog.open(NewReviewsComponent, {
           data: { ios: this.newIOSReviews, android: this.newAndroidReviews },
         });
-      });
+      // });
   }
 
   sendEmail(message: string, email: string) {
