@@ -1,9 +1,20 @@
 .container {
     display: flex;
     align-items: center;
-    height: 15px;
-    width: 105px;
+    /* height: 15px; */
+    /* width: 105px; */
     justify-content: space-between;
+    flex-direction: column-reverse;
+}
+
+.d-flex {
+    display: flex;
+    gap: 35px;
+    align-items: center;
+}
+
+.margin-left {
+    margin-left: 80px;
 }
 
 .text {

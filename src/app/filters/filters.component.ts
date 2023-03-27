@@ -24,11 +24,11 @@ export class FiltersComponent implements OnInit {
   ];
 
   public ratings: any[] = [
-    { text: '1★', value: '1', isSelected: true },
-    { text: '2★', value: '2', isSelected: true },
-    { text: '3★', value: '3', isSelected: true },
-    { text: '4★', value: '4', isSelected: true },
-    { text: '5★', value: '5', isSelected: true },
+    { text: '1★', value: '1', isSelected: false },
+    { text: '2★', value: '2', isSelected: false },
+    { text: '3★', value: '3', isSelected: false },
+    { text: '4★', value: '4', isSelected: false },
+    { text: '5★', value: '5', isSelected: false },
   ];
 
   constructor() {}
@@ -46,7 +46,24 @@ export class FiltersComponent implements OnInit {
     }).isSelected = !this.ratings.find((rating) => {
       return rating.text == rate.text;
     }).isSelected;
-    this.ratingFilter.emit(this.ratings);
+
+    let areAnySelected = false;
+    this.ratings.forEach((rating: any) => {
+      if (rating.isSelected) {
+        areAnySelected = true;
+      }
+    });
+
+    let ratings = [];
+    if (!areAnySelected) {
+      ratings = JSON.parse(JSON.stringify(this.ratings));
+      ratings.forEach((rating: any) => {
+        rating.isSelected = true;
+      });
+      this.ratingFilter.emit(ratings);
+    } else {
+      this.ratingFilter.emit(this.ratings);
+    }
   }
 
   versionSelected(event: any) {

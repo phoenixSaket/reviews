@@ -54,9 +54,6 @@
         </mat-form-field>
     </div>
 
-</div>
-
-<div class="mobile-filters" *ngIf="showFilterButton" [ngStyle]="{'height' : showFilters ? 'unset' : '100%'}">
     <mat-form-field appearance="outline">
         <mat-label>Sort By</mat-label>
         <mat-select (selectionChange)="sortChange($event)">
@@ -65,6 +62,11 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
+
+</div>
+
+<div class="mobile-filters" *ngIf="showFilterButton" [ngStyle]="{'height' : showFilters ? 'unset' : '100%'}">
+    
     <button mat-flat-button color="primary" class="filter-button" (click)="toggleFilters()">
         <img class="filter-img" src="assets/filter.png" alt="filter">
         <div class="text">{{showFilters ? 'Hide' :'Show'}} Filters</div>

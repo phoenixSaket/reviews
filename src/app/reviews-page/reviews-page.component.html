@@ -4,11 +4,11 @@
 
 <div *ngIf="!isLoading && !!data.getCurrentApp().name">
     <div class="top">
-        <div class="inner">
+        <!-- <div class="inner">
             <div class="histogram">
                 <app-histogram [reviewsNo]="androidReviews.length + iosReviews.length"></app-histogram>
             </div>
-        </div>
+        </div> -->
         <div class="filter">
             <app-filters [versions]="versions" [years]="years" (version)="versionFilter($event)"
                 (year)="yearFilter($event)" (searchKeyword)="searchSort($event)" (ratingFilter)="ratingFilter($event)"

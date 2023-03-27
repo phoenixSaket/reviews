@@ -18,6 +18,23 @@
     color: white;
 }
 
+.mat-chip.mat-standard-chip > .rating-container> div {
+    color: var(--active);
+}
+
+.mat-chip.mat-standard-chip > .rating-container> div {
+    color: var(--active);
+}
+
+.mat-rating.mat-chip-selected > .rating-container> div {
+    color: white;
+}
+
+.mat-chip.mat-standard-chip {
+    background-color: transparent;
+    border: 2px solid var(--active);
+}
+
 .filter-div > mat-form-field {
     width: 200px;
 } 
@@ -29,6 +46,7 @@
 
 .mat-rating.mat-chip-selected {
     background-color: var(--active);
+    color: white;
 }
 
 .rating {
