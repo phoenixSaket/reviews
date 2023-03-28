@@ -31,6 +31,10 @@ export class FiltersComponent implements OnInit {
     { text: '5★', value: '5', isSelected: false },
   ];
 
+  public versionSorted: any = { sorted: false, type: 'A' };
+  public dateSorted: any = { sorted: false, type: 'A' };
+  public ratingSorted: any = { sorted: false, type: 'A' };
+
   constructor() {}
 
   ngOnInit(): void {}
@@ -80,5 +84,13 @@ export class FiltersComponent implements OnInit {
 
   sortChange(event: any) {
     this.sortBy.emit(event.value);
+  }
+
+  sortByEmit(str: string) {
+    this.sortBy.emit(str);
+  }
+
+  reset() {
+    
   }
 }
