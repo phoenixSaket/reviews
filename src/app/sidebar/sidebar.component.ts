@@ -20,6 +20,7 @@ export class SidebarComponent implements OnInit {
   public selectedWordCloud: boolean = false;
   public selectedSmartWordCloud: boolean = false;
   public isNotMobile: boolean = screen.availWidth > 500;
+  private backupSelectedApp: any = {};
 
   constructor(
     private data: DataService,
@@ -127,9 +128,11 @@ export class SidebarComponent implements OnInit {
 
   deleteApp() {
     this.shouldDelete = !this.shouldDelete;
+    this.backupSelectedApp = this.apps.find((app: any)=> {return app.isSelected;});
     this.apps.forEach((app) => {
       app.shouldDelete = false;
       app.shouldCompare = false;
+      app.isSelected = false;
     });
   }
 
@@ -141,7 +144,7 @@ export class SidebarComponent implements OnInit {
     let temp: any[] = [];
     let temp2: any[] = [];
     this.apps.forEach((app: any) => {
-      if (app.shouldDelete && app.isSelected) {
+      if (app.shouldDelete && app == this.backupSelectedApp) {
         this.router.navigate(['/']);
       }
 

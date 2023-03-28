@@ -354,28 +354,40 @@ export class ReviewsPageComponent implements OnInit {
   versionFilter(version: any) {
     if (this.app.isIOS) {
       if (version == -1) {
-        // this.iosReviews = this.backup;
+        this.sortingCriteria['version'] = null;
+        this.filterData(true);
       } else {
         this.sortingCriteria['version'] = version;
         this.filterData(true);
       }
     } else {
-      this.sortingCriteria['version'] = version;
-      this.filterData(false);
+      if (version == -1) {
+        this.sortingCriteria['version'] = null;
+        this.filterData(false);
+      } else {
+        this.sortingCriteria['version'] = version;
+        this.filterData(false);
+      }
     }
   }
 
   yearFilter(year: any) {
     if (this.app.isIOS) {
       if (year == -1) {
-        // this.iosReviews = this.backup;
+        this.sortingCriteria['year'] = null;
+        this.filterData(true);
       } else {
         this.sortingCriteria['year'] = year;
         this.filterData(true);
       }
     } else {
-      this.sortingCriteria['year'] = year;
-      this.filterData(false);
+      if (year == -1) {
+        this.sortingCriteria['year'] = null;
+        this.filterData(false);
+      } else {
+        this.sortingCriteria['year'] = year;
+        this.filterData(false);
+      }
     }
   }
 
@@ -607,9 +619,9 @@ export class ReviewsPageComponent implements OnInit {
           this.androidReviews = this.backup.filter((el: any) => {
             return (
               el.version == this.sortingCriteria.version &&
-              (el.text
+              el.text
                 .toLowerCase()
-                .includes(this.sortingCriteria.search.toLowerCase()))
+                .includes(this.sortingCriteria.search.toLowerCase())
             );
           });
           break;
@@ -617,11 +629,10 @@ export class ReviewsPageComponent implements OnInit {
           this.androidReviews = this.backup.filter((el: any) => {
             return (
               el.version == this.sortingCriteria.version &&
-              (el.text
+              el.text
                 .toLowerCase()
-                .includes(this.sortingCriteria.search.toLowerCase())) &&
-              new Date(el.date).getFullYear() ==
-                this.sortingCriteria.year
+                .includes(this.sortingCriteria.search.toLowerCase()) &&
+              new Date(el.date).getFullYear() == this.sortingCriteria.year
             );
           });
           break;

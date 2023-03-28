@@ -89,8 +89,4 @@ export class FiltersComponent implements OnInit {
   sortByEmit(str: string) {
     this.sortBy.emit(str);
   }
-
-  reset() {
-    
-  }
 }
