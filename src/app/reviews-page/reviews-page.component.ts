@@ -547,7 +547,7 @@ export class ReviewsPageComponent implements OnInit {
         this.iosReviews = temp;
       }
 
-      console.log('Filtered', this.iosReviews);
+      // console.log('Filtered', this.iosReviews);
     } else {
       this.androidReviews = this.backup;
       console.log(this.androidReviews);
