@@ -7,3 +7,9 @@
     overflow: auto;
     background-color: #f3f3f3;
 }
+
+@media (max-width: 500px) {
+    .container {
+        margin-top: 80px;
+    }
+}

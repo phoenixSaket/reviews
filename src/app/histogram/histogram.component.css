@@ -33,6 +33,16 @@
         line-height: 12px;
         font-size: 12px;
     } 
+
+    .d-flex {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .hide {
+        display: none;
+    }
 }
 
 .bold {
