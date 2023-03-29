@@ -481,6 +481,7 @@ export class ReviewsPageComponent implements OnInit {
               el.title.label.includes(this.sortingCriteria.search)
             );
           });
+          this.highlight('');
           break;
         case 'year-version':
           this.iosReviews = this.backup.filter((el: any) => {
@@ -502,6 +503,7 @@ export class ReviewsPageComponent implements OnInit {
                 el.title.label.includes(this.sortingCriteria.search))
             );
           });
+          this.highlight('');
           break;
         case 'version-search':
           this.iosReviews = this.backup.filter((el: any) => {
@@ -513,6 +515,7 @@ export class ReviewsPageComponent implements OnInit {
                 el.title.label.includes(this.sortingCriteria.search))
             );
           });
+          this.highlight('');
           break;
         case 'all':
           this.iosReviews = this.backup.filter((el: any) => {
@@ -526,6 +529,7 @@ export class ReviewsPageComponent implements OnInit {
                 this.sortingCriteria.year
             );
           });
+          this.highlight('');
           break;
         default:
           break;
@@ -596,6 +600,7 @@ export class ReviewsPageComponent implements OnInit {
               .toLowerCase()
               .includes(this.sortingCriteria.search.toLowerCase());
           });
+          this.highlight('');
           break;
         case 'year-version':
           this.androidReviews = this.backup.filter((el: any) => {
@@ -614,6 +619,7 @@ export class ReviewsPageComponent implements OnInit {
                 .includes(this.sortingCriteria.search.toLowerCase())
             );
           });
+          this.highlight('');
           break;
         case 'version-search':
           this.androidReviews = this.backup.filter((el: any) => {
@@ -624,6 +630,7 @@ export class ReviewsPageComponent implements OnInit {
                 .includes(this.sortingCriteria.search.toLowerCase())
             );
           });
+          this.highlight('');
           break;
         case 'all':
           this.androidReviews = this.backup.filter((el: any) => {
@@ -635,6 +642,7 @@ export class ReviewsPageComponent implements OnInit {
               new Date(el.date).getFullYear() == this.sortingCriteria.year
             );
           });
+          this.highlight('');
           break;
         default:
           break;
@@ -654,5 +662,34 @@ export class ReviewsPageComponent implements OnInit {
 
       console.log('Filtered', this.androidReviews);
     }
+  }
+
+  highlight(keyword: string) {
+    setTimeout(() => {
+      let titles = Array.from(<HTMLCollection>document.getElementsByClassName('title'));
+      let content = Array.from(<HTMLCollection>document.getElementsByClassName('content'));
+      const regex = new RegExp(this.sortingCriteria.search.toLowerCase(), 'gi');
+
+      content.forEach(cont=> {
+        let text = cont.innerHTML;
+        text = text.replace(/(<mark class="highlight">|<\/mark>)/gim, '');
+        let newText = text.replace(
+          regex,
+          '<mark class="highlight">$&</mark>'
+        );
+        cont.innerHTML = newText;
+      });
+
+      titles.forEach(title=> {
+        let text = title.innerHTML;
+        text = text.replace(/(<mark class="highlight">|<\/mark>)/gim, '');
+        let newText = text.replace(
+          regex,
+          '<mark class="highlight">$&</mark>'
+        );
+        title.innerHTML = newText;
+      })
+
+    }, 300);
   }
 }
