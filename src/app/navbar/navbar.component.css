@@ -63,3 +63,38 @@
     font-weight: 900;
     font-size: large;
 }
+
+.column-on-mobile {
+    display: flex;
+    flex-direction: row;
+    width: 75%;
+    justify-content: space-between;
+}
+
+@media (max-width: 500px) {
+    .brand {
+        display: none;
+    }
+
+    .column-on-mobile {
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .bold {
+        display: none;
+    }
+
+    .left {
+        align-items: unset;
+        gap: unset;
+    }
+
+    .navbar-container {
+        height: unset;
+        align-items: unset;
+    }
+}

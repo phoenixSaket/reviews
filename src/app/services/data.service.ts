@@ -23,6 +23,8 @@ export class DataService {
   public newReviewCount: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   private newIOSReviews: any[] = [];
   private newAndroidReviews: any[] = [];
+  public isSnackbarOpen: boolean = false;
+  public isLoading: boolean = false;
 
   constructor(private http: HttpClient, private android: AndroidService, private ios: IosService, public dialog: MatDialog, private snackBar: MatSnackBar) {
     let x = 0;
@@ -30,7 +32,7 @@ export class DataService {
       if (values == 1) {
         x += 1;
         if (x == this.getTotalApps()) {
-          let date = new Date().toString();
+          let date = new Date("03-01-2023").toString();
           localStorage.setItem("lastDate-reviews", date);
           let shouldShow: boolean = false;
           this.newAndroidReviews.forEach(el=> {
@@ -84,7 +86,7 @@ export class DataService {
 
   sendMailApi(email: string, apps: any[]) {
     let payload = { email: email, apps: JSON.stringify(apps) }
-    return this.http.post("https://reviews-be.cyclic.app/ios/save-apps", payload);
+    return this.http.post("https://reviews-be.cyclic.app/save-apps", payload);
     // return this.http.post("http://localhost:8000/save-apps", payload);
   }
 
@@ -134,7 +136,7 @@ export class DataService {
               }
             })
           } else {
-            let date = new Date().toString();
+            let date = new Date("03-01-2023").toString();
             localStorage.setItem("lastDate-reviews", date);
           }
         }
@@ -169,20 +171,25 @@ export class DataService {
   }
 
   openNewReviewDialog() {
-    // this.snackBar.open('New Reviews found !', 'Show', {
-    //   duration: 100000000,
-    //   horizontalPosition: 'end',
-    //   verticalPosition: 'bottom',
-    // }).onAction().subscribe(res => {
-    this.dialog.open(NewReviewsComponent, {
-      data: { ios: this.newIOSReviews, android: this.newAndroidReviews },
-    });
-    // });
+    // this.isSnackbarOpen = true;
+    // this.snackBar
+    //   .open('New Reviews found !', 'Show', {
+    //     duration: 5000,
+    //     horizontalPosition: 'end',
+    //     verticalPosition: 'bottom',
+    //   })
+    //   .onAction()
+    //   .subscribe((res) => {
+    //     this.isSnackbarOpen = false;
+        this.dialog.open(NewReviewsComponent, {
+          data: { ios: this.newIOSReviews, android: this.newAndroidReviews },
+        });
+      // });
   }
 
   sendEmail(message: string, email: string) {
     let payload = { email: email, message: message }
-    // return this.http.post("https://reviews-be.cyclic.app/ios/save-apps", payload);
-    return this.http.post("https://reviews-be.cyclic.app/ios/mail/send", payload);
+    // return this.http.post("https://reviews-be.cyclic.app/save-apps", payload);
+    return this.http.post("https://reviews-be.cyclic.app/mail/send", payload);
   }
 }

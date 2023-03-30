@@ -20,14 +20,15 @@ export class SidebarComponent implements OnInit {
   public selectedWordCloud: boolean = false;
   public selectedSmartWordCloud: boolean = false;
   public isNotMobile: boolean = screen.availWidth > 500;
+  private backupSelectedApp: any = {};
 
   constructor(
-    private data: DataService,
+    public data: DataService,
     private router: Router,
     private sidebar: SidebarService,
     private snackBar: MatSnackBar,
     public dialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.apps.forEach((app: any) => {
@@ -127,9 +128,11 @@ export class SidebarComponent implements OnInit {
 
   deleteApp() {
     this.shouldDelete = !this.shouldDelete;
+    this.backupSelectedApp = this.apps.find((app: any)=> {return app.isSelected;});
     this.apps.forEach((app) => {
       app.shouldDelete = false;
       app.shouldCompare = false;
+      app.isSelected = false;
     });
   }
 
@@ -141,7 +144,7 @@ export class SidebarComponent implements OnInit {
     let temp: any[] = [];
     let temp2: any[] = [];
     this.apps.forEach((app: any) => {
-      if (app.shouldDelete && app.isSelected) {
+      if (app.shouldDelete && app == this.backupSelectedApp) {
         this.router.navigate(['/']);
       }
 
@@ -184,15 +187,17 @@ export class SidebarComponent implements OnInit {
       }
     });
     if (tempCompareArray.length <= 1) {
-      this.snackBar.open(
-        'Atleast 2 apps are required for comparison.',
-        'close',
-        {
-          duration: 3000,
-          horizontalPosition: 'end',
-          verticalPosition: 'bottom',
-        }
-      );
+      if (!this.data.isSnackbarOpen) {
+        this.snackBar.open(
+          'Atleast 2 apps are required for comparison.',
+          'close',
+          {
+            duration: 3000,
+            horizontalPosition: 'end',
+            verticalPosition: 'bottom',
+          }
+        );
+      }
     } else {
       if (this.selectedWordCloud)
         this.selectedWordCloud = !this.selectedWordCloud;
@@ -235,15 +240,17 @@ export class SidebarComponent implements OnInit {
       if (app.shouldCompare) {
         app.shouldCompare = !app.shouldCompare;
       } else {
-        this.snackBar.open(
-          'Cannot compare more than ' + length + ' apps.',
-          'close',
-          {
-            duration: 3000,
-            horizontalPosition: 'end',
-            verticalPosition: 'bottom',
-          }
-        );
+        if (!this.data.isSnackbarOpen) {
+          this.snackBar.open(
+            'Cannot compare more than ' + length + ' apps.',
+            'close',
+            {
+              duration: 3000,
+              horizontalPosition: 'end',
+              verticalPosition: 'bottom',
+            }
+          );
+        }
       }
     } else {
       app.shouldCompare = !app.shouldCompare;
@@ -253,8 +260,7 @@ export class SidebarComponent implements OnInit {
     });
     if (this.selectedAddApp) this.selectedAddApp = !this.selectedAddApp;
     if (this.selectedDashboard)
-      this
-        .selectedDashboard = !this.selectedDashboard;
+      this.selectedDashboard = !this.selectedDashboard;
   }
 
   openEmailDialog() {

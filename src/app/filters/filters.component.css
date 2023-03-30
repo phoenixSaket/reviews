@@ -1,6 +1,6 @@
 .filter-container {
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
@@ -18,6 +18,23 @@
     color: white;
 }
 
+.mat-chip.mat-standard-chip > .rating-container> div {
+    color: var(--active);
+}
+
+.mat-chip.mat-standard-chip > .rating-container> div {
+    color: var(--active);
+}
+
+.mat-rating.mat-chip-selected > .rating-container> div {
+    color: white;
+}
+
+.mat-chip.mat-standard-chip {
+    background-color: transparent;
+    border: 2px solid var(--active);
+}
+
 .filter-div > mat-form-field {
     width: 200px;
 } 
@@ -29,6 +46,7 @@
 
 .mat-rating.mat-chip-selected {
     background-color: var(--active);
+    color: white;
 }
 
 .rating {
@@ -100,4 +118,66 @@
 
 .text {
     color: white;
+}
+
+/* Sorting */
+
+
+.sorting-container {
+    display: flex;
+    align-items: center;
+    background-color: var(--active);
+    border-radius: 5px;
+    padding: 7px 10px;
+    color: white;
+    /* font-size: 16px;
+    position: sticky;
+    top: 53.45px; */
+    margin: 0 10px;
+}
+
+.left {
+    width: 20%;
+}
+
+.center {
+    width: 65%;
+}
+
+.right {
+    width: 15%;
+}
+
+.sort-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+@media (max-width: 500px) {
+    .sorting-container {
+        display: none;
+    }
+}
+
+.compare {
+    color: var(--active);
+    justify-content: space-between;
+}
+
+.link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 2px solid var(--active);
+    background-color: transparent;
+    font-weight: 700;
+    outline: none;
 }

@@ -22,26 +22,30 @@ export class ReviewsPageComponent implements OnInit {
   public versionSorted: any = { sorted: false, type: 'A' };
   public dateSorted: any = { sorted: false, type: 'A' };
   public ratingSorted: any = { sorted: false, type: 'A' };
+  private sortingCriteria: any = {};
 
   constructor(
     public data: DataService,
     private android: AndroidService,
     private ios: IosService,
     private snackBar: MatSnackBar
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.data.appLoader.subscribe((app: any) => {
       if (!!app) {
         this.isLoading = true;
+        this.data.isLoading = true;
         this.versions = [];
         this.years = [];
         this.backup = [];
-        this.snackBar.open('Reviews loading ...', 'Close', {
-          duration: 3000,
-          horizontalPosition: 'end',
-          verticalPosition: 'bottom',
-        });
+        if (!this.data.isSnackbarOpen) {
+          this.snackBar.open('Reviews loading ...', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'end',
+            verticalPosition: 'bottom',
+          });
+        }
         this.app = app;
         this.androidReviews = [];
         this.iosReviews = [];
@@ -57,21 +61,8 @@ export class ReviewsPageComponent implements OnInit {
   }
 
   getAndroidReviews(app: any) {
-    this.android.getAppReviews(app.appId, true).subscribe((response: any) => {
-      this.androidReviews = JSON.parse(response.result).data;
-      this.androidReviews.forEach((review: any) => {
-        if (!this.versions.includes(review.version)) {
-          this.versions.push(review.version);
-        }
-        if (!this.years.includes(new Date(review.date).getFullYear())) {
-          this.years.push(new Date(review.date).getFullYear());
-        }
-      })
-      this.backup = JSON.parse(JSON.stringify(this.androidReviews));
-      this.doSentimentAnalysis();
-      this.stopLoading();
-    }, error => {
-      this.android.getAppReviews(app.appId).subscribe((response: any) => {
+    this.android.getAppReviews(app.appId, true).subscribe(
+      (response: any) => {
         this.androidReviews = JSON.parse(response.result).data;
         this.androidReviews.forEach((review: any) => {
           if (!this.versions.includes(review.version)) {
@@ -85,8 +76,9 @@ export class ReviewsPageComponent implements OnInit {
         this.doSentimentAnalysis();
         this.stopLoading();
       },
-        (error) => {
-          this.android.getAppReviews(app.appId).subscribe((response: any) => {
+      (error) => {
+        this.android.getAppReviews(app.appId).subscribe(
+          (response: any) => {
             this.androidReviews = JSON.parse(response.result).data;
             this.androidReviews.forEach((review: any) => {
               if (!this.versions.includes(review.version)) {
@@ -99,46 +91,50 @@ export class ReviewsPageComponent implements OnInit {
             this.backup = JSON.parse(JSON.stringify(this.androidReviews));
             this.doSentimentAnalysis();
             this.stopLoading();
-          });
-        }
-      );
-    });
+          },
+          (error) => {
+            this.android.getAppReviews(app.appId).subscribe((response: any) => {
+              this.androidReviews = JSON.parse(response.result).data;
+              this.androidReviews.forEach((review: any) => {
+                if (!this.versions.includes(review.version)) {
+                  this.versions.push(review.version);
+                }
+                if (!this.years.includes(new Date(review.date).getFullYear())) {
+                  this.years.push(new Date(review.date).getFullYear());
+                }
+              });
+              this.backup = JSON.parse(JSON.stringify(this.androidReviews));
+              this.doSentimentAnalysis();
+              this.stopLoading();
+            });
+          }
+        );
+      } 
+    );
   }
 
   getIOSReviews(app: any, page: number = 1) {
-    this.ios.getAppReviews(app.id, 1, true).subscribe((response: any) => {
-      const max = this.getMaxPages(JSON.parse(response.result).feed.link);
-      for (let i = 1; i <= max; i++) {
-        this.storeIOSReviews(app.id, i, max);
-      }
-    }, error => {
-      this.ios.getAppReviews(app.id, 1).subscribe((response: any) => {
+    this.ios.getAppReviews(app.id, 1, true).subscribe(
+      (response: any) => {
         const max = this.getMaxPages(JSON.parse(response.result).feed.link);
         for (let i = 1; i <= max; i++) {
           this.storeIOSReviews(app.id, i, max);
         }
-      });
-    });
+      },
+      (error) => {
+        this.ios.getAppReviews(app.id, 1).subscribe((response: any) => {
+          const max = this.getMaxPages(JSON.parse(response.result).feed.link);
+          for (let i = 1; i <= max; i++) {
+            this.storeIOSReviews(app.id, i, max);
+          }
+        });
+      }
+    );
   }
 
   storeIOSReviews(appId: string, page: number, max: number) {
-    this.ios.getAppReviews(appId, page, true).subscribe((response: any) => {
-      JSON.parse(response.result).feed.entry.forEach((entry: any) => {
-        this.iosReviews.push(entry);
-        if (!this.versions.includes(entry["im:version"].label)) {
-          this.versions.push(entry["im:version"].label);
-        }
-        if (!this.years.includes(new Date(entry.updated.label).getFullYear())) {
-          this.years.push(new Date(entry.updated.label).getFullYear());
-        }
-      });
-      this.backup = JSON.parse(JSON.stringify(this.iosReviews));
-      if (page == max) {
-        this.stopLoading();
-        this.doSentimentAnalysis()
-      }
-    }, error => {
-      this.ios.getAppReviews(appId, page).subscribe((response: any) => {
+    this.ios.getAppReviews(appId, page, true).subscribe(
+      (response: any) => {
         JSON.parse(response.result).feed.entry.forEach((entry: any) => {
           this.iosReviews.push(entry);
           if (!this.versions.includes(entry['im:version'].label)) {
@@ -153,10 +149,30 @@ export class ReviewsPageComponent implements OnInit {
         this.backup = JSON.parse(JSON.stringify(this.iosReviews));
         if (page == max) {
           this.stopLoading();
-          this.doSentimentAnalysis()
+          this.doSentimentAnalysis();
         }
-      });
-    });
+      },
+      (error) => {
+        this.ios.getAppReviews(appId, page).subscribe((response: any) => {
+          JSON.parse(response.result).feed.entry.forEach((entry: any) => {
+            this.iosReviews.push(entry);
+            if (!this.versions.includes(entry['im:version'].label)) {
+              this.versions.push(entry['im:version'].label);
+            }
+            if (
+              !this.years.includes(new Date(entry.updated.label).getFullYear())
+            ) {
+              this.years.push(new Date(entry.updated.label).getFullYear());
+            }
+          });
+          this.backup = JSON.parse(JSON.stringify(this.iosReviews));
+          if (page == max) {
+            this.stopLoading();
+            this.doSentimentAnalysis();
+          }
+        });
+      }
+    );
   }
 
   getMaxPages(links: any[]) {
@@ -178,119 +194,26 @@ export class ReviewsPageComponent implements OnInit {
 
   stopLoading() {
     this.isLoading = false;
-    this.snackBar.open('Reviews loaded', 'Close', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: 'bottom',
-    });
-  }
+    this.data.isLoading = false;
 
-  versionFilter(version: any) {
-    if (this.app.isIOS) {
-      if (version == -1) {
-        this.iosReviews = this.backup;
-      } else {
-        this.iosReviews = this.backup.filter((app) => {
-          return app['im:version'].label == version;
-        });
-      }
-      this.length = this.iosReviews.length;
-    } else {
-      if (version == -1) {
-        this.androidReviews = this.backup;
-      } else {
-        this.androidReviews = this.backup.filter((app) => {
-          return app.version == version;
-        });
-      }
-      this.length = this.androidReviews.length;
-    }
-    this.sortSnackbar(this.length + ' matching Reviews.');
-  }
-
-  yearFilter(year: any) {
-    if (this.app.isIOS) {
-      if (year == -1) {
-        this.iosReviews = this.backup;
-      } else {
-        this.iosReviews = this.backup.filter((app) => {
-          return new Date(app.updated.label).getFullYear() == year;
-        });
-      }
-      this.length = this.iosReviews.length;
-    } else {
-      if (year == -1) {
-        this.iosReviews = this.backup;
-      } else {
-        this.androidReviews = this.backup.filter((app) => {
-          return new Date(app.date).getFullYear() == year;
-        });
-      }
-      this.length = this.androidReviews.length;
-    }
-    this.sortSnackbar(this.length + ' matching Reviews.');
-  }
-
-  searchSort(keyword: any) {
-    if (this.app.isIOS) {
-      this.iosReviews = this.backup.filter((app) => {
-        if (
-          app.content.label.includes(keyword) ||
-          app.title.label.includes(keyword)
-        ) {
-          return app;
-        }
+    if (!this.data.isSnackbarOpen) {
+      this.snackBar.open('Reviews loaded', 'Close', {
+        duration: 3000,
+        horizontalPosition: 'end',
+        verticalPosition: 'bottom',
       });
-      this.length = this.iosReviews.length;
-    } else {
-      this.androidReviews = this.backup.filter((app) => {
-        if (app.text.includes(keyword)) {
-          return app;
-        }
-      });
-      this.length = this.androidReviews.length;
+      this.initialSort();
     }
-    this.sortSnackbar(this.length + ' matching Reviews.');
   }
 
   sortSnackbar(message: string) {
-    this.snackBar.open(message, 'Close', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: 'bottom',
-    });
-  }
-
-  ratingFilter(ratingArray: any) {
-    let array: any[] = ratingArray;
-    let app = '';
-    let length: number = 0;
-    this.iosReviews = [];
-    this.androidReviews = [];
-
-    array.forEach((element: any) => {
-      if (element.isSelected) {
-        this.backup.forEach((el: any) => {
-          let rating = '';
-          if (!!el?.score) {
-            rating = el.score;
-            app = 'android';
-          } else if (!!el['im:rating']?.label) {
-            rating = el['im:rating'].label;
-            app = 'ios';
-          }
-          if (rating == element.text) {
-            if (app == 'ios') {
-              this.iosReviews.push(el);
-            } else {
-              this.androidReviews.push(el);
-            }
-          }
-        });
-      }
-    });
-    length = this.iosReviews.length + this.androidReviews.length;
-    this.sortSnackbar(length + ' matching reviews');
+    if (!this.data.isSnackbarOpen) {
+      this.snackBar.open(message, 'Close', {
+        duration: 3000,
+        horizontalPosition: 'end',
+        verticalPosition: 'bottom',
+      });
+    }
   }
 
   sortBy(text: string) {
@@ -341,8 +264,8 @@ export class ReviewsPageComponent implements OnInit {
                 ? -1
                 : 1
               : a['im:rating'].label > b['im:rating'].label
-                ? 1
-                : -1;
+              ? 1
+              : -1;
           });
         } else {
           this.androidReviews.sort((a: any, b: any) => {
@@ -351,8 +274,8 @@ export class ReviewsPageComponent implements OnInit {
                 ? -1
                 : 1
               : a.score > b.score
-                ? 1
-                : -1;
+              ? 1
+              : -1;
           });
         }
 
@@ -369,8 +292,8 @@ export class ReviewsPageComponent implements OnInit {
                 ? -1
                 : 1
               : new Date(a.updated.label) > new Date(b.updated.label)
-                ? 1
-                : -1;
+              ? 1
+              : -1;
           });
         } else {
           this.androidReviews.sort((a: any, b: any) => {
@@ -379,8 +302,8 @@ export class ReviewsPageComponent implements OnInit {
                 ? -1
                 : 1
               : new Date(a.date) > new Date(b.date)
-                ? 1
-                : -1;
+              ? 1
+              : -1;
           });
         }
 
@@ -399,6 +322,24 @@ export class ReviewsPageComponent implements OnInit {
     this.sortBy(event);
   }
 
+  initialSort() {
+    if (this.app.isIOS) {
+      this.iosReviews.sort((a: any, b: any) => {
+        return new Date(a.updated.label) > new Date(b.updated.label)
+            ? -1
+            : 1;
+      });
+    } else {
+      this.androidReviews.sort((a: any, b: any) => {
+        return new Date(a.date) > new Date(b.date)
+            ? -1
+            : 1;
+      });
+    }
+    this.dateSorted.sorted = true;
+    this.dateSorted.type = 'A';
+
+  }
 
   doSentimentAnalysis() {
     let total: string[] = [];
@@ -413,8 +354,8 @@ export class ReviewsPageComponent implements OnInit {
             if (review.content.label == sentiment.string) {
               review.sentiment = sentiment.sentiments;
             }
-          })
-        })
+          });
+        });
       });
     } else {
       this.androidReviews.forEach((review: any) => {
@@ -427,9 +368,351 @@ export class ReviewsPageComponent implements OnInit {
             if (review.text == sentiment.string) {
               review.sentiment = sentiment.sentiments;
             }
-          })
-        })
-      })
+          });
+        });
+      });
     }
+  }
+
+  versionFilter(version: any) {
+    if (this.app.isIOS) {
+      if (version == -1) {
+        this.sortingCriteria['version'] = null;
+        this.filterData(true);
+      } else {
+        this.sortingCriteria['version'] = version;
+        this.filterData(true);
+      }
+    } else {
+      if (version == -1) {
+        this.sortingCriteria['version'] = null;
+        this.filterData(false);
+      } else {
+        this.sortingCriteria['version'] = version;
+        this.filterData(false);
+      }
+    }
+  }
+
+  yearFilter(year: any) {
+    if (this.app.isIOS) {
+      if (year == -1) {
+        this.sortingCriteria['year'] = null;
+        this.filterData(true);
+      } else {
+        this.sortingCriteria['year'] = year;
+        this.filterData(true);
+      }
+    } else {
+      if (year == -1) {
+        this.sortingCriteria['year'] = null;
+        this.filterData(false);
+      } else {
+        this.sortingCriteria['year'] = year;
+        this.filterData(false);
+      }
+    }
+  }
+
+  searchSort(keyword: any) {
+    if (this.app.isIOS) {
+      this.sortingCriteria['search'] = keyword;
+      this.filterData(true);
+    } else {
+      this.sortingCriteria['search'] = keyword;
+      this.filterData(false);
+    }
+  }
+
+  ratingFilter(ratingArray: any) {
+    let app = '';
+
+    this.sortingCriteria['rating'] = ratingArray;
+
+    this.backup.forEach((el: any) => {
+      if (!!el?.score) {
+        app = 'android';
+      } else if (!!el['im:rating']?.label) {
+        app = 'ios';
+      }
+    });
+
+    if (app == 'android') {
+      this.filterData(false);
+    } else {
+      this.filterData(true);
+    }
+    // length = this.iosReviews.length + this.androidReviews.length;
+    // this.sortSnackbar(length + ' matching reviews');
+  }
+
+  filterData(isIOS: boolean) {
+    if (isIOS) {
+      this.iosReviews = this.backup;
+      let rating = !!this.sortingCriteria.rating;
+      let year = !!this.sortingCriteria.year;
+      let version = !!this.sortingCriteria.version;
+      let search = !!this.sortingCriteria.search;
+
+      let switcher = '';
+
+      let filterRating: any[] = [];
+      if (!!rating) {
+        this.sortingCriteria.rating.forEach((rating: any) => {
+          if (rating.isSelected) {
+            filterRating.push(rating.value);
+          }
+        });
+      }
+
+      if (!version && !search && year) {
+        switcher = 'year';
+      } else if (version && !search && !year) {
+        switcher = 'version';
+      } else if (!version && search && !year) {
+        switcher = 'search';
+      } else if (version && !search && year) {
+        switcher = 'year-version';
+      } else if (!version && search && year) {
+        switcher = 'year-search';
+      } else if (version && search && !year) {
+        switcher = 'version-search';
+      } else if (version && search && year) {
+        switcher = 'all';
+      }
+
+      switch (switcher) {
+        case 'year':
+          this.iosReviews = this.backup.filter((el: any) => {
+            return (
+              new Date(el.updated.label).getFullYear() ==
+              this.sortingCriteria.year
+            );
+          });
+          break;
+        case 'version':
+          this.iosReviews = this.backup.filter((el: any) => {
+            return el['im:version'].label == this.sortingCriteria.version;
+          });
+          break;
+        case 'search':
+          this.iosReviews = this.backup.filter((el: any) => {
+            return (
+              el.content.label
+                .toLowerCase()
+                .includes(this.sortingCriteria.search.toLowerCase()) ||
+              el.title.label.toLowerCase().includes(this.sortingCriteria.search.toLowerCase())
+            );
+          });
+          this.highlight('');
+          break;
+        case 'year-version':
+          this.iosReviews = this.backup.filter((el: any) => {
+            return (
+              new Date(el.updated.label).getFullYear() ==
+                this.sortingCriteria.year &&
+              el['im:version'].label == this.sortingCriteria.version
+            );
+          });
+          break;
+        case 'year-search':
+          this.iosReviews = this.backup.filter((el: any) => {
+            return (
+              new Date(el.updated.label).getFullYear() ==
+                this.sortingCriteria.year &&
+              (el.content.label
+                .toLowerCase()
+                .includes(this.sortingCriteria.search.toLowerCase()) ||
+                el.title.label.toLowerCase().includes(this.sortingCriteria.search.toLowerCase()))
+            );
+          });
+          this.highlight('');
+          break;
+        case 'version-search':
+          this.iosReviews = this.backup.filter((el: any) => {
+            return (
+              el['im:version'].label == this.sortingCriteria.version &&
+              (el.content.label
+                .toLowerCase()
+                .includes(this.sortingCriteria.search.toLowerCase()) ||
+                el.title.label.toLowerCase().includes(this.sortingCriteria.search.toLowerCase()))
+            );
+          });
+          this.highlight('');
+          break;
+        case 'all':
+          this.iosReviews = this.backup.filter((el: any) => {
+            return (
+              el['im:version'].label == this.sortingCriteria.version &&
+              (el.content.label
+                .toLowerCase()
+                .includes(this.sortingCriteria.search.toLowerCase()) ||
+                el.title.label.toLowerCase().includes(this.sortingCriteria.search.toLowerCase())) &&
+              new Date(el.updated.label).getFullYear() ==
+                this.sortingCriteria.year
+            );
+          });
+          this.highlight('');
+          break;
+        default:
+          break;
+      }
+
+      if (filterRating.length > 0) {
+        let temp: any[] = [];
+        this.iosReviews.forEach((el: any) => {
+          filterRating.forEach((rating: any) => {
+            if (el['im:rating'].label == rating) {
+              temp.push(el);
+            }
+          });
+        });
+        this.iosReviews = temp;
+      }
+
+      // console.log('Filtered', this.iosReviews);
+    } else {
+      this.androidReviews = this.backup;
+      console.log(this.androidReviews);
+      let rating = !!this.sortingCriteria.rating;
+      let year = !!this.sortingCriteria.year;
+      let version = !!this.sortingCriteria.version;
+      let search = !!this.sortingCriteria.search;
+
+      let switcher = '';
+
+      let filterRating: any[] = [];
+      if (!!rating) {
+        this.sortingCriteria.rating.forEach((rating: any) => {
+          if (rating.isSelected) {
+            filterRating.push(rating.value);
+          }
+        });
+      }
+
+      if (!version && !search && year) {
+        switcher = 'year';
+      } else if (version && !search && !year) {
+        switcher = 'version';
+      } else if (!version && search && !year) {
+        switcher = 'search';
+      } else if (version && !search && year) {
+        switcher = 'year-version';
+      } else if (!version && search && year) {
+        switcher = 'year-search';
+      } else if (version && search && !year) {
+        switcher = 'version-search';
+      } else if (version && search && year) {
+        switcher = 'all';
+      }
+
+      switch (switcher) {
+        case 'year':
+          this.androidReviews = this.backup.filter((el: any) => {
+            return new Date(el.date).getFullYear() == this.sortingCriteria.year;
+          });
+          break;
+        case 'version':
+          this.androidReviews = this.backup.filter((el: any) => {
+            return el.version == this.sortingCriteria.version;
+          });
+          break;
+        case 'search':
+          this.androidReviews = this.backup.filter((el: any) => {
+            return el.text
+              .toLowerCase()
+              .includes(this.sortingCriteria.search.toLowerCase());
+          });
+          this.highlight('');
+          break;
+        case 'year-version':
+          this.androidReviews = this.backup.filter((el: any) => {
+            return (
+              new Date(el.date).getFullYear() == this.sortingCriteria.year &&
+              el.version == this.sortingCriteria.version
+            );
+          });
+          break;
+        case 'year-search':
+          this.androidReviews = this.backup.filter((el: any) => {
+            return (
+              new Date(el.date).getFullYear() == this.sortingCriteria.year &&
+              el.text
+                .toLowerCase()
+                .includes(this.sortingCriteria.search.toLowerCase())
+            );
+          });
+          this.highlight('');
+          break;
+        case 'version-search':
+          this.androidReviews = this.backup.filter((el: any) => {
+            return (
+              el.version == this.sortingCriteria.version &&
+              el.text
+                .toLowerCase()
+                .includes(this.sortingCriteria.search.toLowerCase())
+            );
+          });
+          this.highlight('');
+          break;
+        case 'all':
+          this.androidReviews = this.backup.filter((el: any) => {
+            return (
+              el.version == this.sortingCriteria.version &&
+              el.text
+                .toLowerCase()
+                .includes(this.sortingCriteria.search.toLowerCase()) &&
+              new Date(el.date).getFullYear() == this.sortingCriteria.year
+            );
+          });
+          this.highlight('');
+          break;
+        default:
+          break;
+      }
+
+      if (filterRating.length > 0) {
+        let temp: any[] = [];
+        this.androidReviews.forEach((el: any) => {
+          filterRating.forEach((rating: any) => {
+            if (el.score == rating) {
+              temp.push(el);
+            }
+          });
+        });
+        this.androidReviews = temp;
+      }
+
+      console.log('Filtered', this.androidReviews);
+    }
+  }
+
+  highlight(keyword: string) {
+    setTimeout(() => {
+      let titles = Array.from(<HTMLCollection>document.getElementsByClassName('title'));
+      let content = Array.from(<HTMLCollection>document.getElementsByClassName('content'));
+      const regex = new RegExp(this.sortingCriteria.search.toLowerCase(), 'gi');
+
+      content.forEach(cont=> {
+        let text = cont.innerHTML;
+        text = text.replace(/(<mark class="highlight">|<\/mark>)/gim, '');
+        let newText = text.replace(
+          regex,
+          '<mark class="highlight">$&</mark>'
+        );
+        cont.innerHTML = newText;
+      });
+
+      titles.forEach(title=> {
+        let text = title.innerHTML;
+        text = text.replace(/(<mark class="highlight">|<\/mark>)/gim, '');
+        let newText = text.replace(
+          regex,
+          '<mark class="highlight">$&</mark>'
+        );
+        title.innerHTML = newText;
+      })
+
+    }, 300);
   }
 }

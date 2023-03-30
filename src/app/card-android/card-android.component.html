@@ -13,10 +13,10 @@
     </div>
     <div class="center">
         <div class="stars-container">
-            <div class="rate" *ngFor="let star of rating">
+            <span class="rate" *ngFor="let star of rating">
                 <span *ngIf="!star.shouldHighlight">&#9734;</span>
                 <span *ngIf="star.shouldHighlight">&#9733;</span>
-            </div>
+            </span>
         </div>
         <div class="title">{{data.title}}</div>
         <div class="content">{{data.text}}</div>
