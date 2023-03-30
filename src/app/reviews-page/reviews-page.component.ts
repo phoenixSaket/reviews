@@ -478,7 +478,7 @@ export class ReviewsPageComponent implements OnInit {
               el.content.label
                 .toLowerCase()
                 .includes(this.sortingCriteria.search.toLowerCase()) ||
-              el.title.label.includes(this.sortingCriteria.search)
+              el.title.label.toLowerCase().includes(this.sortingCriteria.search.toLowerCase())
             );
           });
           this.highlight('');
@@ -500,7 +500,7 @@ export class ReviewsPageComponent implements OnInit {
               (el.content.label
                 .toLowerCase()
                 .includes(this.sortingCriteria.search.toLowerCase()) ||
-                el.title.label.includes(this.sortingCriteria.search))
+                el.title.label.toLowerCase().includes(this.sortingCriteria.search.toLowerCase()))
             );
           });
           this.highlight('');
@@ -512,7 +512,7 @@ export class ReviewsPageComponent implements OnInit {
               (el.content.label
                 .toLowerCase()
                 .includes(this.sortingCriteria.search.toLowerCase()) ||
-                el.title.label.includes(this.sortingCriteria.search))
+                el.title.label.toLowerCase().includes(this.sortingCriteria.search.toLowerCase()))
             );
           });
           this.highlight('');
@@ -524,7 +524,7 @@ export class ReviewsPageComponent implements OnInit {
               (el.content.label
                 .toLowerCase()
                 .includes(this.sortingCriteria.search.toLowerCase()) ||
-                el.title.label.includes(this.sortingCriteria.search)) &&
+                el.title.label.toLowerCase().includes(this.sortingCriteria.search.toLowerCase())) &&
               new Date(el.updated.label).getFullYear() ==
                 this.sortingCriteria.year
             );
