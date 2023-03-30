@@ -1,8 +1,9 @@
-<div class="side-bar-container open" id="sidebar">
+<div class="side-bar-container open" id="sidebar" [ngClass]="data.isLoading ? 'no-select' : 'selectable'">
     <!-- <div class="link shadows" routerLink="/">
         <img class="img" src="assets/home.jpg" alt="pie">
         Home
     </div> -->
+    <div class="backdrop" *ngIf="data.isLoading"></div>
     <div class="link shadows" routerLink="/dashboard" [ngClass]="selectedDashboard ? 'active': ''"
         (click)="closeSideBar('dashboard')">
         <mat-icon>dashboard</mat-icon>

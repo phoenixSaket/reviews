@@ -8,7 +8,10 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class FiltersComponent implements OnInit {
   @Input() versions: any[] = [];
   @Input() years: any[] = [];
-
+  @Input() versionSorted: any = { sorted: false, type: 'A' };
+  @Input() dateSorted: any = { sorted: false, type: 'A' };
+  @Input() ratingSorted: any = { sorted: false, type: 'A' };
+  
   @Output() searchKeyword: EventEmitter<string> = new EventEmitter<string>();
   @Output() version: EventEmitter<string> = new EventEmitter<string>();
   @Output() year: EventEmitter<string> = new EventEmitter<string>();
@@ -31,9 +34,6 @@ export class FiltersComponent implements OnInit {
     { text: '5★', value: '5', isSelected: false },
   ];
 
-  public versionSorted: any = { sorted: false, type: 'A' };
-  public dateSorted: any = { sorted: false, type: 'A' };
-  public ratingSorted: any = { sorted: false, type: 'A' };
 
   constructor() {}
 

@@ -35,6 +35,7 @@ export class ReviewsPageComponent implements OnInit {
     this.data.appLoader.subscribe((app: any) => {
       if (!!app) {
         this.isLoading = true;
+        this.data.isLoading = true;
         this.versions = [];
         this.years = [];
         this.backup = [];
@@ -108,7 +109,7 @@ export class ReviewsPageComponent implements OnInit {
             });
           }
         );
-      }
+      } 
     );
   }
 
@@ -193,12 +194,15 @@ export class ReviewsPageComponent implements OnInit {
 
   stopLoading() {
     this.isLoading = false;
+    this.data.isLoading = false;
+
     if (!this.data.isSnackbarOpen) {
       this.snackBar.open('Reviews loaded', 'Close', {
         duration: 3000,
         horizontalPosition: 'end',
         verticalPosition: 'bottom',
       });
+      this.initialSort();
     }
   }
 
@@ -316,6 +320,25 @@ export class ReviewsPageComponent implements OnInit {
 
   sortByMobile(event: any) {
     this.sortBy(event);
+  }
+
+  initialSort() {
+    if (this.app.isIOS) {
+      this.iosReviews.sort((a: any, b: any) => {
+        return new Date(a.updated.label) > new Date(b.updated.label)
+            ? -1
+            : 1;
+      });
+    } else {
+      this.androidReviews.sort((a: any, b: any) => {
+        return new Date(a.date) > new Date(b.date)
+            ? -1
+            : 1;
+      });
+    }
+    this.dateSorted.sorted = true;
+    this.dateSorted.type = 'A';
+
   }
 
   doSentimentAnalysis() {

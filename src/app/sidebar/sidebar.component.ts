@@ -23,7 +23,7 @@ export class SidebarComponent implements OnInit {
   private backupSelectedApp: any = {};
 
   constructor(
-    private data: DataService,
+    public data: DataService,
     private router: Router,
     private sidebar: SidebarService,
     private snackBar: MatSnackBar,
