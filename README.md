@@ -1,28 +1,28 @@
-# Reviews
+#Reviews Dashboard
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.6.
+The Reviews Dashboard is a part of a full-stack project that provides a comprehensive set of features to help manage app reviews. The main backend APIs connect with Apple App Store Connect to retrieve data for iOS apps while for Android, data is scrapped from Google Play Store. Other functionalities are handled in-house.
 
-## Development server
+The following are the features offered:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+1. Dashboard: The Reviews Dashboard provides a visual representation of the ratings of the iOS/Android apps added to the system.
 
-## Code scaffolding
+2. Add App Feature: The tool allows users to add any iOS/Android app available on Google Play/Apple App Store.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+3. Word Cloud Feature: The Reviews Dashboard generates word clouds for the app added/selected based on the reviews from Google Play/Apple App Store.
 
-## Build
+4. Reviews: The Reviews Dashboard allows users to see the number of ratings from 1 star to 5 star, and filter them based on rating, year, version, and search keywords. Users can also sort reviews based on version, ratings, and date.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+5. Comparison: Users can compare up to three apps on the website and two apps on mobile view.
 
-## Running unit tests
+6. Delete: Users can delete the apps they have added.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+7. Pop-up Feature: The Reviews Dashboard provides a pop-up feature that shows the new reviews added between the last two times the website was loaded.
 
-## Running end-to-end tests
+Overall, the Reviews Dashboard provides a comprehensive tool for managing app reviews that can help developers and businesses to gain insights and make data-driven decisions based on user feedback.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+#About
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-"# reviews" 
+The Reviews Dashboard is a comprehensive app analytics tool that provides businesses and developers with insights into user feedback to make data-driven decisions.
+With the Reviews Dashboard, users can manage app reviews for both iOS and Android apps. The Dashboard provides a visual representation of the ratings of the iOS/Android apps added to the system. Users can see the number of ratings from 1 star to 5 stars and filter and sort them based on multiple factors.
+The Reviews Dashboard also includes a range of additional features that make it a valuable tool for businesses and developers. These features include the ability to add any iOS/Android app available on Google Play/Apple App Store, generate word clouds based on reviews and sentiments from Google Play/Apple App Store, compare, delete added apps, and receive pop-up notification for new reviews added since the last time the website was loaded.
+Overall, the Reviews Dashboard is a powerful tool that can provide businesses and developers with valuable insights into user feedback. Its range of features, ease of use, and ability to work with both iOS and Android apps hepls in making it easier for delivering the best user experience.
