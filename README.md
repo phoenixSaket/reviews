@@ -23,6 +23,9 @@ Overall, the Reviews Dashboard provides a comprehensive tool for managing app re
 #About
 
 The Reviews Dashboard is a comprehensive app analytics tool that provides businesses and developers with insights into user feedback to make data-driven decisions.
+
 With the Reviews Dashboard, users can manage app reviews for both iOS and Android apps. The Dashboard provides a visual representation of the ratings of the iOS/Android apps added to the system. Users can see the number of ratings from 1 star to 5 stars and filter and sort them based on multiple factors.
+
 The Reviews Dashboard also includes a range of additional features that make it a valuable tool for businesses and developers. These features include the ability to add any iOS/Android app available on Google Play/Apple App Store, generate word clouds based on reviews and sentiments from Google Play/Apple App Store, compare, delete added apps, and receive pop-up notification for new reviews added since the last time the website was loaded.
+
 Overall, the Reviews Dashboard is a powerful tool that can provide businesses and developers with valuable insights into user feedback. Its range of features, ease of use, and ability to work with both iOS and Android apps hepls in making it easier for delivering the best user experience.
