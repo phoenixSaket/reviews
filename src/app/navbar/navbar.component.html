@@ -7,7 +7,7 @@
         <div class="brand">Review Dashboard</div>
     </div>
     <div class="column-on-mobile">
-        <div class="histogram" *ngIf="data.getCurrentApp()?.name?.length > 0">
+        <div class="histogram" *ngIf="data.getCurrentPage() != '-1' && data.getCurrentApp()?.name?.length > 0">
             <app-histogram [reviewsNo]="androidReviews.length + iosReviews.length"></app-histogram>
         </div>
         <div class="app" *ngIf="data.getCurrentPage() != '-1'">

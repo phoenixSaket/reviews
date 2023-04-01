@@ -5,7 +5,7 @@
     padding: 10px;
     transition-duration: 300ms;
     overflow: auto;
-    background-color: #f3f3f3;
+    background-color: var(--accent);
 }
 
 @media (max-width: 500px) {

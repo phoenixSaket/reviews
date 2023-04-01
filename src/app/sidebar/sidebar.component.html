@@ -32,18 +32,6 @@
             </div>
         </div>
     </div>
-    <!-- <div class="link shadows"
-        (click)="openEmailDialog()">
-        <mat-icon>mail</mat-icon>
-        <div class="app">
-            <div class="name">
-                Get Emails
-            </div>
-            <div class="device">
-                beta
-            </div>
-        </div>
-    </div> -->
     <!-- <hr> -->
     <div class="apps-container">
         <div class="apps shadows" *ngFor="let app of apps" [ngClass]="app.isSelected ? 'active' : ''"
@@ -104,5 +92,10 @@
             <div>Delete</div>
             <mat-icon>delete_outline</mat-icon>
         </div>
+    </div>
+    <div class="link shadows" routerLink="/docs" [ngClass]="selectedDocumentation ? 'active': ''"
+    (click)="closeSideBar('docs')">
+        <mat-icon>description</mat-icon>
+        About   
     </div>
 </div>

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AddReviewComponent } from './add-review/add-review.component';
 import { CompareAppsComponent } from './compare-apps/compare-apps.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { DocumentationComponent } from './documentation/documentation.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { ReviewsPageComponent } from './reviews-page/reviews-page.component';
 import { SentimentCloudComponent } from './sentiment-cloud/sentiment-cloud.component';
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: "add-app", component: AddReviewComponent},
   {path: "word-cloud", component: WordcloudComponent},
   {path: "sentiment-cloud", component: SentimentCloudComponent},
+  {path: "docs", component: DocumentationComponent},
 ];
 
 @NgModule({
