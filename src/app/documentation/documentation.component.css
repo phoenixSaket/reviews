@@ -134,6 +134,61 @@ path {
     margin: 10px;
 }
 
+.mobile-container {
+    width: 300px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    position: relative;
+    height: 500px;
+}
+
+.mobile-inner {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.mobile {
+    position: absolute;
+    height: 500px;
+    width: auto;  
+    left: 0px;
+    z-index: 2;
+}
+
+.mobile-content {
+    /* width: 350px; */
+    font-size: 20px;
+    text-align: center;
+    justify-content: center;
+}
+
+.screenshot {
+    z-index: 1;
+    height: 480px;
+    top: 10px;
+    border-radius: 15px;
+    outline: 2px solid black;
+    --multi : 240;
+}
+
+.ss-1 {left: 10px;}
+
+.button {
+    padding: 10px;
+    border: none;
+    outline: none;
+    background-color: var(--active);
+    color: white;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+
 @media (max-width: 500px) {
 
     .left,

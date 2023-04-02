@@ -9,7 +9,8 @@
             </div>
         </div>
         <div class="right">
-            <img src="https://raw.githubusercontent.com/phoenixSaket/reviews/deploy/src/assets/reviews.png" alt="welcome" class="image">
+            <img src="https://raw.githubusercontent.com/phoenixSaket/reviews/main/docs/assets/reviews.png" alt="welcome"
+                class="image">
         </div>
     </div>
     <div class="center">
@@ -54,6 +55,37 @@
                     {{feature.text}}
                 </div>
                 <ng-container *ngTemplateOutlet="wave"></ng-container>
+            </div>
+        </div>
+    </div>
+
+    <div class="center">
+        <div class="bottom-title-doc">
+            PWA App
+        </div>
+        <div class="mobile-inner">
+            <div class="mobile-container">
+                <img class="mobile" src="/assets/mobile.png" alt="mobile">
+                <div class="image-container">
+                    <img class="screenshot mobile ss-1" [src]="images[selectedImgIndex]" alt="mobile">
+                </div>
+            </div>
+            <div class="bottom-subtitle-doc mobile-content">
+                <div class="section">
+                    Download the Reviews Dashboard PWA app
+                </div>
+                <div class="section">
+                    No updates required
+                </div>
+                <div class="section">
+                    Stay up to date with the latest and greatest always
+                </div>
+                <div class="section">
+                    <button class="button" (click)="download('/assets/apps/reviews-dashboard.apk')">Download Android App</button>
+                </div>
+                <div class="section">
+                    <button class="button" (click)="download('/assets/apps/ios_source.tar')">Download iOS App Source Code</button>
+                </div>
             </div>
         </div>
     </div>
