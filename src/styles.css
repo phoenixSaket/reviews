@@ -28,8 +28,13 @@
 .mat-simple-snackbar {
     font-size: 16px;
 }
-.body {
-    background-color: #ededed;
+
+html {
+    background-color: var(--accent);
+}
+
+body {
+    background-color: var(--accent);
     overflow: hidden;
 }
 
@@ -42,6 +47,7 @@
 ::-webkit-scrollbar {
     width: 5px;
     border-radius: 5px;
+    height: 2px;
 }
 
 /* Track */

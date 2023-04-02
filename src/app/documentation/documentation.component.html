@@ -1,0 +1,76 @@
+<div class="doc-container">
+    <div class="top">
+        <div class="left">
+            <div class="title-doc">
+                Welcome
+            </div>
+            <div class="subtitle-doc">
+                to review dashboard
+            </div>
+        </div>
+        <div class="right">
+            <img src="https://raw.githubusercontent.com/phoenixSaket/reviews/deploy/src/assets/reviews.png" alt="welcome" class="image">
+        </div>
+    </div>
+    <div class="center">
+        <div class="bottom-title-doc">
+            Introduction
+        </div>
+        <div class="bottom-subtitle-doc">
+            <div class="section">
+                The Reviews Dashboard is a comprehensive app analytics tool that provides businesses and developers with
+                insights into user feedback to make data-driven decisions.
+            </div>
+            <div class="section">
+                With the Reviews Dashboard, users can manage app reviews for both iOS and Android apps. The Dashboard
+                provides a visual representation of the ratings of the iOS/Android apps added to the system. Users can
+                see the number of ratings from 1 star to 5 stars and filter and sort them based on multiple factors.
+            </div>
+            <div class="section">
+                The Reviews Dashboard also includes a range of additional features that make it a valuable tool for
+                businesses and developers. These features include the ability to add any iOS/Android app available on
+                Google Play/Apple App Store, generate word clouds based on reviews and sentiments from Google Play/Apple
+                App Store, compare, delete added apps, and receive pop-up notification for new reviews added since the
+                last time the website was loaded.
+            </div>
+            <div class="section">
+                Overall, the Reviews Dashboard is a powerful tool that can provide businesses and developers with
+                valuable insights into user feedback. Its range of features, ease of use, and ability to work with both
+                iOS and Android apps hepls in making it easier for delivering the best user experience.
+            </div>
+        </div>
+    </div>
+    <div class="center">
+        <div class="bottom-title-doc">
+            Features
+        </div>
+        <div class="features-container">
+            <div class="feature" *ngFor="let feature of features">
+                <ng-container *ngTemplateOutlet="waveTop"></ng-container>
+                <div class="feature-title">
+                    {{feature.title}}
+                </div>
+                <div class="text">
+                    {{feature.text}}
+                </div>
+                <ng-container *ngTemplateOutlet="wave"></ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #wave class="wave">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill-opacity="0.5"
+            d="M0,192L40,170.7C80,149,160,107,240,101.3C320,96,400,128,480,160C560,192,640,224,720,213.3C800,203,880,149,960,117.3C1040,85,1120,75,1200,74.7C1280,75,1360,85,1400,90.7L1440,96L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z">
+        </path>
+    </svg>
+</ng-template>
+
+<ng-template #waveTop class="wave">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill-opacity="0.5"
+            d="M0,192L40,170.7C80,149,160,107,240,101.3C320,96,400,128,480,160C560,192,640,224,720,213.3C800,203,880,149,960,117.3C1040,85,1120,75,1200,74.7C1280,75,1360,85,1400,90.7L1440,96L1440,0L1400,0C1360,0,1280,0,1200,0C1120,0,1040,0,960,0C880,0,800,0,720,0C640,0,560,0,480,0C400,0,320,0,240,0C160,0,80,0,40,0L0,0Z">
+        </path>
+    </svg>
+</ng-template>
