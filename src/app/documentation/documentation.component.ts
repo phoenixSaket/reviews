@@ -16,7 +16,11 @@ export class DocumentationComponent implements OnInit {
     { title: "New Apps Popup", text: "Get a popup with the reviews of your apps received while you were away" }
   ];
 
-  public images: any[] = ["/assets/Images/1.jpg", "/assets/Images/2.jpg", "/assets/Images/3.jpg", "/assets/Images/4.jpg", "/assets/Images/5.jpg"];
+  public images: any[] = ["https://raw.githubusercontent.com/phoenixSaket/reviews/main/src/assets/Images/1.jpg",
+    "https://raw.githubusercontent.com/phoenixSaket/reviews/main/src/assets/Images/2.jpg",
+    "https://raw.githubusercontent.com/phoenixSaket/reviews/main/src/assets/Images/3.jpg",
+    "https://raw.githubusercontent.com/phoenixSaket/reviews/main/src/assets/Images/4.jpg",
+    "https://raw.githubusercontent.com/phoenixSaket/reviews/main/src/assets/Images/5.jpg"];
 
   public selectedImgIndex: number = 0;
 
@@ -44,6 +48,13 @@ export class DocumentationComponent implements OnInit {
   }
 
   download(link: string) {
-    window.open(link, '_blank');
+    let page = '';
+    switch (link) {
+      case "android": page = "https://github.com/phoenixSaket/reviews/blob/main/src/assets/apps/reviews-dashboard.apk?raw=true";
+        break;
+      case "ios": page = "https://github.com/phoenixSaket/reviews/blob/main/src/assets/apps/ios_source.tar.gz?raw=true"
+        break;
+    }
+    window.open(page, '_blank');
   }
 }
