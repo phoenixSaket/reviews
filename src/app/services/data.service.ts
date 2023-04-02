@@ -46,9 +46,9 @@ export class DataService {
             }
           })
 
-          // if(shouldShow) {
-          //   this.openNewReviewDialog();
-          // }
+          if(shouldShow) {
+            this.openNewReviewDialog();
+          }
         }
       }
     })
