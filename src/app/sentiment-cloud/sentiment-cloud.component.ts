@@ -36,7 +36,7 @@ export class SentimentCloudComponent implements OnInit {
     private ios: IosService,
     private android: AndroidService,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     Chart.register(WordCloudController, WordElement);
@@ -104,10 +104,12 @@ export class SentimentCloudComponent implements OnInit {
 
   reallyGetIosReviews(id: any, page: number, max: number, type: string) {
     this.ios.getAppReviews(id, page).subscribe((response: any) => {
-      let resp = JSON.parse(response.result).feed.entry;
-      resp.forEach((el: any) => {
-        this.reviews.push(el);
-      })
+      let resp = JSON.parse(response.result)?.feed?.entry;
+      if (resp?.length > 0) {
+        resp.forEach((el: any) => {
+          this.reviews.push(el);
+        })
+      }
       if (page == max) {
         setTimeout(() => {
           this.getKeywordData(this.reviews, true, type);
@@ -298,13 +300,13 @@ export class SentimentCloudComponent implements OnInit {
     let multlipicant = (1024) / (length * 9);
     multlipicant = multlipicant > 0.5 ? multlipicant : 1 - multlipicant;
     multlipicant = multlipicant < 20 ? multlipicant : 20;
-    if(type == "single"){
+    if (type == "single") {
       this.generateWordCloud(z, multlipicant);
     }
     let tempArr: any[] = [];
     if (this.array.length > 150) {
       this.array.forEach((el, index) => {
-        if(index < 150) {
+        if (index < 150) {
           tempArr.push(el);
         }
       })
@@ -459,7 +461,7 @@ export class SentimentCloudComponent implements OnInit {
   }
 
   separateClouds() {
-    if(this.showOne) {
+    if (this.showOne) {
       this.appSelected(this.selectedApp, "single");
     } else {
       this.appSelected(this.selectedApp, "multiple");

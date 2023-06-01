@@ -15,7 +15,7 @@ export class NavbarComponent implements OnInit {
   public iosReviews: any[] = [];
   public androidReviews: any[] = [];
 
-  constructor(public sidebar: SidebarService, public data: DataService, private android: AndroidService, private ios: IosService) {}
+  constructor(public sidebar: SidebarService, public data: DataService, private android: AndroidService, private ios: IosService) { }
 
   ngOnInit(): void {
     this.data.appLoader.subscribe((app: any) => {
@@ -35,18 +35,18 @@ export class NavbarComponent implements OnInit {
     this.android.getAppReviews(app.appId, true).subscribe(
       (response: any) => {
         this.androidReviews = JSON.parse(response.result).data;
-        this.androidReviews.forEach((review: any) => {});
+        this.androidReviews.forEach((review: any) => { });
       },
       (error: any) => {
         this.android.getAppReviews(app.appId).subscribe(
           (response: any) => {
             this.androidReviews = JSON.parse(response.result).data;
-            this.androidReviews.forEach((review: any) => {});
+            this.androidReviews.forEach((review: any) => { });
           },
           (error: any) => {
             this.android.getAppReviews(app.appId).subscribe((response: any) => {
               this.androidReviews = JSON.parse(response.result).data;
-              this.androidReviews.forEach((review: any) => {});
+              this.androidReviews.forEach((review: any) => { });
             });
           }
         );
@@ -77,15 +77,19 @@ export class NavbarComponent implements OnInit {
   storeIOSReviews(appId: string, page: number, max: number) {
     this.ios.getAppReviews(appId, page, true).subscribe(
       (response: any) => {
-        JSON.parse(response.result).feed.entry.forEach((entry: any) => {
-          this.iosReviews.push(entry);
-        });
-      },
-      (error: any) => {
-        this.ios.getAppReviews(appId, page).subscribe((response: any) => {
+        if (JSON.parse(response.result)?.feed?.entry?.length > 0) {
           JSON.parse(response.result).feed.entry.forEach((entry: any) => {
             this.iosReviews.push(entry);
           });
+        }
+      },
+      (error: any) => {
+        this.ios.getAppReviews(appId, page).subscribe((response: any) => {
+          if (JSON.parse(response.result)?.feed?.entry?.length > 0) {
+            JSON.parse(response.result).feed.entry.forEach((entry: any) => {
+              this.iosReviews.push(entry);
+            });
+          }
         });
       }
     );
