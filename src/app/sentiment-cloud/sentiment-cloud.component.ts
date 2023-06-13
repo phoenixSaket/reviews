@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Chart } from 'chart.js';
 import { WordCloudController, WordElement } from 'chartjs-chart-wordcloud';
@@ -14,6 +14,9 @@ import { WordDialogComponent } from '../word-dialog/word-dialog.component';
   styleUrls: ['./sentiment-cloud.component.css'],
 })
 export class SentimentCloudComponent implements OnInit {
+
+  @ViewChild('wordCloudContainer', { static: false }) wordCloudContainer: ElementRef = new ElementRef<any>(null);
+
   public chart: any;
   public positiveChart: any;
   public negativeChart: any;
@@ -30,6 +33,7 @@ export class SentimentCloudComponent implements OnInit {
   public multiplicant1: number = 0;
   public sentiments: any;
   public showOne: boolean = true;
+  public multiplicant: number = 1;
 
   constructor(
     private data: DataService,
@@ -76,30 +80,34 @@ export class SentimentCloudComponent implements OnInit {
   getIOSReviews(app: any, page: number = 1, type: string) {
     this.ios.getAppReviews(app.id, 1, true).subscribe((response: any) => {
 
-      const max = this.getMaxPages(JSON.parse(response.result).feed.link);
-      for (let i = 1; i <= max; i++) {
-        this.reallyGetIosReviews(app.id, i, max, type);
-      }
-    }, error => {
-      this.ios.getAppReviews(app.id, 1).subscribe((response: any) => {
-        const max = this.getMaxPages(JSON.parse(response.result).feed.link);
+      this.getMaxPages(JSON.parse(response.result).feed.link).then((max: number) => {
         for (let i = 1; i <= max; i++) {
           this.reallyGetIosReviews(app.id, i, max, type);
         }
+      })
+    }, error => {
+      this.ios.getAppReviews(app.id, 1).subscribe((response: any) => {
+        this.getMaxPages(JSON.parse(response.result).feed.link).then((max: number) => {
+          for (let i = 1; i <= max; i++) {
+            this.reallyGetIosReviews(app.id, i, max, type);
+          }
+        })
       });
     });
   }
 
-  getMaxPages(links: any[]) {
-    let maxPage = 0;
-    links.forEach((link: any) => {
-      if (link.attributes.rel == "last") {
-        const lk = link.attributes.href;
-        const page = lk.toString().substring(lk.toString().indexOf("page=") + 5, lk.toString().indexOf("/", lk.toString().indexOf("page=") + 5));
-        maxPage = page;
-      }
+  getMaxPages(links: any[]): Promise<number> {
+    return new Promise(resolve => {
+      let maxPage = 0;
+      links.forEach((link: any) => {
+        if (link.attributes.rel == "last") {
+          const lk = link.attributes.href;
+          const page = lk.toString().substring(lk.toString().indexOf("page=") + 5, lk.toString().indexOf("/", lk.toString().indexOf("page=") + 5));
+          maxPage = page;
+        }
+      })
+      resolve(maxPage);
     })
-    return maxPage;
   }
 
   reallyGetIosReviews(id: any, page: number, max: number, type: string) {
@@ -136,9 +144,7 @@ export class SentimentCloudComponent implements OnInit {
     })
   }
 
-  generateWordCloud(data: any[], multlipicant: number) {
-    this.multiplicant1 = multlipicant;
-
+  generateSentimentWordCloud(data: any[], type: string) {
     setTimeout(() => {
       const config = {
         data: {
@@ -146,56 +152,12 @@ export class SentimentCloudComponent implements OnInit {
           labels: data.map((d) => d.text),
           datasets: [
             {
-              label: '',
+              label: "",
+              values: "",
               fit: false,
               maintainAspectRatio: true,
               // size in pixel
-              data: data.map((d) => (d.number) * (this.multiplicant1)),
-            },
-          ]
-        }
-      };
-      const canvas = <HTMLCanvasElement>(document.getElementById('canvas'));
-      const ctx = canvas?.getContext('2d') || "canvas";
-      this.chart = new Chart('canvas', {
-        type: WordCloudController.id,
-        data: config.data,
-        options: {
-          plugins: {
-            legend: {
-              display: false,
-            },
-          },
-          datasets: {
-            wordCloud: {
-              rotate: 0,
-              padding: 3,
-              fit: true,
-              rotationSteps: 0,
-              color: "#6DBCB7",
-              showTooltips: false
-            },
-          }
-        }
-      });
-      this.loading = false;
-    }, 100);
-  }
-
-  generateSentimentWordCloud(data: any[], multlipicant: number, type: string) {
-
-    setTimeout(() => {
-      const config = {
-        data: {
-          // text
-          labels: data.map((d) => d.text),
-          datasets: [
-            {
-              label: '',
-              fit: false,
-              maintainAspectRatio: true,
-              // size in pixel
-              data: data.map((d) => (d.number) * (multlipicant)),
+              data: data.map((d, index) => ((d.number + (280 / (index + 1))) + 5) * this.multiplicant),
             },
           ]
         }
@@ -206,6 +168,8 @@ export class SentimentCloudComponent implements OnInit {
         type: WordCloudController.id,
         data: config.data,
         options: {
+          events: ['click'],
+          onClick: (event: any) => { this.clicked(event) },
           plugins: {
             legend: {
               display: false,
@@ -219,7 +183,7 @@ export class SentimentCloudComponent implements OnInit {
               rotationSteps: 0,
               color: type == "single" ? data.map((d) => {
                 if (d.isPositive == null) {
-                  return "#F9D28B"
+                  return "#F9D28B9d"
                 } else if (d.isPositive) {
                   return "#007A58"
                 } else {
@@ -238,9 +202,30 @@ export class SentimentCloudComponent implements OnInit {
     }, 100);
   }
 
-  reduceSize() {
-    this.multiplicant1 -= 1;
-    this.chart?.update();
+  clicked(event: any) {
+    console.log(event);
+    setTimeout(() => {
+      let selected = event.chart?.tooltip?.title[0];
+      let selectedIndex = event.chart?.config._config.data.labels.indexOf(selected);
+      let selectedColor = event.chart?.config._config.options.datasets.wordCloud.color[selectedIndex];
+      let sentiment: string = "";
+  
+      switch (selectedColor) {
+        case "#F9D28B9d":
+          sentiment = "Neutral";
+          break;
+        case "#007A58":
+          sentiment = "Positive";
+          break;
+        case "#E74B58":
+          sentiment = "Negative";
+          break;
+      }
+  
+      console.log("Selected", selected);
+      console.log("Sentiment", sentiment);
+    }, 300);
+    
   }
 
   getKeywordData(dataForExtraction: any[], isIos: boolean, type: string) {
@@ -300,9 +285,6 @@ export class SentimentCloudComponent implements OnInit {
     let multlipicant = (1024) / (length * 9);
     multlipicant = multlipicant > 0.5 ? multlipicant : 1 - multlipicant;
     multlipicant = multlipicant < 20 ? multlipicant : 20;
-    if (type == "single") {
-      this.generateWordCloud(z, multlipicant);
-    }
     let tempArr: any[] = [];
     if (this.array.length > 150) {
       this.array.forEach((el, index) => {
@@ -439,21 +421,21 @@ export class SentimentCloudComponent implements OnInit {
         let multlipicant = (1024) / (length * 9);
         multlipicant = multlipicant > 0.5 ? multlipicant : 1 - multlipicant;
         multlipicant = multlipicant < 20 ? multlipicant : 20;
-        this.generateSentimentWordCloud(result, multlipicant, "multiple");
+        this.generateSentimentWordCloud(result, "multiple");
       } else {
         let length = z[0].number;
         let multlipicant = (1024) / (length * 9);
         multlipicant = multlipicant > 0.5 ? multlipicant : 1 - multlipicant;
         multlipicant = multlipicant < 20 ? multlipicant : 20;
-        this.generateSentimentWordCloud(z, multlipicant, "single");
+        this.generateSentimentWordCloud(z, "single");
         this.showOne = true;
       }
     });
   }
 
   redraw() {
-    this.chart?.destroy();
-    this.appSelected(this.selectedApp);
+    this.positiveChart?.destroy();
+    this.generateSentimentWordCloud(this.words, "single");
   }
 
   getWordReport() {
@@ -467,4 +449,32 @@ export class SentimentCloudComponent implements OnInit {
       this.appSelected(this.selectedApp, "multiple");
     }
   }
+
+  zoomIn() {
+    this.multiplicant = JSON.parse(JSON.stringify(this.multiplicant)) + (0.1 * JSON.parse(JSON.stringify(this.multiplicant)));
+    this.redraw();
+  }
+
+  zoomOut() {
+    this.multiplicant = JSON.parse(JSON.stringify(this.multiplicant)) - (0.1 * JSON.parse(JSON.stringify(this.multiplicant)));
+    this.redraw();
+  }
+
+  download() {
+    const canvas = document.createElement('canvas');
+    const container = this.wordCloudContainer.nativeElement;
+
+    canvas.width = container.width;
+    canvas.height = container.height;
+
+    const context = canvas.getContext('2d');
+    context?.drawImage(container, 0, 0);
+
+    const link = document.createElement('a');
+    link.href = canvas.toDataURL('image/png');
+    link.download = this.selectedApp.value.appName + '_sentitment_word_cloud.png';
+
+    link.click();
+  }
+
 }
