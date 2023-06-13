@@ -32,7 +32,7 @@ export class DataService {
       if (values == 1) {
         x += 1;
         if (x == this.getTotalApps()) {
-          let date = new Date("03-01-2023").toString();
+          let date = new Date("05-20-2023").toString();
           localStorage.setItem("lastDate-reviews", date);
           let shouldShow: boolean = false;
           this.newAndroidReviews.forEach(el=> {
@@ -46,9 +46,9 @@ export class DataService {
             }
           })
 
-          // if(shouldShow) {
-          //   this.openNewReviewDialog();
-          // }
+          if(shouldShow) {
+            this.openNewReviewDialog();
+          }
         }
       }
     })
