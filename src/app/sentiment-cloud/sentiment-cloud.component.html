@@ -11,6 +11,27 @@
         (click)="redraw()">Shuffle</button>
     <button mat-raised-button class="shuffle-button" *ngIf="!!selectedApp && !loading" (click)="getWordReport()">Get
         Word Report</button>
+    <button mat-raised-button class="shuffle-button" *ngIf="!!selectedApp && !loading" (click)="zoomIn()">
+        Zoom In
+        <span class="material-symbols-outlined">
+            zoom_in
+        </span>
+    </button>
+    <button mat-raised-button class="shuffle-button" *ngIf="!!selectedApp && !loading" (click)="zoomOut()">
+        Zoom Out
+        <span class="material-symbols-outlined">
+            zoom_out
+        </span>
+    </button>
+    <button mat-raised-button class="shuffle-button" *ngIf="!!selectedApp && !loading" (click)="download()">
+        Save
+        <span class="material-symbols-outlined">
+            download
+        </span>
+    </button>
+    <div class="words" *ngIf="!!selectedApp && !loading">
+        Word Count : {{words.length}}
+    </div>
 </div>
 
 <div class="loading-container" *ngIf="loading">
@@ -18,17 +39,5 @@
 </div>
 
 <div class="canvas-container">
-    <!-- <div class="title" *ngIf="!!selectedApp && !loading">Top keywords (max 150)</div> -->
-    <!-- <canvas id="canvas">{{chart}}</canvas> -->
-    <canvas id="positive-canvas">{{positiveChart}}</canvas>
+    <canvas #wordCloudContainer id="positive-canvas">{{positiveChart}}</canvas>
 </div>
-<!-- <div class="contain">
-    
-    <div class="canvas-container" *ngIf="!showOne" [ngStyle]="{'width': '50%'}">
-        <div class="title" *ngIf="!!selectedApp && !loading">Sentiment keywords (max 150)</div>
-    </div>
-</div> -->
-
-<!-- <div class="canvas-container">
-    <canvas id="negative-canvas">{{negativeChart}}</canvas>
-</div> -->
