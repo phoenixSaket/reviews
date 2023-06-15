@@ -91,6 +91,7 @@ export class ReviewsPageComponent implements OnInit {
             this.backup = JSON.parse(JSON.stringify(this.androidReviews));
             this.doSentimentAnalysis();
             this.stopLoading();
+
           },
           (error) => {
             this.android.getAppReviews(app.appId).subscribe((response: any) => {
@@ -582,10 +583,8 @@ export class ReviewsPageComponent implements OnInit {
         this.iosReviews = temp;
       }
 
-      // console.log('Filtered', this.iosReviews);
     } else {
       this.androidReviews = this.backup;
-      console.log(this.androidReviews);
       let rating = !!this.sortingCriteria.rating;
       let year = !!this.sortingCriteria.year;
       let version = !!this.sortingCriteria.version;
@@ -695,7 +694,6 @@ export class ReviewsPageComponent implements OnInit {
         this.androidReviews = temp;
       }
 
-      console.log('Filtered', this.androidReviews);
     }
   }
 
