@@ -25,6 +25,7 @@ export class DataService {
   private newAndroidReviews: any[] = [];
   public isSnackbarOpen: boolean = false;
   public isLoading: boolean = false;
+  public selectedSentiment: any = {};
 
   constructor(private http: HttpClient, private android: AndroidService, private ios: IosService, public dialog: MatDialog, private snackBar: MatSnackBar) {
     let x = 0;

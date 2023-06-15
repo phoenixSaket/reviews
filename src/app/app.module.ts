@@ -38,6 +38,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { NewReviewsComponent } from './new-reviews/new-reviews.component';
 import { DocumentationComponent } from './documentation/documentation.component';
+import { SentimentReviewsComponent } from './sentiment-reviews/sentiment-reviews.component';
 
 
 
@@ -61,7 +62,8 @@ import { DocumentationComponent } from './documentation/documentation.component'
     GetEmailComponent,
     ErrorDialogComponent,
     NewReviewsComponent,
-    DocumentationComponent
+    DocumentationComponent,
+    SentimentReviewsComponent
   ],
   imports: [
     BrowserModule,

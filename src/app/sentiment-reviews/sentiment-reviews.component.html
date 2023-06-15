@@ -1,0 +1,19 @@
+<div class="back-container" routerLink="/sentiment-cloud">
+    <span class="material-symbols-outlined">
+        arrow_back
+    </span>
+    Back
+</div>
+<div class="container-sentiment">
+    <div class="review" *ngFor="let review of reviews">
+        <div class="ios" *ngIf="isIOS">
+            <app-card-ios [data]="review"></app-card-ios>
+        </div>
+        <div class="android" *ngIf="!isIOS">
+            <app-card-android [data]="review"></app-card-android>
+        </div>
+    </div>
+</div>
+<div class="loading" *ngIf="isLoading">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>

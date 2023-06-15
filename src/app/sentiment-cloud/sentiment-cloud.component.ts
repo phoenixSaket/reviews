@@ -7,6 +7,7 @@ import { AndroidService } from '../services/android.service';
 import { DataService } from '../services/data.service';
 import { IosService } from '../services/ios.service';
 import { WordDialogComponent } from '../word-dialog/word-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sentiment-cloud',
@@ -39,7 +40,8 @@ export class SentimentCloudComponent implements OnInit {
     private data: DataService,
     private ios: IosService,
     private android: AndroidService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -200,32 +202,6 @@ export class SentimentCloudComponent implements OnInit {
       this.positiveChart = x;
       this.loading = false;
     }, 100);
-  }
-
-  clicked(event: any) {
-    console.log(event);
-    setTimeout(() => {
-      let selected = event.chart?.tooltip?.title[0];
-      let selectedIndex = event.chart?.config._config.data.labels.indexOf(selected);
-      let selectedColor = event.chart?.config._config.options.datasets.wordCloud.color[selectedIndex];
-      let sentiment: string = "";
-  
-      switch (selectedColor) {
-        case "#F9D28B9d":
-          sentiment = "Neutral";
-          break;
-        case "#007A58":
-          sentiment = "Positive";
-          break;
-        case "#E74B58":
-          sentiment = "Negative";
-          break;
-      }
-  
-      console.log("Selected", selected);
-      console.log("Sentiment", sentiment);
-    }, 300);
-    
   }
 
   getKeywordData(dataForExtraction: any[], isIos: boolean, type: string) {
@@ -475,6 +451,49 @@ export class SentimentCloudComponent implements OnInit {
     link.download = this.selectedApp.value.appName + '_sentitment_word_cloud.png';
 
     link.click();
+  }
+
+  clicked(event: any) {
+    this.data.selectedSentiment = {}
+    setTimeout(() => {
+      let selected = event.chart?.tooltip?.title[0];
+      let selectedIndex = event.chart?.config._config.data.labels.indexOf(selected);
+      let selectedColor = event.chart?.config._config.options.datasets.wordCloud.color[selectedIndex];
+      let sentiment: string = "";
+  
+      switch (selectedColor) {
+        case "#F9D28B9d":
+          sentiment = "Neutral";
+          break;
+        case "#007A58":
+          sentiment = "Positive";
+          break;
+        case "#E74B58":
+          sentiment = "Negative";
+          break;
+      }
+  
+      let ratings: number[] = [];
+      let keyword = "";
+      keyword = selected;
+
+      if(sentiment == "Positive") {
+        ratings = [3, 4, 5];
+      } else if (sentiment == "Negative") {
+        ratings = [1, 2, 3];
+      } else {
+        // show alert that the user has selected a neutral keyword 
+        return;
+      }
+
+      this.data.selectedSentiment = {
+        ratings : ratings,
+        keyword: keyword,
+        app: this.selectedApp.value
+      }
+      this.router.navigate(["/sentiment-reviews"]);
+    }, 300);
+    
   }
 
 }

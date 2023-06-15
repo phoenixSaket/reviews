@@ -4,10 +4,10 @@ import { AddReviewComponent } from './add-review/add-review.component';
 import { CompareAppsComponent } from './compare-apps/compare-apps.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DocumentationComponent } from './documentation/documentation.component';
-import { HomepageComponent } from './homepage/homepage.component';
 import { ReviewsPageComponent } from './reviews-page/reviews-page.component';
 import { SentimentCloudComponent } from './sentiment-cloud/sentiment-cloud.component';
 import { WordcloudComponent } from './wordcloud/wordcloud.component';
+import { SentimentReviewsComponent } from './sentiment-reviews/sentiment-reviews.component';
 
 const routes: Routes = [
   {path: "", component: DashboardComponent},
@@ -18,6 +18,7 @@ const routes: Routes = [
   {path: "word-cloud", component: WordcloudComponent},
   {path: "sentiment-cloud", component: SentimentCloudComponent},
   {path: "docs", component: DocumentationComponent},
+  {path: "sentiment-reviews", component: SentimentReviewsComponent}
 ];
 
 @NgModule({
