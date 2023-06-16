@@ -4,6 +4,8 @@ import { DataService } from '../services/data.service';
 import { IosService } from '../services/ios.service';
 import Chart from 'chart.js/auto';
 import { BehaviorSubject } from 'rxjs';
+import * as keyword_extractor from "keyword-extractor";
+
 
 @Component({
   selector: 'app-compare-apps',
@@ -20,6 +22,8 @@ export class CompareAppsComponent implements OnInit {
   public appDetails: any[] = [];
   public chart: any;
   private loadChart: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
+  sentiments: any;
+  words: any[] = [];
 
   constructor(private data: DataService, private ios: IosService, private android: AndroidService) { }
 
@@ -49,6 +53,10 @@ export class CompareAppsComponent implements OnInit {
                   this.ios.getAppReviews(app.id, i).subscribe((response: any) => {
                     length += JSON.parse(response.result).feed.entry.length;
                     app.reviews = length;
+                    if (i == max) {
+                      this.iosReviews = JSON.parse(response.result).feed.entry;
+                      this.getKeywordData(this.iosReviews, true, app)
+                    }
                   });
                 }
               });
@@ -132,6 +140,7 @@ export class CompareAppsComponent implements OnInit {
               })
             })
           } else {
+            this.getAndroidReviews(app.appId, app);
             this.android.getApp(app.appId, true).subscribe((androidResponse: any) => {
               const data = JSON.parse(androidResponse.result);
               app.developer = data.developer;
@@ -223,5 +232,139 @@ export class CompareAppsComponent implements OnInit {
       }
     })
     return maxPage;
+  }
+
+  getAndroidReviews(appId: string, app: any) {
+    this.android.getAppReviews(appId).subscribe((response: any) => {
+      this.androidReviews = JSON.parse(response.result).data;
+      this.getKeywordData(this.androidReviews, false, app);
+    })
+  }
+
+  getKeywordData(dataForExtraction: any[], isIOS: boolean, app: any) {
+    let array: any[] = [];
+    dataForExtraction.forEach((data: any) => {
+      if (isIOS) {
+        array.push(data?.content?.label)
+      } else {
+        array.push(data?.text)
+      }
+    });
+
+    let contentString = array.join(" ");
+
+    let extract = keyword_extractor.default.extract(contentString, {
+      language: "english",
+      remove_digits: true,
+      return_changed_case: true,
+      remove_duplicates: false,
+      return_max_ngrams: 1
+    });
+
+
+    let wordCount: any[] = [];
+    extract.forEach((el: any) => {
+      let check = false;
+      let i: number = 0;
+
+      // check if present
+      wordCount.forEach((element, index) => {
+        if (element.text == el) {
+          check = true;
+          i = index;
+        }
+      });
+
+      // increment number by 1 if present
+      if (check) {
+        wordCount[i].number = wordCount[i].number + 1
+      }
+    });
+
+    wordCount.sort((a: any, b: any) => {
+      return b.number - a.number;
+    });
+
+    let temp: any[] = [];
+    wordCount.forEach((el: any, index: number) => {
+      if (index < 150) {
+        temp.push(el);
+      }
+    });
+
+    wordCount = temp;
+
+    this.words = wordCount;
+
+    let tempArr: any[] = [];
+    array.forEach((el, index) => {
+      tempArr.push(el);
+    })
+
+    let positiveArray: string[] = [];
+    let negativeArray: string[] = [];
+
+    this.ios.sentimentAnalysis(tempArr.length > 0 ? tempArr : array).subscribe((data: any) => {
+      let sentArray = data.message;
+      sentArray.forEach((el: any) => {
+        el.sentiments.positive.forEach((positive: any) => {
+          positiveArray.push(positive);
+        })
+        el.sentiments.negative.forEach((negative: any) => {
+          negativeArray.push(negative);
+        })
+      });
+
+      let showPositive: any[] = [];
+      let showNegative: any[] = [];
+
+      positiveArray.forEach((word) => {
+        let isPresent: boolean = false;
+        showPositive.forEach(present => {
+          if(word == present.text) {
+            isPresent = true;
+            present.number = present.number + 1;
+          } 
+        })
+
+        if(!isPresent) {
+          showPositive.push({text: word, number: 1});
+        }
+      });
+
+      negativeArray.forEach((word) => {
+        let isPresent: boolean = false;
+        showNegative.forEach(present => {
+          if(word == present.text) {
+            isPresent = true;
+            present.number = present.number + 1;
+          } 
+        })
+
+        if(!isPresent) {
+          showNegative.push({text: word, number: 1});
+        }
+      });
+
+      showPositive = showPositive.sort((a: any, b: any)=> {
+        return b.number - a .number;
+      })
+
+      showNegative = showNegative.sort((a: any, b: any)=> {
+        return b.number - a .number;
+      })
+
+      let positiveWords = [];
+      let negativeWords = [];
+
+      for (let i = 0; i < 5; i++) {
+        positiveWords[i] = showPositive[i];        
+        negativeWords[i] = showNegative[i];        
+      }
+
+      app.positive = positiveWords;
+      app.negative = negativeWords;
+    })
+
   }
 }
