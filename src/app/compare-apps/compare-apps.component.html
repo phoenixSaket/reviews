@@ -11,14 +11,16 @@
     <div class="text-center item">Last Updated</div>
     <div class="text-center item">Number of Reviews</div>
     <div class="text-center item">Number of Ratings</div>
-    <div class="text-center item">1&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
-    <div class="text-center item">2&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
-    <div class="text-center item">3&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
-    <div class="text-center item">4&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
-    <div class="text-center item">5&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
+    <div class="text-center item word-container positive">Top Positive Words</div>
+    <div class="text-center item word-container negative">Top Negative Words</div>
+    <div class="text-center item negative">1&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
+    <div class="text-center item negative">2&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
+    <div class="text-center item neutral">3&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
+    <div class="text-center item positive">4&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
+    <div class="text-center item positive">5&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
   </div>
 
-  <div class="flex-container data-container" *ngFor="let app of compareAppsArray">
+  <div class="flex-container data-container" *ngFor="let app of compareAppsArray; let i = index">
     <div class="header text-center">
       <img [src]="[app.icon]" alt="app icon"/>
       <div class="name">{{ app.name }}</div>
@@ -32,12 +34,21 @@
     <div class="text-center item">{{app.lastUpdated | date}}</div>
     <div class="text-center item">{{app.reviews}}</div>
     <div class="text-center item">{{app.ratings}}</div>
-    <div class="text-center item">{{app.oneStar}}</div>
-    <div class="text-center item">{{app.twoStar}}</div>
-    <div class="text-center item">{{app.threeStar}}</div>
-    <div class="text-center item">{{app.fourStar}}</div>
-    <div class="text-center item">{{app.fiveStar}}</div>
-
+    <div class="text-center item word-container positive">
+      <div class="word" *ngFor="let word of app.positive">
+        {{word?.text}}
+      </div>
+    </div>
+    <div class="text-center item word-container negative">
+      <div class="word" *ngFor="let word of app.negative">
+        {{word?.text}}
+      </div>
+    </div>
+    <div class="text-center item negative">{{app.oneStar}}</div>
+    <div class="text-center item negative">{{app.twoStar}}</div>
+    <div class="text-center item neutral">{{app.threeStar}}</div>
+    <div class="text-center item positive">{{app.fourStar}}</div>
+    <div class="text-center item positive">{{app.fiveStar}}</div>
   </div>
 </div>
 <div class="chart-container">

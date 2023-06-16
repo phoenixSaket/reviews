@@ -28,11 +28,11 @@
 
 .stars {
   font-size: 20px;
-  color: #818181;
+  /* color: #818181; */
 }
 
 .header {
-  height: 50px;
+  min-height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -79,6 +79,27 @@
     font-size: 15px;
 }
 
+.word-container {
+  min-height: 38px !important;
+  height: 100% !important;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.positive {
+  color: #007A58;
+}
+
+.negative {
+  color: #E74B58;
+}
+
+.neutral {
+  color: #bb844c;
+}
+
 @media (max-width: 500px) {
   .flex-container>div>img {
     width: 20px;
@@ -100,7 +121,7 @@
 
   .stars {
     font-size: 15px;
-    color: #818181;
+    /* color: #818181; */
   }
 
   .data-container>div {
@@ -114,7 +135,8 @@
   }
 
   .item {
-    height: 50px;
+    min-height: 50px;
+    height: 100%;
     padding: 8px 4px;
   }
 }

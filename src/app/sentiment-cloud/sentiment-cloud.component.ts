@@ -482,8 +482,7 @@ export class SentimentCloudComponent implements OnInit {
       } else if (sentiment == "Negative") {
         ratings = [1, 2, 3];
       } else {
-        // show alert that the user has selected a neutral keyword 
-        return;
+        ratings = [1, 2, 3, 4, 5];
       }
 
       this.data.selectedSentiment = {
