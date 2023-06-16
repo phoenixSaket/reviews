@@ -95,6 +95,11 @@
 
 .space {
   margin: 0 0 0 5px;
+  cursor: pointer;
+}
+
+.word {
+  cursor: pointer;
 }
 
 .positive {
