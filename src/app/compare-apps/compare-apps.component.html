@@ -35,12 +35,12 @@
     <div class="text-center item">{{app.reviews}}</div>
     <div class="text-center item">{{app.ratings}}</div>
     <div class="text-center item word-container positive">
-      <div [ngClass]="last? 'space' : 'word'" *ngFor="let word of app.positive; let last = last">
+      <div [ngClass]="last? 'space' : 'word'" *ngFor="let word of app.positive; let last = last" (click)="openSentimentReviews(word?.text, true, app)">
         {{word?.text}}
       </div>
     </div>
     <div class="text-center item word-container negative">
-      <div [ngClass]="last? 'space' : 'word'" *ngFor="let word of app.negative; let last = last">
+      <div [ngClass]="last? 'space' : 'word'" *ngFor="let word of app.negative; let last = last" (click)="openSentimentReviews(word?.text, false, app)">
         {{word?.text}}
       </div>
     </div>

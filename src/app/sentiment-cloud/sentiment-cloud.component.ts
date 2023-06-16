@@ -60,6 +60,10 @@ export class SentimentCloudComponent implements OnInit {
     })
 
     this.loading = false;
+
+    if(this.data.selectedSentiment.isComingFrom == "cloud") {
+      this.appSelected({value : this.data.selectedSentiment.app});
+    }
   }
 
   appSelected(app: any, type: string = "multiple") {
@@ -488,7 +492,8 @@ export class SentimentCloudComponent implements OnInit {
       this.data.selectedSentiment = {
         ratings : ratings,
         keyword: keyword,
-        app: this.selectedApp.value
+        app: this.selectedApp.value,
+        isComingFrom: 'cloud'
       }
       this.router.navigate(["/sentiment-reviews"]);
     }, 300);

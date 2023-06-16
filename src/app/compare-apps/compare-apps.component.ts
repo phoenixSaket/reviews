@@ -5,6 +5,7 @@ import { IosService } from '../services/ios.service';
 import Chart from 'chart.js/auto';
 import { BehaviorSubject } from 'rxjs';
 import * as keyword_extractor from "keyword-extractor";
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class CompareAppsComponent implements OnInit {
   sentiments: any;
   words: any[] = [];
 
-  constructor(private data: DataService, private ios: IosService, private android: AndroidService) { }
+  constructor(private data: DataService, private ios: IosService, private android: AndroidService, private router: Router) { }
 
   ngOnInit(): void {
     this.data.compareAppAdded.subscribe((apps: any[]) => {
@@ -47,14 +48,20 @@ export class CompareAppsComponent implements OnInit {
               app.lastUpdated = data.updated;
 
               let length = 0;
+              let reviews: any[] = [];
+              this.iosReviews = [];
+
               this.ios.getAppReviews(app.id, 1).subscribe((response: any) => {
                 const max = this.getMaxPages(JSON.parse(response.result).feed.link);
                 for (let i = 1; i <= max; i++) {
                   this.ios.getAppReviews(app.id, i).subscribe((response: any) => {
                     length += JSON.parse(response.result).feed.entry.length;
                     app.reviews = length;
+                    JSON.parse(response.result).feed.entry.forEach((entry:any)=> {
+                      reviews.push(entry);
+                    })
                     if (i == max) {
-                      this.iosReviews = JSON.parse(response.result).feed.entry;
+                      this.iosReviews = reviews;
                       this.getKeywordData(this.iosReviews, true, app)
                     }
                   });
@@ -321,50 +328,67 @@ export class CompareAppsComponent implements OnInit {
       positiveArray.forEach((word) => {
         let isPresent: boolean = false;
         showPositive.forEach(present => {
-          if(word == present.text) {
+          if (word == present.text) {
             isPresent = true;
             present.number = present.number + 1;
-          } 
+          }
         })
 
-        if(!isPresent) {
-          showPositive.push({text: word, number: 1});
+        if (!isPresent) {
+          showPositive.push({ text: word, number: 1 });
         }
       });
 
       negativeArray.forEach((word) => {
         let isPresent: boolean = false;
         showNegative.forEach(present => {
-          if(word == present.text) {
+          if (word == present.text) {
             isPresent = true;
             present.number = present.number + 1;
-          } 
+          }
         })
 
-        if(!isPresent) {
-          showNegative.push({text: word, number: 1});
+        if (!isPresent) {
+          showNegative.push({ text: word, number: 1 });
         }
       });
 
-      showPositive = showPositive.sort((a: any, b: any)=> {
-        return b.number - a .number;
+      console.log(showPositive)
+      console.log(showNegative)
+
+      showPositive = showPositive.sort((a: any, b: any) => {
+        return b.number - a.number;
       })
 
-      showNegative = showNegative.sort((a: any, b: any)=> {
-        return b.number - a .number;
+      showNegative = showNegative.sort((a: any, b: any) => {
+        return b.number - a.number;
       })
 
       let positiveWords = [];
       let negativeWords = [];
 
       for (let i = 0; i < 5; i++) {
-        positiveWords[i] = showPositive[i];        
-        negativeWords[i] = showNegative[i];        
+        positiveWords[i] = showPositive[i];
+        negativeWords[i] = showNegative[i];
       }
 
       app.positive = positiveWords;
       app.negative = negativeWords;
     })
 
+  }
+
+  openSentimentReviews(word: string, isPositive: boolean, app: any) {
+    let params: any = {};
+    params.isComingFrom = "compare";
+    params.keyword = word;
+    params.app = app;
+    if (isPositive) {
+      params.ratings = [3, 4, 5];
+    } else {
+      params.ratings = [1, 2, 3];
+    }
+    this.data.selectedSentiment = params;
+    this.router.navigate(["/sentiment-reviews"]);
   }
 }

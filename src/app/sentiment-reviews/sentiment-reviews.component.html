@@ -1,8 +1,13 @@
-<div class="back-container" routerLink="/sentiment-cloud">
-    <span class="material-symbols-outlined">
-        arrow_back
-    </span>
-    Back
+<div class="back-outer-container" (click)="goBack($event)">
+    <div class="back-container">
+        <div class="material-symbols-outlined">
+            arrow_back
+        </div>
+        Back
+    </div>
+    <div class="header">
+        Showing <span class="bold">{{sentiment}}</span> reviews for <span class="bold">{{app.appName || app.name}} ( {{app.isIOS ? 'IOS': 'Android'}} )</span> with keyword <span class="bold">'{{keyword}}'</span>
+    </div>
 </div>
 <div class="container-sentiment">
     <div class="review" *ngFor="let review of reviews">

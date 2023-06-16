@@ -9,9 +9,16 @@
     align-items: center;
     gap: 10px;
     cursor: pointer;
-    position: fixed;
-    top: 20px;
+}
+
+.back-outer-container {
+    top: 15px;
     right: 20px;
+    position: fixed;
+    width: calc(100% - 325px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .loading {

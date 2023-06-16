@@ -2,6 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, O
 import { DataService } from '../services/data.service';
 import { IosService } from '../services/ios.service';
 import { AndroidService } from '../services/android.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sentiment-reviews',
@@ -43,21 +44,38 @@ export class SentimentReviewsComponent implements AfterViewInit {
   public reviews: any[] = [];
   public isIOS: boolean = false;
   public isLoading: boolean = true;
+  public cameFrom: string = "cloud";
+  public app: any = {};
+  public sentiment: string = "";
 
-  constructor(private data: DataService, private ios: IosService, private android: AndroidService, private cdr: ChangeDetectorRef) { }
+  constructor(private data: DataService, private ios: IosService, private android: AndroidService, private cdr: ChangeDetectorRef, private router: Router) { }
 
   ngAfterViewInit(): void {
-    if (Object.keys(this.data.selectedSentiment).length > 0) {
-      let app = this.data.selectedSentiment.app;
-      let appId = "";
-      this.isIOS = app.isIOS;
-      appId = app.id;
-      if (this.isIOS) {
-        this.getIOSReviews(appId);
-      } else {
-        this.getAndroidReviews(appId)
+    setTimeout(()=> {
+      if (Object.keys(this.data.selectedSentiment).length > 0) {
+        let app = this.data.selectedSentiment.app;
+        let selectedRatings = this.data.selectedSentiment.ratings;
+        
+        if(selectedRatings.indexOf(1) > -1 && selectedRatings.indexOf(5) > -1) {
+          this.sentiment = "Neutral"
+        } else if (selectedRatings.indexOf(1) > -1 && selectedRatings.indexOf(5) < 0) {
+          this.sentiment = "Negative";
+        } else if (selectedRatings.indexOf(1) < 0 && selectedRatings.indexOf(5) > -1) {
+          this.sentiment = "Positive";
+        }
+
+        this.app = app;
+        let appId = "";
+        this.isIOS = app.isIOS;
+        this.cameFrom = this.data.selectedSentiment.isComingFrom;
+        appId = app.id;
+        if (this.isIOS) {
+          this.getIOSReviews(appId);
+        } else {
+          this.getAndroidReviews(appId)
+        }
       }
-    }
+    }, 200)
   }
 
   filteringSentiments() {
@@ -77,7 +95,7 @@ export class SentimentReviewsComponent implements AfterViewInit {
     this.filterByKeyword(keyword).then((isDone: boolean) => {
       if (isDone) {
         this.filterByRating(ratings).then((isComplete: boolean) => {
-          if(isComplete) {
+          if (isComplete) {
             this.highlight();
           }
         })
@@ -225,21 +243,21 @@ export class SentimentReviewsComponent implements AfterViewInit {
       let temp: any[];
       temp = [];
       rating.forEach((ele: any) => {
-          if (this.isIOS) {
-            reviews.forEach((el: any) => {
-              if (el['im:rating'].label == ele.value && ele.isSelected) {
-                temp.push(el);
-              }
-            });
-          } else {
-            reviews.forEach((el: any) => {
-              if (el.score == ele.value && ele.isSelected) {
-                temp.push(el);
-              }
-            });
+        if (this.isIOS) {
+          reviews.forEach((el: any) => {
+            if (el['im:rating'].label == ele.value && ele.isSelected) {
+              temp.push(el);
+            }
+          });
+        } else {
+          reviews.forEach((el: any) => {
+            if (el.score == ele.value && ele.isSelected) {
+              temp.push(el);
+            }
+          });
         }
       });
-  
+
       this.isLoading = false;
       this.reviews = [];
       this.reviews = temp;
@@ -249,5 +267,16 @@ export class SentimentReviewsComponent implements AfterViewInit {
     })
   }
 
+  goBack(event: Event) {
+    let switcher = this.cameFrom;
 
+    switch (switcher) {
+      case "cloud":
+        this.router.navigate(["/sentiment-cloud"]);
+        break;
+      case "compare":
+        this.router.navigate(["/compare"]);
+        break;
+    }
+  }
 }
