@@ -85,7 +85,16 @@
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+}
+
+.word::after {
+  content: "|";
+  margin: 0 5px;
+  color: #818181;
+}
+
+.space {
+  margin: 0 0 0 5px;
 }
 
 .positive {

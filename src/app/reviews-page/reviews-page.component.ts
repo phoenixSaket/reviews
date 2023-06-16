@@ -23,18 +23,19 @@ export class ReviewsPageComponent implements OnInit {
   public dateSorted: any = { sorted: false, type: 'A' };
   public ratingSorted: any = { sorted: false, type: 'A' };
   private sortingCriteria: any = {};
+  private timeoutInterval: number = 30 * 60 * 1000;
+  private lastReviewDate: any = null;
 
   constructor(
     public data: DataService,
     private android: AndroidService,
     private ios: IosService,
     private snackBar: MatSnackBar
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.data.appLoader.subscribe((app: any) => {
       if (!!app) {
-        this.isLoading = true;
         this.data.isLoading = true;
         this.versions = [];
         this.years = [];
@@ -61,6 +62,9 @@ export class ReviewsPageComponent implements OnInit {
   }
 
   getAndroidReviews(app: any) {
+    setTimeout(() => {
+      this.getAndroidReviews(app);
+    }, this.timeoutInterval);
     this.android.getAppReviews(app.appId, true).subscribe(
       (response: any) => {
         this.androidReviews = JSON.parse(response.result).data;
@@ -73,6 +77,7 @@ export class ReviewsPageComponent implements OnInit {
           }
         });
         this.backup = JSON.parse(JSON.stringify(this.androidReviews));
+
         this.doSentimentAnalysis();
         this.stopLoading();
       },
@@ -115,6 +120,11 @@ export class ReviewsPageComponent implements OnInit {
   }
 
   getIOSReviews(app: any, page: number = 1) {
+    this.iosReviews = [];
+    setTimeout(() => {
+      this.getIOSReviews(app, page);
+    }, this.timeoutInterval)
+
     this.ios.getAppReviews(app.id, 1, true).subscribe(
       (response: any) => {
         const max = this.getMaxPages(JSON.parse(response.result).feed.link);
@@ -342,12 +352,26 @@ export class ReviewsPageComponent implements OnInit {
           ? -1
           : 1;
       });
+      if (!!this.lastReviewDate) {
+        if (new Date(this.iosReviews[0].updated.label).getTime() > JSON.parse(JSON.stringify(this.lastReviewDate))) {
+          this.showNotification();
+          this.sortSnackbar("New Reviews found");
+        }
+      }
+      this.lastReviewDate = new Date(this.iosReviews[0].updated.label).getTime();
     } else {
       this.androidReviews.sort((a: any, b: any) => {
         return new Date(a.date) > new Date(b.date)
           ? -1
           : 1;
       });
+      if (!!this.lastReviewDate) {
+        if (new Date(this.androidReviews[0].date).getTime() > JSON.parse(JSON.stringify(this.lastReviewDate))) {
+          this.showNotification();
+          this.sortSnackbar("New Reviews found");
+        }
+      }
+      this.lastReviewDate = new Date(this.androidReviews[0].date).getTime();
     }
     this.dateSorted.sorted = true;
     this.dateSorted.type = 'A';
@@ -724,5 +748,20 @@ export class ReviewsPageComponent implements OnInit {
       })
 
     }, 300);
+  }
+
+  showNotification() {
+    if ('Notification' in window) {
+      Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+          const notification = new Notification('New Review Added', {
+            body: 'New review has been added for the app loaded in the Review Dashboard'
+          });
+          notification.addEventListener('click', () => {
+            window.focus();
+          });
+        }
+      });
+    }
   }
 }
