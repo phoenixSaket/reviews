@@ -385,8 +385,10 @@ export class CompareAppsComponent implements OnInit {
     params.app = app;
     if (isPositive) {
       params.ratings = [3, 4, 5];
+      params.sentiment = "Positive";
     } else {
       params.ratings = [1, 2, 3];
+      params.sentiment = "Negative";
     }
     this.data.selectedSentiment = params;
     this.router.navigate(["/sentiment-reviews"]);

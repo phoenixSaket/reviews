@@ -152,52 +152,44 @@ export class SentimentCloudComponent implements OnInit {
 
   generateSentimentWordCloud(data: any[], type: string) {
     setTimeout(() => {
-      const config = {
+      const canvas = <HTMLCanvasElement>(document.getElementById('positive-canvas'));
+      const ctx = canvas?.getContext('2d') || "canvas";
+      let x = new Chart(ctx, {
+        type: WordCloudController.id,
         data: {
           // text
           labels: data.map((d) => d.text),
           datasets: [
             {
               label: "",
-              values: "",
-              fit: false,
-              maintainAspectRatio: true,
               // size in pixel
               data: data.map((d, index) => ((d.number + (280 / (index + 1))) + 5) * this.multiplicant),
+              color: data.map((d) => (
+                d.isPositive == null ? "#F9D28B9d" : d.isPositive ? "#007A58": "#E74B58"
+              ))
             },
           ]
-        }
-      };
-      const canvas = <HTMLCanvasElement>(document.getElementById('positive-canvas'));
-      const ctx = canvas?.getContext('2d') || "canvas";
-      let x = new Chart(ctx, {
-        type: WordCloudController.id,
-        data: config.data,
+        },
         options: {
-          events: ['click'],
           onClick: (event: any) => { this.clicked(event) },
           plugins: {
             legend: {
               display: false,
             },
+            title: {
+              text: "Chart",
+              display: false
+            }
           },
           datasets: {
             wordCloud: {
               rotate: 0,
-              padding: 3,
+              padding: 5,
               fit: true,
               rotationSteps: 0,
-              color: type == "single" ? data.map((d) => {
-                if (d.isPositive == null) {
-                  return "#F9D28B9d"
-                } else if (d.isPositive) {
-                  return "#007A58"
-                } else {
-                  return "#E74B58"
-                }
-              })
-                : ['#007A58', '#E74B58'],
-              showTooltips: false
+              color: data.map((d) => (
+                d.isPositive == null ? "#F9D28B9d" : d.isPositive ? "#007A58": "#E74B58"
+              ))
             },
           }
         }
@@ -493,7 +485,8 @@ export class SentimentCloudComponent implements OnInit {
         ratings : ratings,
         keyword: keyword,
         app: this.selectedApp.value,
-        isComingFrom: 'cloud'
+        isComingFrom: 'cloud',
+        sentiment: sentiment
       }
       this.router.navigate(["/sentiment-reviews"]);
     }, 300);

@@ -225,7 +225,9 @@ export class ReviewsPageComponent implements OnInit {
         horizontalPosition: 'end',
         verticalPosition: 'bottom',
       });
-      this.initialSort();
+      setTimeout(() => {
+        this.initialSort();
+      }, 100);
     }
   }
 
