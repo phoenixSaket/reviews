@@ -54,15 +54,7 @@ export class SentimentReviewsComponent implements AfterViewInit {
     setTimeout(()=> {
       if (Object.keys(this.data.selectedSentiment).length > 0) {
         let app = this.data.selectedSentiment.app;
-        let selectedRatings = this.data.selectedSentiment.ratings;
-        
-        if(selectedRatings.indexOf(1) > -1 && selectedRatings.indexOf(5) > -1) {
-          this.sentiment = "Neutral"
-        } else if (selectedRatings.indexOf(1) > -1 && selectedRatings.indexOf(5) < 0) {
-          this.sentiment = "Negative";
-        } else if (selectedRatings.indexOf(1) < 0 && selectedRatings.indexOf(5) > -1) {
-          this.sentiment = "Positive";
-        }
+        this.sentiment = this.data.selectedSentiment.sentiment;
 
         this.app = app;
         let appId = "";
@@ -94,11 +86,13 @@ export class SentimentReviewsComponent implements AfterViewInit {
 
     this.filterByKeyword(keyword).then((isDone: boolean) => {
       if (isDone) {
-        this.filterByRating(ratings).then((isComplete: boolean) => {
-          if (isComplete) {
-            this.highlight();
-          }
-        })
+        setTimeout(()=> {
+          this.filterByRating(ratings).then((isComplete: boolean) => {
+            if (isComplete) {
+              this.highlight();
+            }
+          })
+        }, 100)
       }
     });
   }
@@ -119,8 +113,7 @@ export class SentimentReviewsComponent implements AfterViewInit {
   }
 
   getIOSReviews(appId: string) {
-    this.ios.getAppReviews(appId, 1, true).subscribe(
-      (response: any) => {
+    this.ios.getAppReviews(appId, 1, true).subscribe((response: any) => {
         this.getMaxPages(JSON.parse(response.result).feed.link).then((max: number) => {
           for (let i = 1; i <= max; i++) {
             this.getIndividualIOSReviews(appId, i, max);
@@ -149,7 +142,9 @@ export class SentimentReviewsComponent implements AfterViewInit {
             });
           }
           if (page == max) {
-            this.filteringSentiments();
+            setTimeout(()=> {
+              this.filteringSentiments();
+            }, 100)
           }
         },
         (error) => {
@@ -160,7 +155,9 @@ export class SentimentReviewsComponent implements AfterViewInit {
               });
             }
             if (page == max) {
-              this.filteringSentiments();
+              setTimeout(()=> {
+                this.filteringSentiments();
+              }, 100)
             }
           });
 

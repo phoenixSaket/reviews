@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class IosService {
     return this.http.post(url, { name: parseInt(app) });
   }
 
-  getAppReviews(app: string, page: number, useBackup: boolean = false) {
+  getAppReviews(app: string, page: number, useBackup: boolean = false): Observable<any> {
     let url = (useBackup ? this.backupUrl : this.url) + "review";
     return this.http.post(url, { name: app, page: page });
   }
