@@ -6,7 +6,7 @@
         </div>
         <div class="brand">Review Dashboard</div>
     </div>
-    <div class="column-on-mobile">
+    <div class="column-on-mobile" *ngIf="!sidebar.getIsSidebarOpen()">
         <div class="histogram" *ngIf="data.getCurrentPage() != '-1' && data.getCurrentApp()?.name?.length > 0">
             <app-histogram [reviewsNo]="androidReviews.length + iosReviews.length"></app-histogram>
         </div>

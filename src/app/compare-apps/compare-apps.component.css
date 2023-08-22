@@ -114,7 +114,7 @@
   color: #bb844c;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 768px) {
   .flex-container>div>img {
     width: 20px;
     height: 20px;
