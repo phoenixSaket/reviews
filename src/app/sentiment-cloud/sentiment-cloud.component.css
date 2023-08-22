@@ -13,6 +13,8 @@
     align-items: center;
     position: fixed;
     top: 0;
+    left: 305px;
+    flex-wrap: wrap;
 }
 
 .loading-container {
@@ -47,4 +49,36 @@
     text-transform: uppercase;
     margin: 15px 0;
     color: var(--active);
+}
+
+@media (max-width: 768px) {
+    .top-container {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 5px;
+        padding: 0 10px;
+        top: 50px;
+        left: 0;
+    }
+
+    .contain {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .title {
+        font-size: 14px;
+        line-height: 14px;
+        margin: 0;
+    }
+
+    .canvas-container {
+        width: 100%;
+        height: calc(100% - 130px);
+        margin-top: 130px;
+    }
+
+    .text {
+        display: none;
+    }
 }

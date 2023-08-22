@@ -1,4 +1,4 @@
-<div class="top-container">
+<div class="top-container sentiment">
     <mat-form-field appearance="outline">
         <mat-label>{{shouldWait ? 'Loading apps '+currentApp + ' / '+totalApps :'Select App'}}</mat-label>
         <mat-select (selectionChange)="appSelected($event)">
@@ -7,24 +7,32 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
-    <button mat-raised-button class="shuffle-button" *ngIf="!!selectedApp && !loading"
-        (click)="redraw()">Shuffle</button>
-    <button mat-raised-button class="shuffle-button" *ngIf="!!selectedApp && !loading" (click)="getWordReport()">Get
-        Word Report</button>
+    <button mat-raised-button class="shuffle-button" *ngIf="!!selectedApp && !loading" (click)="redraw()">
+        <div class="text">Shuffle</div>
+        <span class="material-symbols-outlined">
+            shuffle
+        </span>
+    </button>
+    <button mat-raised-button class="shuffle-button" *ngIf="!!selectedApp && !loading" (click)="getWordReport()">
+        <div class="text">Get Word Report</div>
+        <span class="material-symbols-outlined">
+            list_alt
+        </span>
+    </button>
     <button mat-raised-button class="shuffle-button" *ngIf="!!selectedApp && !loading" (click)="zoomIn()">
-        Zoom In
+        <div class="text">Zoom In</div>
         <span class="material-symbols-outlined">
             zoom_in
         </span>
     </button>
     <button mat-raised-button class="shuffle-button" *ngIf="!!selectedApp && !loading" (click)="zoomOut()">
-        Zoom Out
+        <div class="text">Zoom Out</div>
         <span class="material-symbols-outlined">
             zoom_out
         </span>
     </button>
     <button mat-raised-button class="shuffle-button" *ngIf="!!selectedApp && !loading" (click)="download()">
-        Save
+        <div class="text">Save</div>
         <span class="material-symbols-outlined">
             download
         </span>

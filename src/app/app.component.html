@@ -1,10 +1,9 @@
 <app-navbar></app-navbar>
 <app-sidebar [apps]="apps"></app-sidebar>
-<div class="container" *ngIf="width > 500" [style.marginLeft]="sidebar.isSidebarOpen ? '305px': '0px'"
+<div class="container" *ngIf="width > 768" [style.marginLeft]="sidebar.isSidebarOpen ? '305px': '0px'"
   [style.width]="sidebar.isSidebarOpen ? 'calc(100% - 305px)': '100%'">
   <router-outlet></router-outlet>
 </div>
-<div class="container" *ngIf="width < 500" [style.padding]="sidebar.isSidebarOpen ? '0px': ''"
-  [style.width]="sidebar.isSidebarOpen ? '0': '100%'">
+<div class="container">
   <router-outlet></router-outlet>
 </div>
