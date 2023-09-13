@@ -1,15 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { AndroidService } from '../services/android.service';
 import { DataService } from '../services/data.service';
 import { IosService } from '../services/ios.service';
+
+import {
+  ApexAxisChartSeries,
+  ApexChart,
+  ApexXAxis,
+  ApexNonAxisChartSeries,
+  ApexResponsive,
+} from "ng-apexcharts";
+import { ApexDataLabels, ApexPlotOptions, ApexTheme, ApexYAxis } from 'ng-apexcharts/lib/model/apex-types';
+
+export type ChartOptions = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  xaxis: ApexXAxis;
+  yaxis: ApexYAxis;
+  plotOptions: ApexPlotOptions;
+  dataLabels: ApexDataLabels;
+  colors: string[]
+};
+
+export type ChartOptions2 = {
+  series: ApexNonAxisChartSeries;
+  chart: ApexChart;
+  responsive: ApexResponsive[];
+  labels: any;
+  plotOptions: ApexPlotOptions;
+  theme: ApexTheme;
+  colors: string[]
+};
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
-export class DashboardComponent {
+export class DashboardComponent implements AfterViewInit {
   public chart: any;
   private histogram: any = {};
   public apps: any[] = [];
@@ -17,6 +46,11 @@ export class DashboardComponent {
   public loading: boolean = true;
   public appLoading: number = 0;
   public loadingPercent: number = 0;
+
+  public charts: any[] = [];
+  public charts2: any[] = [];
+
+  total: any;
 
   constructor(public dataService: DataService, private android: AndroidService, private ios: IosService) { }
 
@@ -36,117 +70,237 @@ export class DashboardComponent {
 
         let apps = JSON.parse(localStorage.getItem("apps-review") || "[]");
 
-        apps.forEach((app: any) => {
-          if (app.isIOS) {
-            iosApps.push(app.app);
-          } else {
-            androidApps.push(app.app);
-          }
+        apps.forEach((app) => {
+          setTimeout(() => {
+            this.loadCharts(app);
+          }, 100);
         })
 
-        iosApps.forEach((app, index: number) => {
-          this.apps.push({ appName: app, type: 'pie' });
+        // apps.forEach((app: any) => {
+        //   if (app.isIOS) {
+        //     iosApps.push(app.app);
+        //   } else {
+        //     androidApps.push(app.app);
+        //   }
+        // })
 
-          this.ios.getAPPRatings(app, true).subscribe((response: any) => {
-            this.histogram = JSON.parse(response.result).histogram;
-            this.createChart(app, "pie");
-            this.createChart(app, "bar");
-          }, error => {
-            this.ios.getAPPRatings(app).subscribe((response: any) => {
-              this.histogram = JSON.parse(response.result).histogram;
-              this.createChart(app, "pie");
-              this.createChart(app, "bar");
-            })
-          })
-        });
+        // iosApps.forEach((app, index: number) => {
+        //   this.apps.push({ appName: app, type: 'pie' });
 
-        androidApps.forEach(app => {
-          this.apps.push({ appName: app, type: 'pie' });
-        })
+        //   this.ios.getAPPRatings(app, true).subscribe((response: any) => {
+        //     this.histogram = JSON.parse(response.result).histogram;
+        //     this.loadCharts(app);
+        //     // this.createChart(app, "bar");
+        //   }, error => {
+        //     this.ios.getAPPRatings(app).subscribe((response: any) => {
+        //       this.histogram = JSON.parse(response.result).histogram;
+        //       this.loadCharts(app);
+        //       // this.createChart(app, "bar");
+        //     })
+        //   })
+        // });
 
-        androidApps.forEach(appName => {
-          this.android.getApp(appName, true).subscribe((response: any) => {
-            let resp: any = JSON.parse(response.result);
-            this.histogram = resp.histogram;
-            this.createChart(appName, "pie");
-            this.createChart(appName, "bar");
-          }, error=> {
-            androidApps.forEach(appName => {
-              this.android.getApp(appName).subscribe((response: any) => {
-                let resp: any = JSON.parse(response.result);
-                this.histogram = resp.histogram;
-                this.createChart(appName, "pie");
-                this.createChart(appName, "bar");
-              });
-            })
-          });
-        })
+        // androidApps.forEach(app => {
+        //   this.apps.push({ appName: app, type: 'pie' });
+        // })
+
+        // androidApps.forEach(appName => {
+        //   this.android.getApp(appName, true).subscribe((response: any) => {
+        //     let resp: any = JSON.parse(response.result);
+        //     this.histogram = resp.histogram;
+        //     this.loadCharts(appName)
+        //     // this.createChart(appName, "bar");
+        //   }, error=> {
+        //     androidApps.forEach(appName => {
+        //       this.android.getApp(appName).subscribe((response: any) => {
+        //         let resp: any = JSON.parse(response.result);
+        //         this.histogram = resp.histogram;
+        //         this.loadCharts(appName)
+        //         // this.createChart(appName, "bar");
+        //       });
+        //     })
+        //   });
+        // })
       }
     })
   }
 
-  createChart(app: string, type: string) {
-    let array: number[] = Object.values(this.histogram);
-    let total: number = array.reduce((a: number, b: number) => { return a + b });
 
-    let percent: string[] = [];
-
-    for (let i = 0; i < array.length; i++) {
-      const element = array[i];
-      percent.push((element * 100 / total).toFixed());
-    }
-
-    if (type == 'pie') {
-      this.chart = new Chart('' + app + 'pie', {
-        type: 'pie',
-        data: {
-          // values on X-Axis
-          labels: ['1★ ( ' + percent[0] + '% )', '2★ ( ' + percent[1] + '% )', '3★ ( ' + percent[2] + '% )', '4★ ( ' + percent[3] + '% )', '5★ ( ' + percent[4] + '% )'],
-          datasets: [
-            {
-              label: '' + this.getAppName(app),
-
-              data: Object.values(this.histogram),
-              backgroundColor: [
-                '#e67474',
-                '#f5e050',
-                '#dffadf',
-                '#90ef90',
-                '#04c900',
-              ],
-            },
-          ],
-        }
-      });
-    } else {
-      this.chart = new Chart('' + app + 'bar', {
-        type: 'bar',
-        data: {
-          // values on X-Axis
-          labels: ['1★', '2★', '3★', '4★', '5★'],
-          datasets: [
-            {
-              label: '' + this.getAppName(app),
-              // labels: ['1★', '2★', '3★', '4★', '5★'],
-              data: Object.values(this.histogram),
-              backgroundColor: [
-                '#e67474',
-                '#f5e050',
-                '#dffadf',
-                '#90ef90',
-                '#04c900',
-              ],
-            },
-          ],
-        },
-        options: {
-          plugins: {
-            legend: {
-              display: false
-            }
+  loadCharts(app: any) {
+    this.loading = true;
+    let chartOptions: any = {
+      chart: {
+        height: 350,
+        type: "bar"
+      },
+      xaxis: {
+        type: 'category',
+        categories: ["1 ★", "2 ★", "3 ★", "4 ★", "5 ★"],
+        labels: {
+          style: {
+            fontSize: '14px',
+            fontWeight: 'bold',
+            colors: '#1C2E4A'
           }
         }
-      });
+      },
+      yaxis: {
+        show: false
+      },
+      plotOptions: {
+        bar: {
+          dataLabels: {
+            position: "top", // top, center, bottom
+            offSetY: -20
+          }
+        },
+        dataLabels: {
+          enabled: true,
+          offsetY: -20,
+          style: {
+            fontSize: '12px',
+            fontWeight: 800,
+            colors: ['#1C2E4A'],
+            fontFamily: 'Cabin, sans-serif'
+          }
+        },
+      },
+      colors: ["#126963", "#0C4642", "#126963", "#188C84", "#1EAEA5"]
+    };
+
+    let chartOptions2: any = {
+      chart: {
+        // width: '350',
+        // height: '100%',
+        type: "pie"
+      },
+      labels: ["1★", "2★", "3★", "4★", "5★"],
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 320
+            },
+            legend: {
+              position: "bottom"
+            }
+          }
+        },
+        {
+          breakpoint: 1000,
+          options: {
+            chart: {
+              width: 400
+            },
+            legend: {
+              position: "bottom"
+            }
+          }
+        },
+        {
+          breakpoint: 2160,
+          options: {
+            chart: {
+              width: 400
+            },
+            legend: {
+              position: "bottom"
+            }
+          }
+        },
+        {
+          breakpoint: 750,
+          options: {
+            chart: {
+              width: 350
+            },
+            legend: {
+              position: "bottom"
+            }
+          }
+        },
+      ],
+      theme: {
+        monochrome: {
+          enabled: true
+        }
+      },
+      plotOptions: {
+        bar: {
+          dataLabels: {
+            position: "top" // top, center, bottom
+          },
+          offsetY: -20
+        }
+      },
+      colors: ["#062321", "#0C4642", "#126963", "#188C84", "#1EAEA5"]
+    };
+
+    if (!!app) {
+      if (app.isIOS) {
+        this.ios.getApp(app.appId || app.app).subscribe((resp: any) => {
+          this.ios.getAPPRatings(app.appId || app.app).subscribe((response: any) => {
+            let histogram = JSON.parse(response.result).histogram;
+            let ratings: any[] = Object.values(histogram);
+            this.histogram = ratings;
+            let total = ratings.reduce((el, ab) => ab + el);
+            this.total = total;
+            let values = [];
+            ratings.forEach(el => {
+              values.push(parseFloat(((el * 100) / total).toFixed(2)));
+            })
+
+            chartOptions.series = [{
+              data: ratings,
+              name: "Ratings"
+            }];
+
+            chartOptions.app = JSON.parse(resp.result).title;
+            chartOptions.isIOS = true;
+
+            chartOptions2.series = values;
+            chartOptions2.isIOS = true;
+            chartOptions2.app = JSON.parse(resp.result).title;
+
+            this.charts.push({ app: JSON.parse(resp.result).title, type: 'bar', isIOS: app.isIOS, bar: chartOptions, pie: chartOptions2, isVisible: 'bar' });
+
+            setTimeout(() => {
+              this.loading = false;
+            }, 100);
+          })
+        })
+
+      } else {
+        this.android.getApp(app.appId || app.app).subscribe((resp: any) => {
+          console.log(JSON.parse(resp.result));
+          let histogram = JSON.parse(resp.result).histogram;
+          let ratings: any[] = Object.values(histogram);
+          this.histogram = ratings;
+          let total = ratings.reduce((el, ab) => ab + el);
+          this.total = total;
+          let values = [];
+          ratings.forEach(el => {
+            values.push(parseFloat(((el * 100) / total).toFixed(2)));
+          })
+
+          chartOptions.series = [{
+            data: ratings,
+            name: "Ratings"
+          }];
+
+          chartOptions.app = JSON.parse(resp.result).title;
+          chartOptions2.series = values;
+          chartOptions2.app = JSON.parse(resp.result).title;
+
+          this.charts.push({ app: JSON.parse(resp.result).title, type: 'bar', isIOS: app.isIOS, bar: chartOptions, pie: chartOptions2, isVisible: 'bar' });
+
+          setTimeout(() => {
+            this.loading = false;
+          }, 10);
+        });
+
+      }
     }
   }
 
@@ -169,6 +323,14 @@ export class DashboardComponent {
     } else {
       canvas?.scrollBy(-300, 0);
       this.apps[index].type = "pie";
+    }
+  }
+
+  changeChart(chart: any) {
+    if (chart.isVisible == 'pie') {
+      chart.isVisible = 'bar';
+    } else {
+      chart.isVisible = 'pie';
     }
   }
 
