@@ -39,6 +39,7 @@ import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { NewReviewsComponent } from './new-reviews/new-reviews.component';
 import { DocumentationComponent } from './documentation/documentation.component';
 import { SentimentReviewsComponent } from './sentiment-reviews/sentiment-reviews.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 
 
@@ -84,6 +85,7 @@ import { SentimentReviewsComponent } from './sentiment-reviews/sentiment-reviews
     MatDialogModule,
     ReactiveFormsModule,
     MatCheckboxModule,
+    NgApexchartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

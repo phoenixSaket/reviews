@@ -1,31 +1,31 @@
-<div class="container" *ngIf="!loading">
-  <div class="chart-container" [ngClass]="!!chart ? 'shadows': ''" *ngFor="let app of apps; let i = index">
-    <div class="chart-inner">
-      <div class="app-name" *ngIf="!!chart">
-        {{getAppName(app.appName)}}
-        <div class="type" (click)="togglePage(i)">
-          <mat-icon *ngIf="app.type == 'bar'"> pie_chart</mat-icon>
-          <mat-icon *ngIf="app.type == 'pie'"> bar_chart</mat-icon>
-        </div>
+<div class="container">
+  <div class="tab-content">
+      <div class="chart shadows" *ngFor="let chart of charts; let i = index">
+          <div class="name-container shadows">
+              <div class="name">
+                  {{chart.app}}
+                  <div class="platform">{{chart.isIOS ? 'IOS' : 'Android'}}</div>
+              </div>
+              <div class="icon" (click)="changeChart(chart)">
+                  <span class="material-symbols-outlined" *ngIf="chart.isVisible == 'bar'">
+                      bar_chart
+                  </span>
+                  <span class="material-symbols-outlined" *ngIf="chart.isVisible == 'pie'">
+                      pie_chart
+                  </span>
+              </div>
+          </div>
+          <apx-chart *ngIf="chart.isVisible == 'bar'" [series]="chart.bar.series" [colors]="chart.bar.colors"
+              [chart]="chart.bar.chart" [plotOptions]="chart.bar.plotOptions" [xaxis]="chart.bar.xaxis"
+              [yaxis]="chart.bar.yaxis" [dataLabels]="chart.bar.plotOptions.dataLabels"></apx-chart>
+          <apx-chart *ngIf="chart.isVisible == 'pie'" [series]="chart.pie.series" [colors]="chart.pie.colors"
+              [chart]="chart.pie.chart" [labels]="chart.pie.labels" [responsive]="chart.pie.responsive"
+              [plotOptions]="chart.pie.plotOptions"></apx-chart>
+          <div class="arrow shadows" (click)="changeChart(chart)">
+              <span class="material-symbols-outlined">
+                  arrow_circle_right
+              </span>
+          </div>
       </div>
-
-
-      <div class="canvas-container" [id]="'canvas'+i">
-        <canvas [id]="app.appName+'pie'">{{ chart }}</canvas>
-        <canvas [id]="app.appName+'bar'">{{ chart }}</canvas>
-      </div>
-
-      <div class="title" *ngIf="!!chart">
-        <span *ngIf="app.type == 'pie'">Ratings By Percentage</span>
-        <span *ngIf="app.type == 'bar'">Ratings By Count</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="loading-container" *ngIf="loading">
-  Loading Dashboard ... <span class="smaller">{{appLoading}} apps loaded out of {{this.dataService.getTotalApps() == 0 ? 10 : this.dataService.getTotalApps()}} apps.</span>
-  <div class="progress-bar">
-    <mat-progress-bar mode="determinate" [value]="loadingPercent"></mat-progress-bar>
   </div>
 </div>
