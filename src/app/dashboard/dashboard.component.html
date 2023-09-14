@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="!loading">
   <div class="tab-content">
       <div class="chart shadows" *ngFor="let chart of charts; let i = index">
           <div class="name-container shadows">
@@ -27,5 +27,13 @@
               </span>
           </div>
       </div>
+  </div>
+</div>
+
+<div class="loading-container" *ngIf="loading">
+  <div class="header">Loading Dashboard ...</div> 
+  Loaded {{(loadingPercent * this.dataService.getTotalApps()) / 100}} apps of {{this.dataService.getTotalApps()}} total apps.
+  <div class="progress-bar">
+    <mat-progress-bar mode="determinate" [value]="loadingPercent" [max]="100"></mat-progress-bar>
   </div>
 </div>

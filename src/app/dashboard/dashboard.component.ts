@@ -60,10 +60,6 @@ export class DashboardComponent implements AfterViewInit {
       this.loadingPercent = (data * 100) / (this.dataService.getTotalApps() == 0 ? 10 : this.dataService.getTotalApps());
       if (!!data && data > -1 && (data == (this.dataService.getTotalApps() == 0 ? 10 : this.dataService.getTotalApps()) - this.dataService.failedApps)) {
 
-        setTimeout(() => {
-          this.loading = false;
-        }, 400);
-
         this.chart?.destroy()
         let iosApps: any[] = []; //this.ios.iosAppsDefault;
         let androidApps: any[] = []; //this.android.androidAppsDefault;
@@ -75,52 +71,6 @@ export class DashboardComponent implements AfterViewInit {
             this.loadCharts(app);
           }, 100);
         })
-
-        // apps.forEach((app: any) => {
-        //   if (app.isIOS) {
-        //     iosApps.push(app.app);
-        //   } else {
-        //     androidApps.push(app.app);
-        //   }
-        // })
-
-        // iosApps.forEach((app, index: number) => {
-        //   this.apps.push({ appName: app, type: 'pie' });
-
-        //   this.ios.getAPPRatings(app, true).subscribe((response: any) => {
-        //     this.histogram = JSON.parse(response.result).histogram;
-        //     this.loadCharts(app);
-        //     // this.createChart(app, "bar");
-        //   }, error => {
-        //     this.ios.getAPPRatings(app).subscribe((response: any) => {
-        //       this.histogram = JSON.parse(response.result).histogram;
-        //       this.loadCharts(app);
-        //       // this.createChart(app, "bar");
-        //     })
-        //   })
-        // });
-
-        // androidApps.forEach(app => {
-        //   this.apps.push({ appName: app, type: 'pie' });
-        // })
-
-        // androidApps.forEach(appName => {
-        //   this.android.getApp(appName, true).subscribe((response: any) => {
-        //     let resp: any = JSON.parse(response.result);
-        //     this.histogram = resp.histogram;
-        //     this.loadCharts(appName)
-        //     // this.createChart(appName, "bar");
-        //   }, error=> {
-        //     androidApps.forEach(appName => {
-        //       this.android.getApp(appName).subscribe((response: any) => {
-        //         let resp: any = JSON.parse(response.result);
-        //         this.histogram = resp.histogram;
-        //         this.loadCharts(appName)
-        //         // this.createChart(appName, "bar");
-        //       });
-        //     })
-        //   });
-        // })
       }
     })
   }
@@ -329,7 +279,7 @@ export class DashboardComponent implements AfterViewInit {
 
           setTimeout(() => {
             this.loading = false;
-          }, 10);
+          }, 100);
         });
 
       }

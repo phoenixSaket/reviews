@@ -112,6 +112,7 @@ export class AddReviewComponent implements OnInit {
     if (this.platform == "IOS") {
       shouldAddApp = this.saveToLocalStorage({ app: app.id, isIOS: this.platform == "IOS" });
       if (shouldAddApp) {
+        this.data.totalApps =  JSON.parse(localStorage.getItem("apps-review") || "[]").length;
         this.data.newAppAdded.next({ app: app.id, isIOS: this.platform == "IOS", appName: app.title });
       } else {
         this.openSnackbar("App already present");
@@ -119,6 +120,7 @@ export class AddReviewComponent implements OnInit {
     } else {
       shouldAddApp = this.saveToLocalStorage({ app: app.appId, isIOS: this.platform == "IOS" });
       if (shouldAddApp) {
+        this.data.totalApps =  JSON.parse(localStorage.getItem("apps-review") || "[]").length;
         this.data.newAppAdded.next({ app: app.appId, isIOS: this.platform == "IOS", appName: app.title });
       } else {
         this.openSnackbar("App already present");
