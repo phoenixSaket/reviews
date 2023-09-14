@@ -51,7 +51,7 @@
     width: 100%;
     padding: 10px;
     border-radius: 5px;
-    background-color: rgba(100%, 100%, 100%, 100%);
+    background-color: var(--white);
     cursor: pointer;
 
 }
@@ -162,7 +162,7 @@ hr {
 }
 
 .checkbox {
-    background-color: #ffffff;
+    background-color: var(--white);
     width: 15px;
     height: 15px;
     border-radius: 5px;
