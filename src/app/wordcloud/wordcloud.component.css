@@ -23,7 +23,7 @@
 .shuffle-button {
     background-color: var(--active);
     height: 50px;
-    color: white;
+    color: var(--white);
 }
 
 .contain {

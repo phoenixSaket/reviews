@@ -125,6 +125,38 @@ export class DashboardComponent implements AfterViewInit {
     })
   }
 
+  getColor(colorName: string): string {
+    const r = document.querySelector(':root');
+    const rs = getComputedStyle(r);
+    const color = rs.getPropertyValue("--"+colorName);
+    return color;
+  }
+
+  getColorShades(colorName: string): string[] {
+    const root = document.querySelector(':root');
+    const rs = getComputedStyle(root);
+    const color = rs.getPropertyValue("--"+colorName);
+
+    const [r,g,b] = [
+      parseInt(color.substring(1,3), 16),
+      parseInt(color.substring(3,5), 16),
+      parseInt(color.substring(5,7), 16),
+    ];
+
+    const shades = [
+      '#' + this.getHexValue(r, 0.2) + this.getHexValue(g, 0.2) + this.getHexValue(b, 0.2),
+      '#' + this.getHexValue(r, 0.4) + this.getHexValue(g, 0.4) + this.getHexValue(b, 0.4),
+      '#' + this.getHexValue(r, 0.6) + this.getHexValue(g, 0.6) + this.getHexValue(b, 0.6),
+      '#' + this.getHexValue(r, 0.8) + this.getHexValue(g, 0.8) + this.getHexValue(b, 0.8),
+      color,
+    ];
+
+    return shades;
+  }
+
+  getHexValue(r: number, opacity: number) {
+    return Math.round(r * opacity).toString(16).length == 2 ? Math.round(r * opacity).toString(16) : '0' + Math.round(r * opacity).toString(16);
+  }
 
   loadCharts(app: any) {
     this.loading = true;
@@ -140,7 +172,7 @@ export class DashboardComponent implements AfterViewInit {
           style: {
             fontSize: '14px',
             fontWeight: 'bold',
-            colors: '#1C2E4A'
+            colors: this.getColor('graph')
           }
         }
       },
@@ -160,12 +192,12 @@ export class DashboardComponent implements AfterViewInit {
           style: {
             fontSize: '12px',
             fontWeight: 800,
-            colors: ['#1C2E4A'],
+            colors: [this.getColor('graph')],
             fontFamily: 'Cabin, sans-serif'
           }
         },
       },
-      colors: ["#126963", "#0C4642", "#126963", "#188C84", "#1EAEA5"]
+      colors: [this.getColor('graph')]
     };
 
     let chartOptions2: any = {
@@ -234,7 +266,7 @@ export class DashboardComponent implements AfterViewInit {
           offsetY: -20
         }
       },
-      colors: ["#062321", "#0C4642", "#126963", "#188C84", "#1EAEA5"]
+      colors: this.getColorShades('active')
     };
 
     if (!!app) {

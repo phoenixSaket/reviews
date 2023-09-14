@@ -166,8 +166,9 @@ export class AppComponent {
           this.ios.getApp(data.app, true).subscribe((response: any) => {
             let resp: any = JSON.parse(response.result);
             this.data.setAppName({ appName: resp.title, isIOS: true, id: data.app });
-            this.apps.push({ name: resp.title, icon: resp.icon, rating: resp.score, isIOS: true, id: resp.id, appId: resp.appId });
-            this.apps.sort((a, b) => { if (a.name > b.name) { return 1 } else if (b.name > a.name) { return -1 } else { return 0 } });
+            // this.apps.push({ name: resp.title, icon: resp.icon, rating: resp.score, isIOS: true, id: resp.id, appId: resp.appId });
+            // this.apps.sort((a, b) => { if (a.name > b.name) { return 1 } else if (b.name > a.name) { return -1 } else { return 0 } });
+            this.apps = this.pushToTop(this.apps, {name: resp.title, icon: resp.icon, rating: resp.score, isIOS: true, id: resp.id})
             this.cdr.detectChanges();
             this.loadedApps += 1;
             this.data.loadedApps.next(this.loadedApps);
@@ -180,8 +181,9 @@ export class AppComponent {
             this.ios.getApp(data.app).subscribe((response: any) => {
               let resp: any = JSON.parse(response.result);
               this.data.setAppName({ appName: resp.title, isIOS: true, id: data.app });
-              this.apps.push({ name: resp.title, icon: resp.icon, rating: resp.score, isIOS: true, id: resp.id, appId: resp.appId });
-              this.apps.sort((a, b) => { if (a.name > b.name) { return 1 } else if (b.name > a.name) { return -1 } else { return 0 } });
+              // this.apps.push({ name: resp.title, icon: resp.icon, rating: resp.score, isIOS: true, id: resp.id, appId: resp.appId });
+              // this.apps.sort((a, b) => { if (a.name > b.name) { return 1 } else if (b.name > a.name) { return -1 } else { return 0 } });
+              this.apps = this.pushToTop(this.apps, {name: resp.title, icon: resp.icon, rating: resp.score, isIOS: true, id: resp.id})
               this.cdr.detectChanges();
               this.loadedApps += 1;
               this.data.loadedApps.next(this.loadedApps);
@@ -199,8 +201,9 @@ export class AppComponent {
           this.android.getApp(data.app, true).subscribe((response: any) => {
             let resp: any = JSON.parse(response.result);
             this.data.setAppName({ appName: resp.title, isIOS: false, id: data.app });
-            this.apps.push({ name: resp.title, icon: resp.icon, rating: resp.score, isIOS: false, appId: resp.appId });
-            this.apps.sort((a, b) => { if (a.name > b.name) { return 1 } else if (b.name > a.name) { return -1 } else { return 0 } });
+            // this.apps.push({ name: resp.title, icon: resp.icon, rating: resp.score, isIOS: false, appId: resp.appId });
+            // this.apps.sort((a, b) => { if (a.name > b.name) { return 1 } else if (b.name > a.name) { return -1 } else { return 0 } });
+            this.apps = this.pushToTop(this.apps, {name: resp.title, icon: resp.icon, rating: resp.score, isIOS: false, appId: resp.appId})
             this.cdr.detectChanges();
             this.loadedApps += 1;
             this.data.loadedApps.next(this.loadedApps);
@@ -217,8 +220,9 @@ export class AppComponent {
             this.android.getApp(data.app).subscribe((response: any) => {
               let resp: any = JSON.parse(response.result);
               this.data.setAppName({ appName: resp.title, isIOS: false, id: data.app });
-              this.apps.push({ name: resp.title, icon: resp.icon, rating: resp.score, isIOS: false, appId: resp.appId });
-              this.apps.sort((a, b) => { if (a.name > b.name) { return 1 } else if (b.name > a.name) { return -1 } else { return 0 } });
+              // this.apps.push({ name: resp.title, icon: resp.icon, rating: resp.score, isIOS: false, appId: resp.appId });
+              // this.apps.sort((a, b) => { if (a.name > b.name) { return 1 } else if (b.name > a.name) { return -1 } else { return 0 } });
+              this.apps = this.pushToTop(this.apps, {name: resp.title, icon: resp.icon, rating: resp.score, isIOS: false, appId: resp.appId})
               this.cdr.detectChanges();
               this.loadedApps += 1;
               this.data.loadedApps.next(this.loadedApps);
@@ -239,6 +243,17 @@ export class AppComponent {
         }
       }
     })
+  }
+
+  pushToTop(array: any[], entry: any): any[] {
+    let newArray: any[] = [];
+    newArray.push(entry);
+
+    array.forEach(el=> {
+      newArray.push(el);
+    });
+
+    return newArray;
   }
 
   ngAfterViewInit() {

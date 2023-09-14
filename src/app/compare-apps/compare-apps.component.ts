@@ -353,9 +353,6 @@ export class CompareAppsComponent implements OnInit {
         }
       });
 
-      console.log(showPositive)
-      console.log(showNegative)
-
       showPositive = showPositive.sort((a: any, b: any) => {
         return b.number - a.number;
       })
