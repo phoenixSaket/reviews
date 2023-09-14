@@ -44,7 +44,6 @@ export class DashboardComponent implements AfterViewInit {
   public apps: any[] = [];
   public type: string = "pie";
   public loading: boolean = true;
-  public appLoading: number = 0;
   public loadingPercent: number = 0;
 
   public charts: any[] = [];
@@ -56,7 +55,6 @@ export class DashboardComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.dataService.loadedApps.subscribe((data: number) => {
-      this.appLoading = data;
       this.loadingPercent = (data * 100) / (this.dataService.getTotalApps() == 0 ? 10 : this.dataService.getTotalApps());
       if (!!data && data > -1 && (data == (this.dataService.getTotalApps() == 0 ? 10 : this.dataService.getTotalApps()) - this.dataService.failedApps)) {
 
@@ -247,9 +245,9 @@ export class DashboardComponent implements AfterViewInit {
 
             this.charts.push({ app: JSON.parse(resp.result).title, type: 'bar', isIOS: app.isIOS, bar: chartOptions, pie: chartOptions2, isVisible: 'bar' });
 
-            setTimeout(() => {
-              this.loading = false;
-            }, 100);
+            // setTimeout(() => {
+            //   this.loading = false;
+            // }, 100);
           })
         })
 
@@ -277,9 +275,9 @@ export class DashboardComponent implements AfterViewInit {
 
           this.charts.push({ app: JSON.parse(resp.result).title, type: 'bar', isIOS: app.isIOS, bar: chartOptions, pie: chartOptions2, isVisible: 'bar' });
 
-          setTimeout(() => {
-            this.loading = false;
-          }, 100);
+          // setTimeout(() => {
+          //   this.loading = false;
+          // }, 100);
         });
 
       }
