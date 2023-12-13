@@ -92,13 +92,14 @@ export class DashboardComponent implements AfterViewInit {
     ];
 
     const shades = [
-      '#' + this.getHexValue(r, 0.2) + this.getHexValue(g, 0.2) + this.getHexValue(b, 0.2),
-      '#' + this.getHexValue(r, 0.4) + this.getHexValue(g, 0.4) + this.getHexValue(b, 0.4),
-      '#' + this.getHexValue(r, 0.6) + this.getHexValue(g, 0.6) + this.getHexValue(b, 0.6),
-      '#' + this.getHexValue(r, 0.8) + this.getHexValue(g, 0.8) + this.getHexValue(b, 0.8),
-      color,
+      '#' + this.getHexValue(r, 0.1) + this.getHexValue(g, 0.1) + this.getHexValue(b, 0.5),
+      '#' + this.getHexValue(r, 0.3) + this.getHexValue(g, 0.3) + this.getHexValue(b, 0.6),
+      '#' + this.getHexValue(r, 0.5) + this.getHexValue(g, 0.5) + this.getHexValue(b, 0.7),
+      '#' + this.getHexValue(r, 0.7) + this.getHexValue(g, 0.7) + this.getHexValue(b, 0.8),
+      '#' + this.getHexValue(r, 0.9) + this.getHexValue(g, 0.9) + this.getHexValue(b, 0.9),
     ];
 
+    console.log(shades)
     return shades;
   }
 
@@ -214,7 +215,7 @@ export class DashboardComponent implements AfterViewInit {
           offsetY: -20
         }
       },
-      colors: this.getColorShades('active')
+      colors: this.getColorShades('graph')
     };
 
     if (!!app) {
@@ -243,17 +244,12 @@ export class DashboardComponent implements AfterViewInit {
             chartOptions2.isIOS = true;
             chartOptions2.app = JSON.parse(resp.result).title;
 
-            this.charts.push({ app: JSON.parse(resp.result).title, type: 'bar', isIOS: app.isIOS, bar: chartOptions, pie: chartOptions2, isVisible: 'bar' });
-
-            // setTimeout(() => {
-            //   this.loading = false;
-            // }, 100);
+            this.charts.push({ app: JSON.parse(resp.result).title, type: 'bar', isIOS: app.isIOS, bar: chartOptions, pie: chartOptions2, isVisible: 'bar' });;
           })
         })
 
       } else {
         this.android.getApp(app.appId || app.app).subscribe((resp: any) => {
-          console.log(JSON.parse(resp.result));
           let histogram = JSON.parse(resp.result).histogram;
           let ratings: any[] = Object.values(histogram);
           this.histogram = ratings;
