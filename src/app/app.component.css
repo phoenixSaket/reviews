@@ -8,8 +8,10 @@
     background-color: var(--accent);
 }
 
-@media (max-width: 500px) {
+@media (max-width: 768px) {
     .container {
         margin-top: 80px;
+        padding: 0px 10px 50px;
+        height: calc(100vh - 130px);
     }
 }

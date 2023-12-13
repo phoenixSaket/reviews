@@ -20,7 +20,7 @@ export class SidebarComponent implements OnInit {
   public selectedWordCloud: boolean = false;
   public selectedSmartWordCloud: boolean = false;
   public selectedDocumentation: boolean = false;
-  public isNotMobile: boolean = screen.availWidth > 500;
+  public isNotMobile: boolean = screen.availWidth > 768;
   private backupSelectedApp: any = {};
 
   constructor(
@@ -149,7 +149,7 @@ export class SidebarComponent implements OnInit {
           break;
       }
     }
-    if (screen.width < 500) {
+    if (screen.width < 768) {
       this.sidebar.closeSidebar();
     }
   }
@@ -237,7 +237,7 @@ export class SidebarComponent implements OnInit {
       });
       this.data.compareAppAdded.next(tempCompareArray);
       this.compareApp();
-      if (screen.width < 500) {
+      if (screen.width < 768) {
         this.sidebar.closeSidebar();
       }
       this.router.navigate(['/compare']);
@@ -262,8 +262,8 @@ export class SidebarComponent implements OnInit {
       }
     });
     if (
-      (screen.width > 500 && length >= 3) ||
-      (screen.width < 500 && length >= 2)
+      (screen.width > 768 && length >= 3) ||
+      (screen.width < 768 && length >= 2)
     ) {
       if (app.shouldCompare) {
         app.shouldCompare = !app.shouldCompare;

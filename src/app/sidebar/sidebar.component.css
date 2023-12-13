@@ -51,7 +51,7 @@
     width: 100%;
     padding: 10px;
     border-radius: 5px;
-    background-color: rgba(100%, 100%, 100%, 100%);
+    background-color: var(--white);
     cursor: pointer;
 
 }
@@ -76,13 +76,13 @@ hr {
 
 .delete {
     background-image: linear-gradient(to left, rgb(225, 136, 136) 50%, white 80%);
-    color: white;
+    color: var(--white);
     justify-content: space-between;
 }
 
 .compare {
     background-image: linear-gradient(to left, #6cc297 50%, white 80%);
-    color: white;
+    color: var(--white);
     justify-content: space-between;
 }
 
@@ -117,7 +117,7 @@ hr {
     align-items: center;
     padding: 10px;
     border-radius: 5px;
-    background-color: white;
+    background-color: var(--white);
 }
 
 .apps .img {
@@ -162,7 +162,7 @@ hr {
 }
 
 .checkbox {
-    background-color: #ffffff;
+    background-color: var(--white);
     width: 15px;
     height: 15px;
     border-radius: 5px;
@@ -184,7 +184,7 @@ hr {
 .inner-delete {
     padding: 10px 0px;
     border-radius: 5px;
-    color: white;
+    color: var(--white);
     font-weight: 700;
     cursor: pointer;
 }
@@ -208,12 +208,12 @@ hr {
 
 .active {
     background-color: var(--active);
-    color: white;
+    color: var(--white);
 }
 
 .active>* {
     background-color: var(--active);
-    color: white;
+    color: var(--white);
 }
 
 .active  .app {
@@ -250,9 +250,11 @@ hr {
     font-weight: 700;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 768px) {
     .side-bar-container {
         max-width: 100%;
+        background-color: var(--accent);
+        z-index: 1000;
     }
 
     .open {

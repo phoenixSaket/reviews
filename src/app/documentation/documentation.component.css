@@ -181,7 +181,7 @@ path {
     border: none;
     outline: none;
     background-color: var(--active);
-    color: white;
+    color: var(--white);
     border-radius: 5px;
     font-size: 18px;
     font-weight: 700;
@@ -189,7 +189,7 @@ path {
 }
 
 
-@media (max-width: 500px) {
+@media (max-width: 768px) {
 
     .left,
     .right {

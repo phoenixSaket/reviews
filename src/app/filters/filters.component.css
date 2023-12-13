@@ -15,7 +15,7 @@
 }
 
 .rating-container> div {
-    color: white;
+    color: var(--white);
 }
 
 .mat-chip.mat-standard-chip > .rating-container> div {
@@ -27,7 +27,7 @@
 }
 
 .mat-rating.mat-chip-selected > .rating-container> div {
-    color: white;
+    color: var(--white);
 }
 
 .mat-chip.mat-standard-chip {
@@ -46,7 +46,7 @@
 
 .mat-rating.mat-chip-selected {
     background-color: var(--active);
-    color: white;
+    color: var(--white);
 }
 
 .rating {
@@ -56,7 +56,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background-color: var(--white);
 }
 
 .selected {
@@ -86,7 +86,7 @@
     align-items: center;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 768px) {
     .filter-container {
         gap: 2px;
         height: unset;
@@ -117,7 +117,7 @@
 }
 
 .text {
-    color: white;
+    color: var(--white);
 }
 
 /* Sorting */
@@ -129,7 +129,7 @@
     background-color: var(--active);
     border-radius: 5px;
     padding: 7px 10px;
-    color: white;
+    color: var(--white);
     /* font-size: 16px;
     position: sticky;
     top: 53.45px; */
@@ -156,7 +156,7 @@
     user-select: none;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 768px) {
     .sorting-container {
         display: none;
     }

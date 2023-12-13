@@ -5,7 +5,7 @@
     font-family: Cabin, sans-serif;
 }
 
-:root {
+/* :root {
     --accent: #E9F5F3;
     --accent-dark: #198b83;
     --accent-other: #1ca58e;
@@ -14,10 +14,23 @@
     --red: #e18888;
     --mat-mdc-snack-bar-button-color: var(--accent) !important;
     --mdc-snackbar-container-color: var(--active) !important;
+} */
+
+:root {
+    --graph: #546087;
+    --accent: #ebf1fa;
+    --accent-dark: #546087;
+    --accent-other: #84adea;
+    --active: #495d7b;
+    --green: #84adea;
+    --red: #e18888;
+    --mat-mdc-snack-bar-button-color: var(--accent) !important;
+    --mdc-snackbar-container-color: var(--active) !important;
+    --white: #f2f2f2;
 }
 
 .mat-snack-bar-container {
-    color: white;
+    color: var(--white);
     background: var(--accent-dark);
 }
 
@@ -41,6 +54,12 @@ body {
 .shadow,
 .shadows {
     box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.1);
+}
+
+.sentiment .mat-button-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 
@@ -130,4 +149,22 @@ span.mat-checkbox-label {
     display: flex;
     justify-content: space-between;
     gap: 10px;
+}
+
+@media (max-width: 768px) {
+    .cdk-overlay-pane {
+        max-width: 100vw !important;
+    }
+
+    .sentiment .mat-button-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 0px;
+        justify-content: center;
+    }
+    
+}
+
+mat-dialog-container {
+    BACKGROUND-COLOR: var(--white);
 }

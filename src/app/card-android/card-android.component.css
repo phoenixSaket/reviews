@@ -4,7 +4,7 @@
     padding: 10px;
     border-radius: 5px;
     margin: 3px 0px;
-    background-color: white;
+    background-color: #fefefe;
 }
 
 .left {
@@ -80,20 +80,20 @@
 
 .basic {
     background-color: var(--active);
-    color: white;
+    color: var(--white);
 }
 
 .red {
     background-color: #e18888;
-    color: white;
+    color: var(--white);
 }
 
 .green {
     background-color: #6cc297;
-    color: white;
+    color: var(--white);
 }
 
-@media (max-width: 500px) {
+@media (max-width: 768px) {
     .right {
         width: 100%;
         align-items: end;

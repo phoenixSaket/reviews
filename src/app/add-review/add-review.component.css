@@ -98,12 +98,12 @@
 
 .mat-custom {
     background-color: var(--active);
-    color: white;
+    color: var(--white);
 }
 
 .hover {
     position: absolute;
-    background-color: #6dbcb7c9;
+    background-color: #475e8375;
     opacity: 0;
     width: 100%;
     height: 100%;
@@ -114,7 +114,7 @@
     border-radius: 10px;
     transition-property: all;
     transition-duration: 3000ms;
-    color: white;
+    color: var(--white);
     font-weight: 700;
     font-size: 16px;
     cursor: pointer;
@@ -127,6 +127,8 @@
         justify-content: flex-end;
         align-items: flex-end;
         opacity: 1;
+        transition-property: all;
+    transition-duration: 3000ms;
     }
     
     .text {
