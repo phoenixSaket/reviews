@@ -45,7 +45,7 @@ export class AndroidService {
   }
 
   sentimentAnalysis(text: string[]) {
-    let url = "https://sleepy-fox-wrap.cyclic.app/android/" + "sentiment";
+    let url = this.backupUrl + "sentiment";
     return this.http.post(url, {string: text});
   }
 }

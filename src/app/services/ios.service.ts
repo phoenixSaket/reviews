@@ -35,7 +35,7 @@ export class IosService {
   }
 
   sentimentAnalysis(text: string[]) {
-    let url = "https://sleepy-fox-wrap.cyclic.app/ios/" + "sentiment";
+    let url =this.backupUrl + "sentiment";
     return this.http.post(url, {string: text});
   }
 }
