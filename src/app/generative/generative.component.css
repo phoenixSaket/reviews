@@ -1,0 +1,109 @@
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 3px 0px;
+    background-color: #fefefe;
+    height: calc(100dvh - 161.25px);
+    position: sticky;
+    top: 94px;
+}
+
+.top {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.heading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    gap: 5px;
+    border-bottom: 1px solid var(--accent-dark);
+}
+
+.title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #474747;
+}
+
+.sub-title {
+    font-size: 14px;
+    font-style: italic;
+    color: #757575;
+}
+
+.prompt {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.prompt-input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--accent-dark);
+    width: 100%;
+}
+
+.prompt > button {
+    font-size: 16px;
+    font-weight: 700;
+    width: 200px;
+    border-radius: 8px;
+    padding: 3px;
+    background-color: var(--accent-dark);
+    color: var(--white);
+}
+
+.prompt > button.disabled {
+    background-color: var(--white);
+    color: #ababab;
+    cursor: not-allowed;
+}
+
+.pre-defined {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.pre-defined-prompt {
+    width: fit-content;
+    cursor: pointer;
+}
+
+.label {
+    margin: 0 0 5px;
+    font-weight: 400;
+    color: #474747;
+}
+
+.content {
+    overflow-y: auto;
+    height: calc(100dvh - 420px);
+    padding: 16px;
+    border: 1px solid #e7e7e7;
+    border-radius: 8px;
+}
+
+.content pre {
+    white-space: pre-wrap;
+}
+
+@media (max-width: 768px) {
+    .content {
+        height: calc(100dvh - 465px);
+    }
+}

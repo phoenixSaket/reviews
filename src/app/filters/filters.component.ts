@@ -16,8 +16,10 @@ export class FiltersComponent implements OnInit {
   @Output() version: EventEmitter<string> = new EventEmitter<string>();
   @Output() year: EventEmitter<string> = new EventEmitter<string>();
   @Output() ratingFilter: EventEmitter<any> = new EventEmitter<any>();
-  @Output() sortBy: EventEmitter<string> = new EventEmitter<string>();
+  @Output() sortBy: EventEmitter<string> = new EventEmitter<string>();  
+  @Output() shouldOpenAITools: EventEmitter<boolean> = new EventEmitter<boolean>(false);
 
+  openAI: boolean = false;
   public showFilters: boolean = screen.width > 500 ? true : false;
   public showFilterButton: boolean = screen.width < 500 ? true : false;
   public sortingArray: any[] = [
@@ -88,5 +90,10 @@ export class FiltersComponent implements OnInit {
 
   sortByEmit(str: string) {
     this.sortBy.emit(str);
+  }
+
+  openAITools() {
+    this.openAI = !this.openAI;
+    this.shouldOpenAITools.emit(this.openAI);
   }
 }
