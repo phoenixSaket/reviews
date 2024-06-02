@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="generative-container" [ngClass]="shouldOpen ? 'open' : 'closed'">
-            <app-generative [androidReviews]="androidReviews" [iosReviews]="iosReviews"></app-generative>
+            <app-generative [id]="isIOS ? app.id : app.appId" [platform]="isIOS ? 'ios': 'android'"></app-generative>
         </div>
     </div>
 </div>
