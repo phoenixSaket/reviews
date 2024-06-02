@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { GenerativeService } from '../services/generative.service';
+import { GenerativeService, platform } from '../services/generative.service';
 import * as showdown from 'showdown';
 
 @Component({
@@ -9,8 +9,8 @@ import * as showdown from 'showdown';
 })
 export class GenerativeComponent implements OnInit, OnChanges {
 
-  @Input() androidReviews: any;
-  @Input() iosReviews: any;
+  @Input() id: string;
+  @Input() platform: platform;
 
   preDefinedPrompts: string[] = [
     "Summarize the reviews",
@@ -30,57 +30,14 @@ export class GenerativeComponent implements OnInit, OnChanges {
 
   ngOnInit(): void { }
 
-  formatDataAndroid(data: any[]): singleEntry[] {
-    console.log("GenerativeComponent.formatDataAndroid", data);
-
-    let temp: singleEntry[] = [];
-
-    data.forEach((entry: any) => {
-      let singleEntry: singleEntry = {
-        author: entry.userName || '',
-        updated: entry.date || '',
-        rating: entry.scoreText || '',
-        version: entry.version || '',
-        content: entry.text || '',
-        title: entry.title || ''
-      }
-      temp.push(singleEntry);
-    });
-
-    return temp;
-  }
-
-  formatDataIos(data: any[]): singleEntry[] {
-    console.log("GenerativeComponent.formatDataIos", data);
-    let temp: singleEntry[] = [];
-
-    data.forEach((entry: any) => {
-      let singleEntry: singleEntry = {
-        author: entry.author.name.label,
-        updated: entry.updated.label,
-        rating: entry['im:rating'].label,
-        version: entry['im:version'].label,
-        content: entry.content.label,
-        title: entry.title.label
-      }
-      temp.push(singleEntry);
-    });
-
-    return temp;
-  }
-
   changePrompt(prompt: string) {
     console.log("GenerativeComponent.changePromt", prompt);
     this.isLoading = true;
     let type = this.getType(prompt);
-    let appData = this.androidReviews.length > 0 ? this.androidReviews : this.iosReviews.length > 0 ? this.iosReviews : "";
-    appData = this.androidReviews.length > 0 ? this.formatDataAndroid(appData) : this.formatDataIos(appData);
-
-    let data = JSON.stringify({data: appData}).replace(/"/g, "'").replace(/\\n/g, "").replace(/\\r/g, "").replace(/\//g, "");
-    
+        
     this.isButtonDisabled = true;
     this.content = "";
-    this.generative.getSummary(type, data, "").subscribe((response: any) => {
+    this.generative.getSummaryV2(type, this.id, "", this.platform).subscribe((response: any) => {
       this.isLoading = false;
       this.prompt = "";
       console.log("GenerativeComponent.changePrompt -> getSummary success", response);
@@ -89,6 +46,7 @@ export class GenerativeComponent implements OnInit, OnChanges {
       }
     }, (error: any) => {
       console.log("GenerativeComponent.changePrompt -> getSummary error", error);
+      this.isLoading = false;
     })
   }
 
@@ -106,14 +64,10 @@ export class GenerativeComponent implements OnInit, OnChanges {
 
   generate() {
     this.isLoading = true;
-    let appData = this.androidReviews.length > 0 ? this.androidReviews : this.iosReviews.length > 0 ? this.iosReviews : "";
-    appData = this.androidReviews.length > 0 ? this.formatDataAndroid(appData) : this.formatDataIos(appData);
-
-    let data = JSON.stringify({data: appData}).replace(/"/g, "'").replace(/\\n/g, "").replace(/\\r/g, "").replace(/\//g, "");
 
     this.isButtonDisabled = true;
     this.content = "";
-    this.generative.getSummary("", data, this.prompt).subscribe((response: any) => {
+    this.generative.getSummaryV2("", this.id, this.prompt, this.platform).subscribe((response: any) => {
       this.isLoading = false;
       this.prompt = "";
       console.log("GenerativeComponent.changePrompt -> getSummary success", response);
@@ -122,6 +76,7 @@ export class GenerativeComponent implements OnInit, OnChanges {
       }
     }, (error: any) => {
       console.log("GenerativeComponent.changePrompt -> getSummary error", error);
+      this.isLoading = false;
     })
   }
 
