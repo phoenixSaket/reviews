@@ -41,6 +41,7 @@ import { DocumentationComponent } from './documentation/documentation.component'
 import { SentimentReviewsComponent } from './sentiment-reviews/sentiment-reviews.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { GenerativeComponent } from './generative/generative.component';
+import { LoaderComponent } from './loader/loader.component';
 
 
 
@@ -66,7 +67,8 @@ import { GenerativeComponent } from './generative/generative.component';
     NewReviewsComponent,
     DocumentationComponent,
     SentimentReviewsComponent,
-    GenerativeComponent
+    GenerativeComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,

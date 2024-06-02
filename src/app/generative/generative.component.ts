@@ -21,6 +21,7 @@ export class GenerativeComponent implements OnInit, OnChanges {
   isButtonDisabled: boolean = true;
   prompt: string = "";
   content: string = "";
+  isLoading: boolean = false;
 
   constructor(private generative: GenerativeService) { }
 
@@ -70,6 +71,7 @@ export class GenerativeComponent implements OnInit, OnChanges {
 
   changePrompt(prompt: string) {
     console.log("GenerativeComponent.changePromt", prompt);
+    this.isLoading = true;
     let type = this.getType(prompt);
     let appData = this.androidReviews.length > 0 ? this.androidReviews : this.iosReviews.length > 0 ? this.iosReviews : "";
     appData = this.androidReviews.length > 0 ? this.formatDataAndroid(appData) : this.formatDataIos(appData);
@@ -79,6 +81,7 @@ export class GenerativeComponent implements OnInit, OnChanges {
     this.isButtonDisabled = true;
     this.content = "";
     this.generative.getSummary(type, data, "").subscribe((response: any) => {
+      this.isLoading = false;
       this.prompt = "";
       console.log("GenerativeComponent.changePrompt -> getSummary success", response);
       if(response.opstatus == 0) {
@@ -102,6 +105,7 @@ export class GenerativeComponent implements OnInit, OnChanges {
   }
 
   generate() {
+    this.isLoading = true;
     let appData = this.androidReviews.length > 0 ? this.androidReviews : this.iosReviews.length > 0 ? this.iosReviews : "";
     appData = this.androidReviews.length > 0 ? this.formatDataAndroid(appData) : this.formatDataIos(appData);
 
@@ -110,6 +114,7 @@ export class GenerativeComponent implements OnInit, OnChanges {
     this.isButtonDisabled = true;
     this.content = "";
     this.generative.getSummary("", data, this.prompt).subscribe((response: any) => {
+      this.isLoading = false;
       this.prompt = "";
       console.log("GenerativeComponent.changePrompt -> getSummary success", response);
       if(response.opstatus == 0) {
