@@ -40,6 +40,7 @@ import { NewReviewsComponent } from './new-reviews/new-reviews.component';
 import { DocumentationComponent } from './documentation/documentation.component';
 import { SentimentReviewsComponent } from './sentiment-reviews/sentiment-reviews.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { GenerativeComponent } from './generative/generative.component';
 
 
 
@@ -64,7 +65,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     ErrorDialogComponent,
     NewReviewsComponent,
     DocumentationComponent,
-    SentimentReviewsComponent
+    SentimentReviewsComponent,
+    GenerativeComponent
   ],
   imports: [
     BrowserModule,
@@ -87,7 +89,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     MatCheckboxModule,
     NgApexchartsModule,
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

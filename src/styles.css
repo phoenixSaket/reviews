@@ -90,6 +90,14 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.content p {
+    margin: 15px 0;
+}
+
+.content li { 
+    margin: 10px 20px;
+}
+
 .mat-form-field-wrapper {
     padding-bottom: 0;
 }

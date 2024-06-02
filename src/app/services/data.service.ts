@@ -86,7 +86,7 @@ export class DataService {
 
   sendMailApi(email: string, apps: any[]) {
     let payload = { email: email, apps: JSON.stringify(apps) }
-    return this.http.post("https://review-un6v.onrender.com/android/", payload);
+    return this.http.post("https://review-un6v.onrender.com/save-apps", payload);
     // return this.http.post("http://localhost:8000/save-apps", payload);
   }
 
@@ -191,6 +191,6 @@ export class DataService {
 
   sendEmail(message: string, email: string) {
     let payload = { email: email, message: message }
-    return this.http.post("https://review-un6v.onrender.com/android/", payload);
+    return this.http.post("https://review-un6v.onrender.com/mail/send", payload);
   }
 }

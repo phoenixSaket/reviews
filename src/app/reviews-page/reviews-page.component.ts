@@ -25,6 +25,7 @@ export class ReviewsPageComponent implements OnInit {
   private sortingCriteria: any = {};
   private timeoutInterval: number = 30 * 60 * 1000;
   private lastReviewDate: any = null;
+  shouldOpen: boolean = false;
 
   constructor(
     public data: DataService,
@@ -765,5 +766,9 @@ export class ReviewsPageComponent implements OnInit {
         }
       });
     }
+  }
+
+  shouldOpenAITools(shouldOpen: boolean) {
+    this.shouldOpen = shouldOpen;
   }
 }
