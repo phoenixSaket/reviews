@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DocumentationComponent implements OnInit {
   public features: any[] = [
+    { title: "AI Tools", text: "Understand the reviews better using AI Tools powered by Google Gemini." },    
     { title: "Dashboard", text: "Pie & Bar charts for the ratings received by your apps" },
     { title: "Add Apps", text: "Add any app from Google Play Store and Apple App Store" },
     { title: "Word Clouds", text: "Generate word clouds for based on the reviews & sentiments" },

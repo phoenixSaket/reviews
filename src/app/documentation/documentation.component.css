@@ -215,5 +215,15 @@ path {
         align-items: center;
         overflow-x: auto;
         justify-content: unset;
+        padding-bottom: 20px;
     }
+}
+
+.gemini {
+    width: 200px;
+    max-width: 100%;
+}
+
+.color-primary {
+    color: var(--active);
 }
