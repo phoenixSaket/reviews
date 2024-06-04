@@ -20,7 +20,7 @@
         </div>
         <div class="label">Custom Prompt:</div>
         <div class="prompt">
-            <input class="prompt-input" matInput placeholder="Enter your prompt" name="prompt" id="prompt" type="text" name="prompt" (keyup)="changeInput($event)" autocomplete="off">
+            <textarea class="prompt-input" matInput placeholder="Enter your prompt" name="prompt" id="prompt" type="text" name="prompt" [value]="prompt" (keyup)="changeInput($event)" autocomplete="off"></textarea>
             <button mat-raised-button color="custom" type="button" [ngClass]="{'disabled': isButtonDisabled}" [disabled]="isButtonDisabled" (click)="generate()">Generate</button>
         </div>
     </div>

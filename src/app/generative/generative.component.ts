@@ -47,11 +47,11 @@ export class GenerativeComponent implements OnInit, OnChanges {
     }, (error: any) => {
       console.log("GenerativeComponent.changePrompt -> getSummary error", error);
       this.isLoading = false;
+      this.content = "There seems to be an error while calling Google's Gemini API.<br>Please try again in some time.";
     })
   }
 
   changeInput(event: any) {
-    console.log("GenerativeComponent.changeInput", event.target.value);
     let value = event.target.value;
     if (value.length > 0) {
       this.prompt = value.trim();
@@ -77,6 +77,7 @@ export class GenerativeComponent implements OnInit, OnChanges {
     }, (error: any) => {
       console.log("GenerativeComponent.changePrompt -> getSummary error", error);
       this.isLoading = false;
+      this.content = "There seems to be an error while calling Google's Gemini API.<br>Please try again in some time.";
     })
   }
 

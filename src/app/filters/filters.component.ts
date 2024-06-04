@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-filters',
@@ -37,9 +38,15 @@ export class FiltersComponent implements OnInit {
   ];
 
 
-  constructor() {}
+  constructor(private data: DataService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.data.appLoader.subscribe((app: any) => {
+      if (!!app) {
+        this.openAI = false;
+      }
+    });
+  }
 
   searchInput(event: any) {
     event.preventDefault();
@@ -94,6 +101,9 @@ export class FiltersComponent implements OnInit {
 
   openAITools() {
     this.openAI = !this.openAI;
+    if (screen.width <= 768) {
+      this.toggleFilters();
+    }
     this.shouldOpenAITools.emit(this.openAI);
   }
 }
