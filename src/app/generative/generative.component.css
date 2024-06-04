@@ -7,7 +7,6 @@
     border-radius: 5px;
     margin: 3px 0px;
     background-color: #fefefe;
-    height: calc(100dvh - 161.25px);
     position: sticky;
     top: 94px;
 }
@@ -52,6 +51,9 @@
     border-radius: 8px;
     border: 1px solid var(--accent-dark);
     width: 100%;
+    overflow-wrap: break-word;
+    resize: none;
+
 }
 
 .prompt > button {
@@ -103,6 +105,11 @@
 }
 
 @media (max-width: 768px) {
+    .container {
+        height: calc(100dvh - 161.25px);
+        top: unset;
+    }
+
     .content {
         height: calc(100dvh - 465px);
     }

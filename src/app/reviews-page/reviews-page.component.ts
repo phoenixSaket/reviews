@@ -38,6 +38,7 @@ export class ReviewsPageComponent implements OnInit {
     this.data.appLoader.subscribe((app: any) => {
       if (!!app) {
         this.data.isLoading = true;
+        this.shouldOpenAITools(false);
         this.versions = [];
         this.years = [];
         this.backup = [];

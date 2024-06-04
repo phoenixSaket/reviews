@@ -1,7 +1,7 @@
 
 .mainCss {
     width: 100%;
-    height: 50dvh;
+    height: calc(100dvh - 420px);
   }
   
   .dotsCss {

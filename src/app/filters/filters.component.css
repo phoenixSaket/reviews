@@ -181,3 +181,22 @@
     font-weight: 700;
     outline: none;
 }
+
+@media (max-width: 768px) {
+    .filter-button {
+        width: 150px;
+    }
+
+    .filter-div {
+        width: 150px;
+    }
+
+    .filter-div > mat-form-field {
+        width: 150px;
+    } 
+
+    .filter-div button {
+        width: 150px;
+        padding: 7px;
+    }
+}
