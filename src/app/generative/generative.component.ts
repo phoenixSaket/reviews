@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { GenerativeService, platform } from '../services/generative.service';
 import * as showdown from 'showdown';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-generative',
@@ -23,15 +24,20 @@ export class GenerativeComponent implements OnInit, OnChanges {
   content: string = "";
   isLoading: boolean = false;
 
-  constructor(private generative: GenerativeService) { }
+  constructor(private generative: GenerativeService, private data: DataService) { }
 
   ngOnChanges(): void {
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.data.appLoader.subscribe((app) => {
+      if(!!app) {
+        this.content = "";
+      }
+    })
+  }
 
   changePrompt(prompt: string) {
-    console.log("GenerativeComponent.changePromt", prompt);
     this.isLoading = true;
     let type = this.getType(prompt);
         
@@ -40,7 +46,6 @@ export class GenerativeComponent implements OnInit, OnChanges {
     this.generative.getSummaryV2(type, this.id, "", this.platform).subscribe((response: any) => {
       this.isLoading = false;
       this.prompt = "";
-      console.log("GenerativeComponent.changePrompt -> getSummary success", response);
       if(response.opstatus == 0) {
         this.content = this.formatContent(response.message);
       }
@@ -70,7 +75,6 @@ export class GenerativeComponent implements OnInit, OnChanges {
     this.generative.getSummaryV2("", this.id, this.prompt, this.platform).subscribe((response: any) => {
       this.isLoading = false;
       this.prompt = "";
-      console.log("GenerativeComponent.changePrompt -> getSummary success", response);
       if(response.opstatus == 0) {
         this.content = this.formatContent(response.message);
       }
