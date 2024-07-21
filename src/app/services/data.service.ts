@@ -136,7 +136,7 @@ export class DataService {
               }
             })
           } else {
-            let date = new Date("12-01-2023").toString();
+            let date = new Date().setDate(1).toString();
             localStorage.setItem("lastDate-reviews", date);
           }
         }
