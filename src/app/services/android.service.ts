@@ -11,8 +11,6 @@ export class AndroidService {
   public androidAppsDefault = [
     'com.ibx.ibxmobile',
     'com.ahnj.ahmobile',
-    'com.ahatpa.ahamobile',
-    'com.ibxtpa.iamobile',
     'com.ahc.ahcmobile'
   ];
   public histograms: any[] = [];

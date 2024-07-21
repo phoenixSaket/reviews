@@ -23,7 +23,15 @@ export class AppComponent {
     private data: DataService,
     public sidebar: SidebarService,
     private snackbar: MatSnackBar
-  ) { }
+  ) { 
+    this.hotFix().then((hasDeleted: boolean) => {
+      if (hasDeleted) {
+        window.location.reload();
+      }
+    }).catch((hasNoDeletion: boolean) => {
+      // Do Nothing
+    })
+  }
 
   ngOnInit() {
     let apps: any = localStorage.getItem("apps-review") || "[]";
@@ -273,5 +281,37 @@ export class AppComponent {
     }
 
     localStorage.setItem("apps-review", JSON.stringify(apps));
+  }
+
+  hotFix(): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      try {
+        let apps = JSON.parse(localStorage.getItem("apps-review") || "[]");
+        let hasDeleted: boolean = false;
+
+        apps.forEach((app: any, index: number) => {
+          if (app.isIOS) {
+            if (app.app == '1337168006' || app.app == '1337168006') {
+              apps = apps.splice(index, 1);
+              hasDeleted = true;
+            }
+          } else if (!app.isIOS) {
+            if (app.app == 'com.ahatpa.ahamobile' || app.app == 'com.ibxtpa.iamobile') {
+              apps = apps.splice(index, 1);
+              hasDeleted = true;            }
+          }
+        });
+
+        if (hasDeleted) {
+          localStorage.setItem("apps-review", JSON.stringify(apps));
+          resolve(true);
+        } else {
+          reject(false);
+        }
+      } catch (err: any) {
+        console.log("AppComponent.hotFix caught an error,", err);
+        reject(false);
+      }
+    });
   }
 }
