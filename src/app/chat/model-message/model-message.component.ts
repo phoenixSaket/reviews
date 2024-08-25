@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as showdown from 'showdown';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-model-message',
@@ -13,43 +14,19 @@ export class ModelMessageComponent implements OnInit {
   review: any[] = [];
   hasReview: boolean = false;
 
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
     this.message = this.formatContent(this.message);
-
   }
   
   formatContent(content: string): string {
-    let converter = new showdown.Converter();
-    let html = converter.makeHtml(content);
-    // setTimeout(() => {
-    //   if (!this.hideOriginalMessage) {
-    //     this.covertIfHasReview(html)
-    //   }
-    // }, 200);
+    const converter = new showdown.Converter();
+    const html = converter.makeHtml(content);
     return html;
   }
 
-  // {"rating":"1","version":"9.0.6","content":"Trying to setup an account on an iPad and I can’t get the keyboard to display numbers. What a piece of crap this app is.","title":"Can’t even register"}
-  covertIfHasReview(text: string) {
-    let regex: RegExp = new RegExp("((\[[^\}]{3,})?\{s*[^\}\{]{3,}?:.*\}([^\{]+\])?)");
-    let test;
-    if (regex.test(text)) {
-      test = Array.from(document.getElementsByClassName("json"));
-      
-      test.forEach(el => {
-        this.hasReview = true;
-        console.log(JSON.parse(el.innerHTML));
-        if (Array.isArray(JSON.parse(el.innerHTML))) {
-          JSON.parse(el.innerHTML).forEach(ele => {
-            this.review.push(JSON.parse(ele));
-          })
-        } else {
-          this.review.push(JSON.parse(el));
-        }
-      })
-    }
+  copy(element: HTMLElement) {
+    this.dataService.copy(element);
   }
-
 }

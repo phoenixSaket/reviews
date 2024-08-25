@@ -16,7 +16,7 @@ export class GenerativeService {
       type: type,
       prompt: prompt
     };
-    return this.http.post(AI.summary, request);
+    return this.http.post(AI.summaryV2, request);
   }
 
   initiateChat(request: InitiateChatRequest) {
@@ -42,7 +42,7 @@ export interface SummmaryV2Request {
 
 export interface InitiateChatRequest {
   id: string,
-  platform: platform
+  platform: string
 }
 
 export interface ChatRequest {

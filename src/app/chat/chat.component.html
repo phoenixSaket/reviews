@@ -10,21 +10,36 @@
         </mat-form-field>
     </div>
     
-    <app-loader *ngIf="loading"></app-loader>
-    <div class="messages" id="messages" *ngIf="!loading">
+    <div class="how-to" *ngIf="!isAppSelected">
+        <div class="title">
+            How to use Chat tools
+        </div>
+        <ol class="steps">
+            <li>Add an app if not added already.</li>
+            <li>Need to add an app? &nbsp;<span class="link" routerLink="/add-app">Click here to add an app.</span></li>
+            <li>Select the app from the app selector at the top.</li>
+            <li>Wait for the chat to be initailized.</li>
+            <li>You are all set. Continue your discussion with your AI buddy</li>
+        </ol>
+    </div>
+
+    <div class="messages" id="messages">
         <div class="message" *ngFor="let message of history; let i = index;">
             <app-user-message class="w-75" *ngIf="message.role == 'user'" [message]="message.parts[0].text"></app-user-message>
             <app-model-message class="w-75" *ngIf="message.role == 'model'" [message]="message.parts[0].text" [hideOriginalMessage]="i == 1"></app-model-message>
         </div>
     </div>
     
-    <div class="message-box shadows">
-        <textarea class="prompt-input" matInput placeholder="Enter your message" name="prompt" id="prompt" type="text" name="prompt" [value]="message" (keyup)="changeInput($event)" autocomplete="off"></textarea>
-        <button class="send-btn" mat-raised-button color="primary" type="button" [ngClass]="{'disabled': isButtonDisabled}" [disabled]="isButtonDisabled" (click)="sendMessage()">
-            Send
-            <mat-icon>
-                send
-            </mat-icon>
-        </button>
+    <div class="message-box-container">
+        <app-loader *ngIf="loading"></app-loader>
+        <div class="message-box shadows">
+            <textarea class="prompt-input" matInput placeholder="Enter your message" name="prompt" id="prompt" type="text" name="prompt" [value]="message" (keyup)="changeInput($event)" autocomplete="off"></textarea>
+            <button class="send-btn" mat-raised-button color="primary" type="button" [ngClass]="{'disabled': isButtonDisabled}" [disabled]="isButtonDisabled" (click)="sendMessage()">
+                Send
+                <mat-icon>
+                    send
+                </mat-icon>
+            </button>
+        </div>
     </div>
 </div>

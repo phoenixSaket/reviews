@@ -14,27 +14,32 @@ export class GenerativeComponent implements OnInit, OnChanges {
   @Input() platform: platform;
 
   preDefinedPrompts: string[] = [
-    "Summarize the reviews",
-    "Identify Issues",
-    "Identify Improvements"
+    "Summarize reviews",
+    "Identify improvements",
+    "Latest version reviews",
+    "Identify issues"
   ];
+
+  userPrompts: string[] = [];
 
   isButtonDisabled: boolean = true;
   prompt: string = "";
   content: string = "";
   isLoading: boolean = false;
 
-  constructor(private generative: GenerativeService, private data: DataService) { }
+  constructor(private generative: GenerativeService, private dataService: DataService) { }
 
   ngOnChanges(): void {
   }
 
   ngOnInit(): void {
-    this.data.appLoader.subscribe((app) => {
+    this.dataService.appLoader.subscribe((app) => {
       if(!!app) {
         this.content = "";
       }
-    })
+    });
+
+    this.userPrompts = this.dataService.retrievePreviousPrompt();
   }
 
   changePrompt(prompt: string) {
@@ -72,6 +77,10 @@ export class GenerativeComponent implements OnInit, OnChanges {
 
     this.isButtonDisabled = true;
     this.content = "";
+    if (this.prompt !== "summary" && this.prompt !== "latest" && this.prompt !== "improvements") {
+      this.dataService.savePreviousPrompt(this.prompt);
+      this.userPrompts = this.dataService.retrievePreviousPrompt();
+    }
     this.generative.getSummaryV2("", this.id, this.prompt, this.platform).subscribe((response: any) => {
       this.isLoading = false;
       this.prompt = "";
@@ -88,15 +97,18 @@ export class GenerativeComponent implements OnInit, OnChanges {
   getType(prompt: string): string {
     let r = "";
     switch (prompt) {
-      case "Summarize the reviews":
+      case "Summarize reviews":
         r = "summary";
         break;
-      case "Identify Issues":
-        r = "issues";
+      case "Latest version reviews":
+        r = "latest";
         break;
-      case "Identify Improvements":
+      case "Identify improvements":
         r = "improvements";
         break;
+      case "Identify issues":
+        r = "issues";
+        break
       default:
         r = "";
         break;
@@ -109,6 +121,11 @@ export class GenerativeComponent implements OnInit, OnChanges {
     let html = converter.makeHtml(content);
     return html;
   }
+
+  copy(element: HTMLElement) {
+    this.dataService.copy(element);
+  }
+
 }
 
 export interface singleEntry {
