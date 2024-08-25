@@ -1,0 +1,23 @@
+<div class="card">
+    <div class="left d-flex gap-10 w-100 m-b-10">
+        <div class="image">
+            <img src="assets/avatar.jpg" alt="userImage" class="user-img">
+        </div>
+        <div class="d-flex w-100 space-between align-center">
+            <div class="version">
+                <span class="versionText">Version : </span>
+                <span class="versionNumber">{{data.version}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="center">
+        <div class="stars-container">
+            <span class="rate" *ngFor="let star of rating">
+                <span *ngIf="!star.shouldHighlight">&#9734;</span>
+                <span *ngIf="star.shouldHighlight">&#9733;</span>
+            </span>
+        </div>
+        <div class="title">{{data.title}}</div>
+        <div class="content">{{data.content}}</div>
+    </div>
+</div>

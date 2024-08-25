@@ -1,0 +1,153 @@
+* {
+    cursor: default;
+}
+
+.card {
+    width: 100%;
+    display: flex;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 3px 0px;
+    background-color: #fefefe;
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 10%;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    gap: 2px;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+}
+
+.stars-container {
+    display: flex;
+}
+
+.rate span {
+    color: #818181;
+    font-size: 20px;
+    line-height: 20px;
+}
+
+.title {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.content,
+.date,
+.version {
+    color: #747474;
+}
+
+.content,
+.date,
+.author,
+.version {
+    font-size: 14px;
+}
+
+.user-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.sentiment-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.chip {
+    padding: 5px 20px;
+    border-radius: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: default;
+}
+
+.basic {
+    background-color: var(--active);
+    color: var(--white);
+}
+
+.red {
+    background-color: #e18888;
+    color: var(--white);
+}
+
+.green {
+    background-color: #6cc297;
+    color: var(--white);
+}
+
+@media (max-width: 500px) {
+    .right {
+        width: 100%;
+        align-items: end;
+    }
+
+    .left {
+        width: 100;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .center {
+        width: 100%
+    }
+
+    .card {
+        flex-direction: column;
+    }
+
+    .d-flex {
+        display: flex;
+    }
+
+    .column {
+        flex-direction: column;
+    }
+
+    .gap-10 {
+        gap: 10px;
+    }
+
+    .w-100 {
+        width: 100%
+    }
+
+    .image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .m-b-10 {
+        margin-bottom: 10px;
+    }
+
+    .space-between {
+        justify-content: space-between;
+    }
+
+    .align-center {
+        align-items: center;
+    }
+}

@@ -19,6 +19,18 @@
         <mat-icon>cloud</mat-icon>
         Generate Word-Cloud
     </div> -->
+    <div class="link shadows" routerLink="/chat" [ngClass]="selectedChat ? 'active': ''"
+        (click)="closeSideBar('chat')">
+        <mat-icon>chat</mat-icon>
+        <div class="app">
+            <div class="name">
+                AI Chat
+            </div>
+            <div class="device">
+                beta
+            </div>
+        </div>
+    </div>
     <div class="link shadows" routerLink="/sentiment-cloud" [ngClass]="selectedSmartWordCloud ? 'active': ''"
         (click)="closeSideBar('smartwordcloud')">
         <mat-icon>sentiment_very_satisfied</mat-icon>

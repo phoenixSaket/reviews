@@ -1,0 +1,6 @@
+<div class="container">
+    <div class="message" [innerHTML]="hideOriginalMessage ? 'The app has been selected.' : message"></div>
+    <div class="reviews" *ngFor="let rev of review">
+        <app-review *ngIf="hasReview" [data]="rev"></app-review>
+    </div>
+</div>

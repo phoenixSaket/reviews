@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject } from 'rxjs';
 import { NewReviewsComponent } from '../new-reviews/new-reviews.component';
 import { AndroidService } from './android.service';
 import { IosService } from './ios.service';
+import { DATA } from './services';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class DataService {
   public isLoading: boolean = false;
   public selectedSentiment: any = {};
 
-  constructor(private http: HttpClient, private android: AndroidService, private ios: IosService, public dialog: MatDialog, private snackBar: MatSnackBar) {
+  constructor(private http: HttpClient, private android: AndroidService, private ios: IosService, public dialog: MatDialog) {
     let x = 0;
     this.newReviewCount.subscribe(values => {
       if (values == 1) {
@@ -86,8 +86,7 @@ export class DataService {
 
   sendMailApi(email: string, apps: any[]) {
     let payload = { email: email, apps: JSON.stringify(apps) }
-    return this.http.post("https://review-un6v.onrender.com/save-apps", payload);
-    // return this.http.post("http://localhost:8000/save-apps", payload);
+    return this.http.post(DATA.saveApps, payload);
   }
 
   newReviewsCheck() {
@@ -171,16 +170,6 @@ export class DataService {
   }
 
   openNewReviewDialog() {
-    // this.isSnackbarOpen = true;
-    // this.snackBar
-    //   .open('New Reviews found !', 'Show', {
-    //     duration: 5000,
-    //     horizontalPosition: 'end',
-    //     verticalPosition: 'bottom',
-    //   })
-    //   .onAction()
-    //   .subscribe((res) => {
-    //     this.isSnackbarOpen = false;
         this.dialog.open(NewReviewsComponent, {
           data: { ios: this.newIOSReviews, android: this.newAndroidReviews },
         });
@@ -191,6 +180,6 @@ export class DataService {
 
   sendEmail(message: string, email: string) {
     let payload = { email: email, message: message }
-    return this.http.post("https://review-un6v.onrender.com/mail/send", payload);
+    return this.http.post(DATA.sendEmail, payload);
   }
 }
