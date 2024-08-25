@@ -1,7 +1,8 @@
 .container {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
+    width: inherit;
 }
 
 .message {
@@ -16,4 +17,22 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+}
+
+.copy-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.copy {
+    padding: 12px 20px;
+    background-color: var(--accent-dark);
+    color: var(--white);
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
 }

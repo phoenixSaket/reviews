@@ -8,15 +8,32 @@
                 Powered by Gemini Flash
             </div>
         </div>
-        <app-loader *ngIf="isLoading"></app-loader>
-        <div *ngIf="!isLoading" class="content" [innerHTML]="content"></div>
+        <div class="copy-container" *ngIf="!!content && content.length > 0">
+            <div class="copy" (click)="copy(messageRef)">
+                <mat-icon><span class="material-symbols-outlined">
+                    content_copy
+                    </span></mat-icon>
+                Copy
+            </div>
+        </div>
     </div>
+    <app-loader *ngIf="isLoading"></app-loader>
+    <div #messageRef class="content" [innerHTML]="content"></div>
     <div class="bottom">
         <div class="label">Pre defined Prompts:</div>
         <div class="pre-defined">
             <div class="prompt-input pre-defined-prompt" *ngFor="let prompt of preDefinedPrompts" (click)="changePrompt(prompt)">
                 {{prompt}}
             </div>
+        </div>
+        <div class="label" *ngIf="userPrompts.length > 0">Last 6 used Prompts:</div>
+        <div class="pre-defined" *ngIf="userPrompts.length > 0">
+            <div class="prompt-input pre-defined-prompt" *ngFor="let prompt of userPrompts" (click)="changePrompt(prompt)">
+                {{prompt}}
+            </div>
+        </div>
+        <div class="chat-tools-navigator" routerLink="/chat">
+            Use the more advanced &nbsp;&nbsp;<span class="link">AI Chat Tool</span>&nbsp;&nbsp;<mat-icon>arrow_right_alt</mat-icon>
         </div>
         <div class="label">Custom Prompt:</div>
         <div class="prompt">

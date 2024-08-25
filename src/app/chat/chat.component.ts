@@ -11,14 +11,16 @@ export class ChatComponent implements OnInit {
 
   // for the apps dropdown
   private appNames: any[] = [];
-  public apps: any[] = [];
+  apps: any[] = [];
   
-  public currentApp: number = 0;
-  public totalApps: number = 0;
+  currentApp: number = 0;
+  totalApps: number = 0;
 
   // for selecting the app
-  public loading: boolean = false;
-  public shouldWait: boolean = true;
+  loading: boolean = false;
+  shouldWait: boolean = true;
+  selectedApp: any = {};
+  isAppSelected: boolean = false;
 
   // promt variables
   message: string = "";
@@ -50,18 +52,12 @@ export class ChatComponent implements OnInit {
 
   appSelected(app: any) {
     this.loading = true;
-
-    console.log(app.value);
-
-    // this.selectedApp =  {
-    //   "appName": "IBX",
-    //   "isIOS": true,
-    //   "id": "584785907"
-    // }
+    this.selectedApp = app.value;
+    this.isAppSelected = true;
 
     let request: InitiateChatRequest = {
       id: app.value.id,
-      platform: app.value.isIOS ? platform.ios: platform.android
+      platform: app.value.isIOS ? "ios": "android"
     }
 
     this.genrativeService.initiateChat(request).subscribe((response: ChatResponse) => {
@@ -77,6 +73,10 @@ export class ChatComponent implements OnInit {
     changeInput : should handle the message to be sent
   */
   changeInput(event: any) {
+    if (!this.isAppSelected) {
+      this.isButtonDisabled = true;
+      return;
+    }
     let value = event.target.value;
     if (value.length > 0) {
       this.message = value.trim();
@@ -98,10 +98,12 @@ export class ChatComponent implements OnInit {
       history: this.history
     }
     this.genrativeService.chat(request).subscribe((response: ChatResponse) => {
+      this.message = "";
       this.loading = false;
       this.history = response.history;
-
-      document.getElementById("messages").scrollTo(0, parseInt(document.getElementById("messages").style.height));
+      setTimeout(() => {
+        document.getElementById("messages").scrollTo(0, document.getElementById("messages").scrollHeight);
+      }, 10);
     })
   }
 

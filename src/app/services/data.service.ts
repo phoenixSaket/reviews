@@ -182,4 +182,35 @@ export class DataService {
     let payload = { email: email, message: message }
     return this.http.post(DATA.sendEmail, payload);
   }
+
+  copy(element: HTMLElement) {
+    const text = element.innerText;
+    document.execCommand("copy", true, text);
+    navigator.clipboard.writeText(text);
+  }
+
+  savePreviousPrompt(prompt: string) {
+    let storedPrompts = JSON.parse(localStorage.getItem("userEnteredPrompts") || "[]");
+
+    if (!!storedPrompts && storedPrompts.length > 0) {
+      const index = storedPrompts.indexOf(prompt);
+      if (index < 0) {
+        storedPrompts.push(prompt);
+      }
+    } else {
+      storedPrompts.push(prompt);
+    }
+
+    localStorage.setItem("userEnteredPrompts", JSON.stringify(storedPrompts));
+  }
+
+  retrievePreviousPrompt(): string[] {
+    let storedPrompts = JSON.parse(localStorage.getItem("userEnteredPrompts") || "[]");
+
+    if (storedPrompts.length > 3) {
+      storedPrompts = storedPrompts.slice(storedPrompts.length - 6, storedPrompts.length);
+    }
+
+    return storedPrompts;
+  }
 }
