@@ -42,6 +42,10 @@ import { SentimentReviewsComponent } from './sentiment-reviews/sentiment-reviews
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { GenerativeComponent } from './generative/generative.component';
 import { LoaderComponent } from './loader/loader.component';
+import { ChatComponent } from './chat/chat.component';
+import { UserMessageComponent } from './chat/user-message/user-message.component';
+import { ModelMessageComponent } from './chat/model-message/model-message.component';
+import { ReviewComponent } from './chat/review/review.component';
 
 
 
@@ -68,7 +72,11 @@ import { LoaderComponent } from './loader/loader.component';
     DocumentationComponent,
     SentimentReviewsComponent,
     GenerativeComponent,
-    LoaderComponent
+    LoaderComponent,
+    ChatComponent,
+    UserMessageComponent,
+    ModelMessageComponent,
+    ReviewComponent
   ],
   imports: [
     BrowserModule,

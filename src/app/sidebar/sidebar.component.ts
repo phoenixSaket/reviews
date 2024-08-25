@@ -22,6 +22,7 @@ export class SidebarComponent implements OnInit {
   public selectedDocumentation: boolean = false;
   public isNotMobile: boolean = screen.availWidth > 768;
   private backupSelectedApp: any = {};
+  public selectedChat: boolean = false;
 
   constructor(
     public data: DataService,
@@ -49,6 +50,8 @@ export class SidebarComponent implements OnInit {
       this.selectedSmartWordCloud = !this.selectedSmartWordCloud;
     if (this.selectedDocumentation)
       this.selectedDocumentation = !this.selectedDocumentation;
+    if (this.selectedChat)
+      this.selectedChat = !this.selectedChat;
     this.apps.forEach((app: any) => {
       app.isSelected = false;
     });
@@ -77,6 +80,8 @@ export class SidebarComponent implements OnInit {
             this.selectedDocumentation = !this.selectedDocumentation;
           this.shouldCompare = false;
           this.shouldDelete = false;
+          if (this.selectedChat)
+            this.selectedDocumentation = !this.selectedDocumentation;
           this.data.setCurrentPage('-1');
           break;
         case 'addApp':
@@ -94,6 +99,8 @@ export class SidebarComponent implements OnInit {
             this.selectedSmartWordCloud = !this.selectedSmartWordCloud;
           this.shouldCompare = false;
           this.shouldDelete = false;
+          if (this.selectedChat)
+            this.selectedDocumentation = !this.selectedDocumentation;
           this.data.setCurrentPage('-1');
           break;
         case 'wordcloud':
@@ -110,6 +117,8 @@ export class SidebarComponent implements OnInit {
           });
           this.shouldCompare = false;
           this.shouldDelete = false;
+          if (this.selectedChat)
+            this.selectedDocumentation = !this.selectedDocumentation;
           this.data.setCurrentPage('-1');
           break;
         case 'smartwordcloud':
@@ -126,6 +135,8 @@ export class SidebarComponent implements OnInit {
           });
           this.shouldCompare = false;
           this.shouldDelete = false;
+          if (this.selectedChat)
+            this.selectedDocumentation = !this.selectedDocumentation;
           this.data.setCurrentPage('-1');
           break;
         case 'docs':
@@ -137,6 +148,27 @@ export class SidebarComponent implements OnInit {
             this.selectedDashboard = !this.selectedDashboard;
           if (this.selectedSmartWordCloud)
             this.selectedSmartWordCloud = !this.selectedSmartWordCloud;
+
+          this.apps.forEach((app: any) => {
+            app.isSelected = false;
+          });
+          this.shouldCompare = false;
+          this.shouldDelete = false;
+          if (this.selectedChat)
+            this.selectedChat = !this.selectedChat;
+          this.data.setCurrentPage('-1');
+          break;
+        case 'chat': 
+          this.selectedChat = !this.selectedChat;
+          if (this.selectedWordCloud)
+            this.selectedWordCloud = !this.selectedWordCloud;
+          if (this.selectedAddApp) this.selectedAddApp = !this.selectedAddApp;
+          if (this.selectedDashboard)
+            this.selectedDashboard = !this.selectedDashboard;
+          if (this.selectedSmartWordCloud)
+            this.selectedSmartWordCloud = !this.selectedSmartWordCloud;
+          if (this.selectedDocumentation)
+            this.selectedDocumentation = !this.selectedDocumentation;
 
           this.apps.forEach((app: any) => {
             app.isSelected = false;

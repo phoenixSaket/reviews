@@ -176,3 +176,20 @@ span.mat-checkbox-label {
 mat-dialog-container {
     BACKGROUND-COLOR: var(--white);
 }
+
+.send-btn .mat-button-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.language-json {
+    display: none;
+}
+
+app-model-message .message > * {
+    word-break: break-all;
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+}

@@ -1,13 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ANDROID } from './services';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AndroidService {
-  public url = "https://review-un6v.onrender.com/android/";
-  public backupUrl = "https://review-un6v.onrender.com/android/";
-
   public androidAppsDefault = [
     'com.ibx.ibxmobile',
     'com.ahnj.ahmobile',
@@ -18,17 +16,17 @@ export class AndroidService {
   constructor(private http: HttpClient) { }
 
   getApp(app: string, useBackup: boolean = false) {
-    let url = (useBackup ? this.backupUrl : this.url) + "app";
+    let url = ANDROID.app;
     return this.http.post(url, { name: app.toLowerCase() });
   }
 
   getAppReviews(app: string, useBackup: boolean = false) {
-    let url = (useBackup ? this.backupUrl : this.url) + "review";
+    let url = ANDROID.review;
     return this.http.post(url, { name: app.toLowerCase() });
   }
 
   searchApp(term: string, num: number, lang: string, price: string, useBackup: boolean = false) {
-    let url = (useBackup ? this.backupUrl : this.url) + "search";
+    let url = ANDROID.search;
     return this.http.post(url, { term: term.toLowerCase(), num: num, lang: lang, price: price })
   }
 
@@ -43,7 +41,7 @@ export class AndroidService {
   }
 
   sentimentAnalysis(text: string[]) {
-    let url = this.backupUrl + "sentiment";
+    let url = ANDROID.sentiment;
     return this.http.post(url, {string: text});
   }
 }
