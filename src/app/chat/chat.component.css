@@ -21,7 +21,7 @@
 
 .message-box-container {
     width: 100%;
-    max-width: 768px;
+    max-width: 824px;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -91,6 +91,33 @@
     text-decoration: underline;
     color: var(--accent-dark);
     cursor: pointer;
+}
+
+.prompt-input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--accent-dark);
+    width: 100%;
+    overflow-wrap: break-word;
+    resize: none;
+}
+
+.pre-defined {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    align-items: center;
+    /* justify-content: space-between; */
+    margin: 10px 0;
+}
+
+.pre-defined-prompt {
+    width: fit-content;
+    cursor: pointer;
+    max-width: 240px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 @media (max-width: 768px) {

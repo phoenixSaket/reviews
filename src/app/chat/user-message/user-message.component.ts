@@ -9,6 +9,8 @@ import * as showdown from 'showdown';
 export class UserMessageComponent implements OnInit {
 
   @Input() message: string;
+  @Input() hideOriginalMessage: boolean = false;
+  @Input() app: {appName: string, isIOS: boolean};
 
   constructor() { }
 

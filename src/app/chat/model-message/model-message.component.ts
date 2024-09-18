@@ -11,6 +11,8 @@ export class ModelMessageComponent implements OnInit {
 
   @Input() message: string;
   @Input() hideOriginalMessage: boolean = false;
+  @Input() app: {appName: string, isIOS: boolean};
+  
   review: any[] = [];
   hasReview: boolean = false;
 
