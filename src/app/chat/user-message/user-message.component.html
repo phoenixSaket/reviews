@@ -1,1 +1,2 @@
-<div class="message shadow">{{message}}</div>
+<div class="message shadow" *ngIf="hideOriginalMessage">Let's discuss about {{app.appName}}&nbsp;{{app.isIOS ? '(IOS)': '(Android)'}}'s reviews.</div>
+<div class="message shadow" *ngIf="!hideOriginalMessage">{{message}}</div>

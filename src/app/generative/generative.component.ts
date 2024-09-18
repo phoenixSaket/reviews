@@ -63,8 +63,13 @@ export class GenerativeComponent implements OnInit, OnChanges {
 
   changeInput(event: any) {
     let value = event.target.value;
+
+    if (event.key.toLowerCase() == 'enter' && !this.isButtonDisabled) {
+      this.generate();
+      return;
+    }
     if (value.length > 0) {
-      this.prompt = value.trim();
+      this.prompt = value;
       this.isButtonDisabled = false;
     } else {
       this.prompt = "";
@@ -77,7 +82,7 @@ export class GenerativeComponent implements OnInit, OnChanges {
 
     this.isButtonDisabled = true;
     this.content = "";
-    if (this.prompt !== "summary" && this.prompt !== "latest" && this.prompt !== "improvements") {
+    if (this.prompt !== "summary" && this.prompt !== "latest" && this.prompt !== "improvements" && this.prompt !== "latest") {
       this.dataService.savePreviousPrompt(this.prompt);
       this.userPrompts = this.dataService.retrievePreviousPrompt();
     }

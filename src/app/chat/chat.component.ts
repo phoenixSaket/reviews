@@ -30,6 +30,17 @@ export class ChatComponent implements OnInit {
   isButtonDisabled: boolean = true;
   history: any;
 
+  // predefined prompts
+  preDefinedPrompts: string[] = [
+    "What can the AI chat tool do ?",
+    "Summarize reviews",
+    "Identify improvements",
+    "Latest version reviews",
+    "Identify issues"
+  ];
+
+  userPrompts: string[] = [];
+
 
   constructor(private data: DataService, private genrativeService: GenerativeService) { }
 
@@ -77,9 +88,15 @@ export class ChatComponent implements OnInit {
       this.isButtonDisabled = true;
       return;
     }
+
+    if (event.key.toLowerCase() == "enter" && !this.isButtonDisabled) {
+      this.sendMessage();
+      return;
+    }
+
     let value = event.target.value;
     if (value.length > 0) {
-      this.message = value.trim();
+      this.message = value;
       this.isButtonDisabled = false;
     } else {
       this.message = "";
@@ -105,6 +122,38 @@ export class ChatComponent implements OnInit {
         document.getElementById("messages").scrollTo(0, document.getElementById("messages").scrollHeight);
       }, 10);
     })
+  }
+
+  changePrompt(prompt: string) {
+    let type = this.getType(prompt);
+    this.message = type;    
+    
+    this.sendMessage();
+  }
+
+  getType(prompt: string): string {
+    let r = "";
+    switch (prompt) {
+      case "Summarize reviews":
+        r = "summarize all the reviews for me";
+        break;
+      case "Latest version reviews":
+        r = "get me the reviews for the latest version based on the reviews provided";
+        break;
+      case "Identify improvements":
+        r = "identify the improvements for me based on the reviews provided";
+        break;
+      case "Identify issues":
+        r = "identify the issues for me based on the reviews provided";
+        break;
+      case "What can the AI chat tool do ?":
+        r = "what can you do for me based on the reviews provided in general";
+        break;
+      default:
+        r = prompt;
+        break;
+    }
+    return r;
   }
 
 }
