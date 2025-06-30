@@ -4,9 +4,9 @@
             <span *ngIf="!sidebar.getIsSidebarOpen()" class="hamburger">&#x2630;</span>
             <span *ngIf="sidebar.getIsSidebarOpen()">&#x2573;</span>
         </div>
-        <div class="brand">Review Dashboard</div>
+        <span class="navbar-title">Reviews Dashboard</span>
     </div>
-    <div class="column-on-mobile" *ngIf="!sidebar.getIsSidebarOpen()">
+    <div class="column-on-mobile">
         <div class="histogram" *ngIf="data.getCurrentPage() != '-1' && data.getCurrentApp()?.name?.length > 0">
             <app-histogram [reviewsNo]="androidReviews.length + iosReviews.length"></app-histogram>
         </div>

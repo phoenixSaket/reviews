@@ -1,113 +1,102 @@
-<div class="side-bar-container open" id="sidebar" [ngClass]="data.isLoading ? 'no-select' : 'selectable'">
-    <!-- <div class="link shadows" routerLink="/">
-        <img class="img" src="assets/home.jpg" alt="pie">
-        Home
+<div class="side-bar-container" id="sidebar" [ngClass]="[sidebar.getIsSidebarOpen() ? 'open' : 'close', data.isLoading ? 'no-select' : 'selectable']">
+    <!-- <div class="sidebar-header">
+        <img src="assets/reviews.png" alt="Logo" class="sidebar-logo">
+        <span class="sidebar-title">Reviews</span>
     </div> -->
     <div class="backdrop" *ngIf="data.isLoading"></div>
-    <div class="link shadows" routerLink="/dashboard" [ngClass]="selectedDashboard ? 'active': ''"
-        (click)="closeSideBar('dashboard')">
-        <mat-icon>dashboard</mat-icon>
-        Dashboard
-    </div>
-    <div class="link shadows" routerLink="/add-app" [ngClass]="selectedAddApp ? 'active': ''"
-        (click)="closeSideBar('addApp')">
-        <mat-icon>add</mat-icon>
-        Add App
-    </div>
-    <!-- <div class="link shadows" routerLink="/word-cloud" [ngClass]="selectedWordCloud ? 'active': ''"
-        (click)="closeSideBar('wordcloud')">
-        <mat-icon>cloud</mat-icon>
-        Generate Word-Cloud
-    </div> -->
-    <div class="link shadows" routerLink="/chat" [ngClass]="selectedChat ? 'active': ''"
-        (click)="closeSideBar('chat')">
-        <mat-icon>chat</mat-icon>
-        <div class="app">
-            <div class="name">
-                AI Chat
+    <nav class="sidebar-nav">
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-section">
+            <div class="sidebar-link" routerLink="/dashboard" [ngClass]="selectedDashboard ? 'active': ''" (click)="closeSideBar('dashboard')">
+                <mat-icon>dashboard</mat-icon>
+                <span>Dashboard</span>
             </div>
-            <div class="device">
-                beta
+            <div class="sidebar-link" routerLink="/add-app" [ngClass]="selectedAddApp ? 'active': ''" (click)="closeSideBar('addApp')">
+                <mat-icon>add</mat-icon>
+                <span>Add App</span>
+            </div>
+            <div class="sidebar-link" routerLink="/chat" [ngClass]="selectedChat ? 'active': ''" (click)="closeSideBar('chat')">
+                <mat-icon>chat</mat-icon>
+                <span>AI Chat <span class="sidebar-beta">beta</span></span>
+            </div>
+            <div class="sidebar-link" routerLink="/sentiment-cloud" [ngClass]="selectedSmartWordCloud ? 'active': ''" (click)="closeSideBar('smartwordcloud')">
+                <mat-icon>sentiment_very_satisfied</mat-icon>
+                <span>Sentiment Word-Cloud <span class="sidebar-beta">beta</span></span>
             </div>
         </div>
-    </div>
-    <div class="link shadows" routerLink="/sentiment-cloud" [ngClass]="selectedSmartWordCloud ? 'active': ''"
-        (click)="closeSideBar('smartwordcloud')">
-        <mat-icon>sentiment_very_satisfied</mat-icon>
-
-        <div class="app">
-            <div class="name">
-                Sentiment Word-Cloud
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">
+                <mat-icon>apps</mat-icon>
+                <div class="sidebar-section-title-text">APPS</div>
             </div>
-            <div class="device">
-                beta
-            </div>
-        </div>
-    </div>
-    <!-- <hr> -->
-    <div class="apps-container">
-        <div class="apps shadows" *ngFor="let app of apps" [ngClass]="app.isSelected ? 'active' : ''"
-            (click)="deleteOrCompareApp(app)">
-            <div class="link">
-                <img [src]="app.icon" [alt]="app.name" class="img">
-                <div class="app">
-                    <div class="name">{{app.name}}
-                        <div class="platform" *ngIf="shouldDelete || shouldCompare">
-                            <img src="assets/android.jpg" *ngIf="!app.isIOS" alt="android" class="platform-img">
-                            <img src="assets/apple.jpg" *ngIf="app.isIOS" alt="apple" class="platform-img">
+            <div class="apps-container">
+                <div class="apps" *ngFor="let app of apps" [ngClass]="app.isSelected ? 'active' : ''" (click)="deleteOrCompareApp(app)">
+                    <div class="sidebar-link app-link">
+                        <img [src]="app.icon" [alt]="app.name" class="img" (error)="onImageError($event)">
+                        <div class="app">
+                            <div class="name">{{app.name}}
+                                <div class="platform" *ngIf="shouldDelete || shouldCompare">
+                                    <img src="assets/android.jpg" *ngIf="!app.isIOS" alt="android" class="platform-img">
+                                    <img src="assets/apple.jpg" *ngIf="app.isIOS" alt="apple" class="platform-img">
+                                </div>
+                            </div>
+                            <div class="device" *ngIf="!shouldDelete && !shouldCompare">
+                                <div class="platform">
+                                    <img src="assets/android.jpg" *ngIf="!app.isIOS" alt="android" class="platform-img">
+                                    <img src="assets/apple.jpg" *ngIf="app.isIOS" alt="apple" class="platform-img">
+                                </div>
+                                <div class="rating"><span class="bold">{{app.rating.toFixed(2)}}</span> / 5</div>
+                            </div>
+                            <div class="checkbox" *ngIf="shouldDelete">
+                                <mat-icon *ngIf="app.shouldDelete">check</mat-icon>
+                            </div>
+                            <div class="checkbox" *ngIf="shouldCompare">
+                                <mat-icon *ngIf="app.shouldCompare">check</mat-icon>
+                            </div>
                         </div>
-                    </div>
-                    <div class="device" *ngIf="!shouldDelete && !shouldCompare">
-                        <div class="platform">
-                            <img src="assets/android.jpg" *ngIf="!app.isIOS" alt="android" class="platform-img">
-                            <img src="assets/apple.jpg" *ngIf="app.isIOS" alt="apple" class="platform-img">
-                        </div>
-                        <div class="rating"><span class="bold">{{app.rating.toFixed(2)}}</span> / 5</div>
-                    </div>
-                    <div class="checkbox" *ngIf="shouldDelete">
-                        <mat-icon *ngIf="app.shouldDelete">check</mat-icon>
-                    </div>
-                    <div class="checkbox" *ngIf="shouldCompare">
-                        <mat-icon *ngIf="app.shouldCompare">check</mat-icon>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- <hr> -->
-    <div class="link shadows compare" (click)="compareApp()" *ngIf="!shouldCompare"
-        [ngClass]="shouldDelete ? 'disable': '' ">
-        <mat-icon class="dark-text">compare_arrows</mat-icon>
-        Compare Apps
-    </div>
-    <div class="delete-container" *ngIf="shouldCompare">
-        <div class="inner-delete grey" (click)="compareApp()">
-            <div>Close</div>
-            <mat-icon>close</mat-icon>
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-section">
+            <div class="sidebar-link compare" (click)="compareApp()" *ngIf="!shouldCompare" [ngClass]="shouldDelete ? 'disable': '' ">
+                <mat-icon class="dark-text">compare_arrows</mat-icon>
+                <span>Compare Apps</span>
+            </div>
+            <div class="delete-container" *ngIf="shouldCompare">
+                <div class="inner-delete grey" (click)="compareApp()">
+                    <span>Close</span>
+                    <mat-icon>close</mat-icon>
+                </div>
+                <div class="inner-delete green" (click)="reallyCompareApps()">
+                    <span>Compare</span>
+                    <mat-icon>compare_arrows</mat-icon>
+                </div>
+            </div>
+            <div class="sidebar-link delete" (click)="deleteApp()" *ngIf="!shouldDelete" [ngClass]="shouldCompare ? 'disable': '' ">
+                <mat-icon class="img">delete_outline</mat-icon>
+                <span>Delete Apps</span>
+            </div>
+            <div class="delete-container" *ngIf="shouldDelete">
+                <div class="inner-delete green" (click)="deleteApp()">
+                    <span>Close</span>
+                    <mat-icon>close</mat-icon>
+                </div>
+                <div class="inner-delete red" (click)="reallyDeleteApp()">
+                    <span>Delete</span>
+                    <mat-icon>delete_outline</mat-icon>
+                </div>
+            </div>
         </div>
-        <div class="inner-delete green" (click)="reallyCompareApps()">
-            <div>Compare</div>
-            <mat-icon>compare_arrows</mat-icon>
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-section">
+            <div class="sidebar-link" routerLink="/docs" [ngClass]="selectedDocumentation ? 'active': ''" (click)="closeSideBar('docs')">
+                <mat-icon>description</mat-icon>
+                <span>About</span>
+            </div>
         </div>
-    </div>
-    <div class="link shadows delete" (click)="deleteApp()" *ngIf="!shouldDelete"
-        [ngClass]="shouldCompare ? 'disable': '' ">
-        <img class="img" src="assets/delete.jpg" alt="delete">
-        Delete Apps
-    </div>
-    <div class="delete-container" *ngIf="shouldDelete">
-        <div class="inner-delete green" (click)="deleteApp()">
-            <div>Close</div>
-            <mat-icon>close</mat-icon>
-        </div>
-        <div class="inner-delete red" (click)="reallyDeleteApp()">
-            <div>Delete</div>
-            <mat-icon>delete_outline</mat-icon>
-        </div>
-    </div>
-    <div class="link shadows" routerLink="/docs" [ngClass]="selectedDocumentation ? 'active': ''"
-    (click)="closeSideBar('docs')">
-        <mat-icon>description</mat-icon>
-        About   
-    </div>
+        <div class="sidebar-divider"></div>
+    </nav>
 </div>

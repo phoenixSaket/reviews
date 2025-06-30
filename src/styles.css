@@ -26,7 +26,7 @@
     --red: #e18888;
     --mat-mdc-snack-bar-button-color: var(--accent) !important;
     --mdc-snackbar-container-color: var(--active) !important;
-    --white: #f2f2f2;
+    --white: #f5f6fb;
 }
 
 .mat-snack-bar-container {
@@ -49,6 +49,7 @@ html {
 body {
     background-color: var(--accent);
     overflow: hidden;
+    margin-top: 50px;
 }
 
 .shadow,
@@ -190,4 +191,112 @@ app-model-message .message > * {
     flex-direction: column;
     overflow-wrap: break-word;
     white-space: pre-wrap;
+}
+
+/* Global Design Theme Styles */
+.classic-style {
+    --primary-color: #1976d2;
+    --secondary-color: #424242;
+    --accent-color: #ff4081;
+    --background-color: #fafafa;
+    --surface-color: #ffffff;
+    --text-primary: #212121;
+    --text-secondary: #757575;
+    --border-color: #e0e0e0;
+    --shadow-color: rgba(0, 0, 0, 0.12);
+    --hover-color: #f5f5f5;
+    --active-color: #e3f2fd;
+}
+
+.modern-style {
+    --primary-color: #6366f1;
+    --secondary-color: #64748b;
+    --accent-color: #f59e0b;
+    --background-color: #f8fafc;
+    --surface-color: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --hover-color: #f1f5f9;
+    --active-color: #e0e7ff;
+}
+
+/* Apply modern design to global elements */
+.modern-style {
+    background-color: var(--background-color) !important;
+}
+
+.modern-style html {
+    background-color: var(--background-color);
+}
+
+.modern-style body {
+    background-color: var(--background-color);
+    color: var(--text-primary);
+}
+
+.modern-style .mat-snack-bar-container {
+    background: var(--primary-color) !important;
+    color: white !important;
+}
+
+.modern-style .mat-simple-snackbar-action {
+    color: white !important;
+}
+
+.modern-style mat-dialog-container {
+    background-color: var(--surface-color) !important;
+    border-radius: 12px;
+    box-shadow: 0 20px 25px -5px var(--shadow-color), 0 10px 10px -5px var(--shadow-color);
+}
+
+.modern-style .mat-form-field-appearance-outline .mat-form-field-outline-start,
+.modern-style .mat-form-field-appearance-outline .mat-form-field-outline-end {
+    border-color: var(--border-color);
+}
+
+.modern-style .mat-focused {
+    border-color: var(--primary-color);
+    color: var(--text-primary);
+}
+
+.modern-style .mat-radio-button.mat-accent .mat-radio-inner-circle,
+.modern-style .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple),
+.modern-style .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
+.modern-style .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+    background-color: var(--primary-color);
+}
+
+.modern-style .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: var(--primary-color);
+}
+
+/* Apply classic design to global elements */
+.classic-style {
+    background-color: var(--background-color) !important;
+}
+
+.classic-style html {
+    background-color: var(--background-color);
+}
+
+.classic-style body {
+    background-color: var(--background-color);
+    color: var(--text-primary);
+}
+
+.classic-style .mat-snack-bar-container {
+    background: var(--primary-color) !important;
+    color: white !important;
+}
+
+.classic-style .mat-simple-snackbar-action {
+    color: white !important;
+}
+
+.classic-style mat-dialog-container {
+    background-color: var(--surface-color) !important;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px -1px var(--shadow-color), 0 4px 5px 0 var(--shadow-color);
 }

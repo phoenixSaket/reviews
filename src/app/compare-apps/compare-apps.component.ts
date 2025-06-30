@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AndroidService } from '../services/android.service';
 import { DataService } from '../services/data.service';
 import { IosService } from '../services/ios.service';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   templateUrl: './compare-apps.component.html',
   styleUrls: ['./compare-apps.component.css']
 })
-export class CompareAppsComponent implements OnInit {
+export class CompareAppsComponent implements OnInit, OnDestroy {
 
   compareAppsArray: any[] = [];
   public apps: any = {};
@@ -25,10 +25,57 @@ export class CompareAppsComponent implements OnInit {
   private loadChart: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
   sentiments: any;
   words: any[] = [];
+  isMobile = false;
+  private resizeListener: any;
+  private loadChartSubscription: any;
+
+  // Add fields array for expansion panels
+  fields = [
+    { label: 'Platform', key: 'platform' },
+    { label: 'Avg Rating', key: 'rating' },
+    { label: 'Developer', key: 'developer' },
+    { label: 'Genre', key: 'genre' },
+    { label: 'Current Version', key: 'version' },
+    { label: 'Release Date', key: 'releaseDate' },
+    { label: 'Last Updated', key: 'lastUpdated' },
+    { label: 'Number of Reviews', key: 'reviews' },
+    { label: 'Number of Ratings', key: 'ratings' },
+    { label: 'Top Positive Words', key: 'positive' },
+    { label: 'Top Negative Words', key: 'negative' },
+    { label: '1★ Ratings', key: 'oneStar' },
+    { label: '2★ Ratings', key: 'twoStar' },
+    { label: '3★ Ratings', key: 'threeStar' },
+    { label: '4★ Ratings', key: 'fourStar' },
+    { label: '5★ Ratings', key: 'fiveStar' },
+  ];
 
   constructor(private data: DataService, private ios: IosService, private android: AndroidService, private router: Router) { }
 
   ngOnInit(): void {
+    this.checkMobile();
+    this.resizeListener = () => this.checkMobile();
+    window.addEventListener('resize', this.resizeListener);
+    
+    // Set up loadChart subscription outside to avoid recreation
+    this.loadChartSubscription = this.loadChart.subscribe((chartNumber: number) => {
+      if (chartNumber > 0 && chartNumber === this.compareAppsArray.length) {
+        // Use a longer delay and ensure DOM is ready
+        setTimeout(() => {
+          // Double-check that the canvas element exists
+          const canvas = document.getElementById('line-chart');
+          if (canvas) {
+            this.createChart();
+          } else {
+            console.log('Canvas element not found, retrying...');
+            // Retry after a short delay
+            setTimeout(() => {
+              this.createChart();
+            }, 200);
+          }
+        }, 300);
+      }
+    });
+    
     this.data.compareAppAdded.subscribe((apps: any[]) => {
       if (!!apps) {
         this.chart?.destroy();
@@ -189,20 +236,38 @@ export class CompareAppsComponent implements OnInit {
             });
           }
         });
-
-        this.loadChart.subscribe((chartNumber: number) => {
-          if (chartNumber == this.compareAppsArray.length) {
-            this.createChart();
-          }
-        })
       }
     });
   }
 
   createChart() {
+    // Destroy existing chart if it exists
+    if (this.chart) {
+      this.chart.destroy();
+      this.chart = null;
+    }
+
+    // Check if we have data to display
+    if (!this.compareAppsArray || this.compareAppsArray.length === 0) {
+      console.log('No data available for chart');
+      return;
+    }
+
+    // Check if all apps have histogram data
+    const appsWithData = this.compareAppsArray.filter(app => app.histogram);
+    if (appsWithData.length !== this.compareAppsArray.length) {
+      console.log('Waiting for all app data to load...');
+      return;
+    }
+
     let dataSets: any[] = [];
 
     this.compareAppsArray.forEach((app: any) => {
+      if (!app.histogram) {
+        console.log(`Missing histogram data for app: ${app.name}`);
+        return;
+      }
+
       let data: any = { label: "", data: [] };
       data.label = app.name + (app.isIOS ? ' - IOS' : ' - Android');
       let array: number[] = Object.values(app.histogram);
@@ -218,15 +283,30 @@ export class CompareAppsComponent implements OnInit {
       dataSets.push(data);
     });
 
+    if (dataSets.length === 0) {
+      console.log('No valid datasets for chart');
+      return;
+    }
 
-    this.chart = new Chart('line-chart', {
-      type: 'bar',
-      data: {
-        // values on X-Axis
-        labels: ['1★', '2★', '3★', '4★', '5★'],
-        datasets: dataSets
-      }
-    });
+    try {
+      this.chart = new Chart('line-chart', {
+        type: 'bar',
+        data: {
+          // values on X-Axis
+          labels: ['1★', '2★', '3★', '4★', '5★'],
+          datasets: dataSets
+        }
+      });
+    } catch (error) {
+      console.error('Failed to create chart:', error);
+    }
+  }
+
+  refreshChart() {
+    if (this.chart) {
+      this.chart.destroy();
+    }
+    this.createChart();
   }
 
   getMaxPages(links: any[]) {
@@ -389,5 +469,40 @@ export class CompareAppsComponent implements OnInit {
     }
     this.data.selectedSentiment = params;
     this.router.navigate(["/sentiment-reviews"]);
+  }
+
+  onImageError(event: any): void {
+    event.target.src = 'assets/default-app.svg';
+  }
+
+  ngOnDestroy() {
+    if (this.resizeListener) {
+      window.removeEventListener('resize', this.resizeListener);
+    }
+    if (this.loadChartSubscription) {
+      this.loadChartSubscription.unsubscribe();
+    }
+  }
+
+  checkMobile() {
+    this.isMobile = window.innerWidth <= 700;
+  }
+
+  getAppFieldValue(app: any, key: string): any {
+    switch (key) {
+      case 'platform':
+        return app.isIOS ? 'IOS' : 'Android';
+      case 'positive':
+        return app.positive?.map((w: any) => w.text).join(', ');
+      case 'negative':
+        return app.negative?.map((w: any) => w.text).join(', ');
+      case 'releaseDate':
+      case 'lastUpdated':
+        return app[key] ? (new Date(app[key])).toLocaleDateString() : '';
+      case 'rating':
+        return app.rating ? app.rating.toFixed(1) : '';
+      default:
+        return app[key] ?? '';
+    }
   }
 }

@@ -1,331 +1,270 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { DataService } from '../services/data.service';
 import { SidebarService } from './sidebar.service';
 import { MatDialog } from '@angular/material/dialog';
 import { GetEmailComponent } from '../get-email/get-email.component';
+
+interface App {
+  id?: string;
+  appId?: string;
+  name: string;
+  isIOS: boolean;
+  shouldDelete: boolean;
+  shouldCompare: boolean;
+  isSelected: boolean;
+}
+
+interface SidebarState {
+  shouldDelete: boolean;
+  shouldCompare: boolean;
+  selectedDashboard: boolean;
+  selectedAddApp: boolean;
+  selectedWordCloud: boolean;
+  selectedSmartWordCloud: boolean;
+  selectedDocumentation: boolean;
+  selectedChat: boolean;
+}
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
 })
-export class SidebarComponent implements OnInit {
-  @Input() apps: any[] = [];
-  public shouldDelete: boolean = false;
-  public shouldCompare: boolean = false;
-  public selectedDashboard: boolean = false;
-  public selectedAddApp: boolean = false;
-  public selectedWordCloud: boolean = false;
-  public selectedSmartWordCloud: boolean = false;
-  public selectedDocumentation: boolean = false;
+export class SidebarComponent implements OnInit, OnDestroy {
+  @Input() apps: App[] = [];
+  
+  public state: SidebarState = {
+    shouldDelete: false,
+    shouldCompare: false,
+    selectedDashboard: false,
+    selectedAddApp: false,
+    selectedWordCloud: false,
+    selectedSmartWordCloud: false,
+    selectedDocumentation: false,
+    selectedChat: false
+  };
+  
   public isNotMobile: boolean = screen.availWidth > 768;
-  private backupSelectedApp: any = {};
-  public selectedChat: boolean = false;
+  private backupSelectedApp: App | null = null;
+  private destroy$ = new Subject<void>();
 
   constructor(
     public data: DataService,
     private router: Router,
-    private sidebar: SidebarService,
+    public sidebar: SidebarService,
     private snackBar: MatSnackBar,
     public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.apps.forEach((app: any) => {
+    this.initializeApps();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private initializeApps(): void {
+    this.apps.forEach((app: App) => {
       app.shouldDelete = false;
       app.shouldCompare = false;
       app.isSelected = false;
     });
   }
 
-  openApp(app: any) {
-    if (this.selectedAddApp) this.selectedAddApp = !this.selectedAddApp;
-    if (this.selectedDashboard)
-      this.selectedDashboard = !this.selectedDashboard;
-    if (this.selectedWordCloud)
-      this.selectedWordCloud = !this.selectedWordCloud;
-    if (this.selectedSmartWordCloud)
-      this.selectedSmartWordCloud = !this.selectedSmartWordCloud;
-    if (this.selectedDocumentation)
-      this.selectedDocumentation = !this.selectedDocumentation;
-    if (this.selectedChat)
-      this.selectedChat = !this.selectedChat;
-    this.apps.forEach((app: any) => {
-      app.isSelected = false;
+  private resetAllSelections(): void {
+    Object.keys(this.state).forEach(key => {
+      if (key !== 'shouldDelete' && key !== 'shouldCompare') {
+        (this.state as any)[key] = false;
+      }
     });
+    
+    this.apps.forEach((app: App) => {
+      app.isSelected = false;
+      app.shouldDelete = false;
+      app.shouldCompare = false;
+    });
+    
+    this.data.setCurrentPage('-1');
+  }
+
+  private resetAllSelectionsExceptDeleteCompare(): void {
+    Object.keys(this.state).forEach(key => {
+      if (key !== 'shouldDelete' && key !== 'shouldCompare') {
+        (this.state as any)[key] = false;
+      }
+    });
+    
+    this.apps.forEach((app: App) => {
+      app.isSelected = false;
+      app.shouldDelete = false;
+      app.shouldCompare = false;
+    });
+    
+    this.data.setCurrentPage('-1');
+  }
+
+  openApp(app: App): void {
+    this.resetAllSelections();
     app.isSelected = true;
     this.data.setCurrentApp(app);
     this.data.setCurrentPage(app.name);
     this.router.navigate(['/reviews']);
-
     this.closeSideBar();
   }
 
-  closeSideBar(type?: string) {
+  closeSideBar(type?: string): void {
     if (type) {
-      switch (type) {
-        case 'dashboard':
-          this.selectedDashboard = !this.selectedDashboard;
-          if (this.selectedWordCloud)
-            this.selectedWordCloud = !this.selectedWordCloud;
-          if (this.selectedAddApp) this.selectedAddApp = !this.selectedAddApp;
-          this.apps.forEach((app: any) => {
-            app.isSelected = false;
-          });
-          if (this.selectedSmartWordCloud)
-            this.selectedSmartWordCloud = !this.selectedSmartWordCloud;
-          if (this.selectedDocumentation)
-            this.selectedDocumentation = !this.selectedDocumentation;
-          this.shouldCompare = false;
-          this.shouldDelete = false;
-          if (this.selectedChat)
-            this.selectedDocumentation = !this.selectedDocumentation;
-          this.data.setCurrentPage('-1');
-          break;
-        case 'addApp':
-          this.selectedAddApp = !this.selectedAddApp;
-          if (this.selectedWordCloud)
-            this.selectedWordCloud = !this.selectedWordCloud;
-          if (this.selectedDashboard)
-            this.selectedDashboard = !this.selectedDashboard;
-          this.apps.forEach((app: any) => {
-            app.isSelected = false;
-          });
-          if (this.selectedDocumentation)
-            this.selectedDocumentation = !this.selectedDocumentation;
-          if (this.selectedSmartWordCloud)
-            this.selectedSmartWordCloud = !this.selectedSmartWordCloud;
-          this.shouldCompare = false;
-          this.shouldDelete = false;
-          if (this.selectedChat)
-            this.selectedDocumentation = !this.selectedDocumentation;
-          this.data.setCurrentPage('-1');
-          break;
-        case 'wordcloud':
-          this.selectedWordCloud = !this.selectedWordCloud;
-          if (this.selectedAddApp) this.selectedAddApp = !this.selectedAddApp;
-          if (this.selectedSmartWordCloud)
-            this.selectedSmartWordCloud = !this.selectedSmartWordCloud;
-          if (this.selectedDashboard)
-            this.selectedDashboard = !this.selectedDashboard;
-          if (this.selectedDocumentation)
-            this.selectedDocumentation = !this.selectedDocumentation;
-          this.apps.forEach((app: any) => {
-            app.isSelected = false;
-          });
-          this.shouldCompare = false;
-          this.shouldDelete = false;
-          if (this.selectedChat)
-            this.selectedDocumentation = !this.selectedDocumentation;
-          this.data.setCurrentPage('-1');
-          break;
-        case 'smartwordcloud':
-          this.selectedSmartWordCloud = !this.selectedSmartWordCloud;
-          if (this.selectedWordCloud)
-            this.selectedWordCloud = !this.selectedWordCloud;
-          if (this.selectedAddApp) this.selectedAddApp = !this.selectedAddApp;
-          if (this.selectedDashboard)
-            this.selectedDashboard = !this.selectedDashboard;
-          if (this.selectedDocumentation)
-            this.selectedDocumentation = !this.selectedDocumentation;
-          this.apps.forEach((app: any) => {
-            app.isSelected = false;
-          });
-          this.shouldCompare = false;
-          this.shouldDelete = false;
-          if (this.selectedChat)
-            this.selectedDocumentation = !this.selectedDocumentation;
-          this.data.setCurrentPage('-1');
-          break;
-        case 'docs':
-          this.selectedDocumentation = !this.selectedDocumentation;
-          if (this.selectedWordCloud)
-            this.selectedWordCloud = !this.selectedWordCloud;
-          if (this.selectedAddApp) this.selectedAddApp = !this.selectedAddApp;
-          if (this.selectedDashboard)
-            this.selectedDashboard = !this.selectedDashboard;
-          if (this.selectedSmartWordCloud)
-            this.selectedSmartWordCloud = !this.selectedSmartWordCloud;
-
-          this.apps.forEach((app: any) => {
-            app.isSelected = false;
-          });
-          this.shouldCompare = false;
-          this.shouldDelete = false;
-          if (this.selectedChat)
-            this.selectedChat = !this.selectedChat;
-          this.data.setCurrentPage('-1');
-          break;
-        case 'chat': 
-          this.selectedChat = !this.selectedChat;
-          if (this.selectedWordCloud)
-            this.selectedWordCloud = !this.selectedWordCloud;
-          if (this.selectedAddApp) this.selectedAddApp = !this.selectedAddApp;
-          if (this.selectedDashboard)
-            this.selectedDashboard = !this.selectedDashboard;
-          if (this.selectedSmartWordCloud)
-            this.selectedSmartWordCloud = !this.selectedSmartWordCloud;
-          if (this.selectedDocumentation)
-            this.selectedDocumentation = !this.selectedDocumentation;
-
-          this.apps.forEach((app: any) => {
-            app.isSelected = false;
-          });
-          this.shouldCompare = false;
-          this.shouldDelete = false;
-          this.data.setCurrentPage('-1');
-          break;
-        default:
-          break;
-      }
+      this.resetAllSelections();
+      this.setActiveSection(type);
     }
+
     if (screen.width < 768) {
       this.sidebar.closeSidebar();
     }
   }
 
-  deleteApp() {
-    this.shouldDelete = !this.shouldDelete;
-    this.backupSelectedApp = this.apps.find((app: any)=> {return app.isSelected;});
-    this.apps.forEach((app) => {
-      app.shouldDelete = false;
-      app.shouldCompare = false;
-      app.isSelected = false;
-    });
-  }
+  private setActiveSection(type: string): void {
+    const sectionMap: { [key: string]: keyof SidebarState } = {
+      'dashboard': 'selectedDashboard',
+      'addApp': 'selectedAddApp',
+      'wordcloud': 'selectedWordCloud',
+      'smartwordcloud': 'selectedSmartWordCloud',
+      'docs': 'selectedDocumentation',
+      'chat': 'selectedChat'
+    };
 
-  selectForDeleting(app: any) {
-    app.shouldDelete = !app.shouldDelete;
-  }
-
-  reallyDeleteApp() {
-    let temp: any[] = [];
-    let temp2: any[] = [];
-    this.apps.forEach((app: any) => {
-      if (app.shouldDelete && app == this.backupSelectedApp) {
-        this.router.navigate(['/']);
-      }
-
-      if (!app.shouldDelete) {
-        temp.push({
-          app: app.isIOS ? app.id : app.appId,
-          isIOS: app.isIOS == true,
-        });
-        temp2.push(app);
-      }
-    });
-
-    if (this.selectedWordCloud)
-      this.selectedWordCloud = !this.selectedWordCloud;
-    if (this.selectedAddApp) this.selectedAddApp = !this.selectedAddApp;
-    if (this.selectedDashboard)
-      this.selectedDashboard = !this.selectedDashboard;
-    this.apps.forEach((app: any) => {
-      app.isSelected = false;
-    });
-    let appsToSave = temp;
-    this.apps = temp2;
-    localStorage.setItem('apps-review', JSON.stringify(appsToSave));
-    this.shouldDelete = !this.shouldDelete;
-  }
-
-  compareApp() {
-    this.shouldCompare = !this.shouldCompare;
-    this.apps.forEach((app) => {
-      app.shouldDelete = false;
-      app.shouldCompare = false;
-    });
-  }
-
-  reallyCompareApps() {
-    let tempCompareArray: any[] = [];
-    this.apps.forEach((app: any) => {
-      if (app.shouldCompare) {
-        tempCompareArray.push(app);
-      }
-    });
-    if (tempCompareArray.length <= 1) {
-      if (!this.data.isSnackbarOpen) {
-        this.snackBar.open(
-          'Atleast 2 apps are required for comparison.',
-          'close',
-          {
-            duration: 3000,
-            horizontalPosition: 'end',
-            verticalPosition: 'bottom',
-          }
-        );
-      }
-    } else {
-      if (this.selectedWordCloud)
-        this.selectedWordCloud = !this.selectedWordCloud;
-      if (this.selectedAddApp) this.selectedAddApp = !this.selectedAddApp;
-      if (this.selectedDashboard)
-        this.selectedDashboard = !this.selectedDashboard;
-      this.apps.forEach((app: any) => {
-        app.isSelected = false;
-      });
-      this.data.compareAppAdded.next(tempCompareArray);
-      this.compareApp();
-      if (screen.width < 768) {
-        this.sidebar.closeSidebar();
-      }
-      this.router.navigate(['/compare']);
+    const section = sectionMap[type];
+    if (section) {
+      this.state[section] = true;
     }
   }
 
-  deleteOrCompareApp(app: any) {
-    if (this.shouldDelete) {
+  deleteApp(): void {
+    this.state.shouldDelete = !this.state.shouldDelete;
+    this.backupSelectedApp = this.apps.find((app: App) => app.isSelected) || null;
+    this.resetAllSelectionsExceptDeleteCompare();
+  }
+
+  selectForDeleting(app: App): void {
+    app.shouldDelete = !app.shouldDelete;
+  }
+
+  reallyDeleteApp(): void {
+    const appsToKeep: App[] = [];
+    const appsToSave: Array<{ app: string; isIOS: boolean }> = [];
+
+    this.apps.forEach((app: App) => {
+      if (app.shouldDelete && app === this.backupSelectedApp) {
+        this.router.navigate(['/']);
+        return;
+      }
+
+      if (!app.shouldDelete) {
+        appsToKeep.push(app);
+        appsToSave.push({
+          app: app.isIOS ? app.id! : app.appId!,
+          isIOS: app.isIOS
+        });
+      }
+    });
+
+    this.resetAllSelections();
+    this.apps = appsToKeep;
+    localStorage.setItem('apps-review', JSON.stringify(appsToSave));
+    this.state.shouldDelete = false;
+  }
+
+  compareApp(): void {
+    this.state.shouldCompare = !this.state.shouldCompare;
+    this.resetAllSelectionsExceptDeleteCompare();
+  }
+
+  reallyCompareApps(): void {
+    const selectedApps = this.apps.filter((app: App) => app.shouldCompare);
+    
+    if (selectedApps.length <= 1) {
+      this.showSnackBar('At least 2 apps are required for comparison.');
+      return;
+    }
+
+    this.resetAllSelections();
+    this.data.compareAppAdded.next(selectedApps);
+    this.state.shouldCompare = false;
+    
+    if (screen.width < 768) {
+      this.sidebar.closeSidebar();
+    }
+    this.router.navigate(['/compare']);
+  }
+
+  deleteOrCompareApp(app: App): void {
+    if (this.state.shouldDelete) {
       this.selectForDeleting(app);
-    } else if (this.shouldCompare) {
+    } else if (this.state.shouldCompare) {
       this.selectForComparing(app);
     } else {
       this.openApp(app);
     }
   }
 
-  selectForComparing(app: any) {
-    let length: number = 0;
-    this.apps.forEach((app: any) => {
+  selectForComparing(app: App): void {
+    const selectedCount = this.apps.filter((app: App) => app.shouldCompare).length;
+    const maxAllowed = this.isNotMobile ? 3 : 2;
+
+    if (selectedCount >= maxAllowed) {
       if (app.shouldCompare) {
-        length = length + 1;
-      }
-    });
-    if (
-      (screen.width > 768 && length >= 3) ||
-      (screen.width < 768 && length >= 2)
-    ) {
-      if (app.shouldCompare) {
-        app.shouldCompare = !app.shouldCompare;
+        app.shouldCompare = false;
       } else {
-        if (!this.data.isSnackbarOpen) {
-          this.snackBar.open(
-            'Cannot compare more than ' + length + ' apps.',
-            'close',
-            {
-              duration: 3000,
-              horizontalPosition: 'end',
-              verticalPosition: 'bottom',
-            }
-          );
-        }
+        this.showSnackBar(`Cannot compare more than ${maxAllowed} apps.`);
       }
     } else {
       app.shouldCompare = !app.shouldCompare;
     }
-    this.apps.forEach((app: any) => {
+
+    // Only reset other selections, not the shouldCompare flag
+    Object.keys(this.state).forEach(key => {
+      if (key !== 'shouldDelete' && key !== 'shouldCompare') {
+        (this.state as any)[key] = false;
+      }
+    });
+    
+    this.apps.forEach((app: App) => {
       app.isSelected = false;
     });
-    if (this.selectedAddApp) this.selectedAddApp = !this.selectedAddApp;
-    if (this.selectedDashboard)
-      this.selectedDashboard = !this.selectedDashboard;
   }
 
-  openEmailDialog() {
-    const dialogRef = this.dialog.open(GetEmailComponent, {
+  private showSnackBar(message: string): void {
+    if (!this.data.isSnackbarOpen) {
+      this.snackBar.open(message, 'close', {
+        duration: 3000,
+        horizontalPosition: 'end',
+        verticalPosition: 'bottom',
+      });
+    }
+  }
+
+  openEmailDialog(): void {
+    this.dialog.open(GetEmailComponent, {
       data: { apps: this.apps },
     });
   }
+
+  onImageError(event: any): void {
+    event.target.src = 'assets/default-app.svg';
+  }
+
+  // Getters for template access
+  get shouldDelete(): boolean { return this.state.shouldDelete; }
+  get shouldCompare(): boolean { return this.state.shouldCompare; }
+  get selectedDashboard(): boolean { return this.state.selectedDashboard; }
+  get selectedAddApp(): boolean { return this.state.selectedAddApp; }
+  get selectedWordCloud(): boolean { return this.state.selectedWordCloud; }
+  get selectedSmartWordCloud(): boolean { return this.state.selectedSmartWordCloud; }
+  get selectedDocumentation(): boolean { return this.state.selectedDocumentation; }
+  get selectedChat(): boolean { return this.state.selectedChat; }
 }
