@@ -3,6 +3,7 @@ import Chart from 'chart.js/auto';
 import { AndroidService } from '../services/android.service';
 import { DataService } from '../services/data.service';
 import { IosService } from '../services/ios.service';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 import {
   ApexAxisChartSeries,
@@ -37,6 +38,14 @@ export type ChartOptions2 = {
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
+  animations: [
+    trigger('fadeInUp', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(30px)' }),
+        animate('600ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+      ])
+    ])
+  ]
 })
 export class DashboardComponent implements AfterViewInit {
   public chart: any;
@@ -45,6 +54,7 @@ export class DashboardComponent implements AfterViewInit {
   public type: string = "pie";
   public loading: boolean = true;
   public loadingPercent: number = 0;
+  public Math = Math;
 
   public charts: any[] = [];
   public charts2: any[] = [];
@@ -109,18 +119,31 @@ export class DashboardComponent implements AfterViewInit {
 
   loadCharts(app: any) {
     this.loading = true;
+    const ratingColors = ['#e53935', '#fb8c00', '#fdd835', '#43a047', '#1e7e34'];
+
     let chartOptions: any = {
       chart: {
-        height: 350,
-        type: "bar"
+        height: 280,
+        type: "bar",
+        toolbar: {
+          show: false
+        },
+        animations: {
+          enabled: true,
+          easing: 'easeinout',
+          speed: 800
+        },
+        legend: {
+          show: false
+        }
       },
       xaxis: {
         type: 'category',
         categories: ["1 ★", "2 ★", "3 ★", "4 ★", "5 ★"],
         labels: {
           style: {
-            fontSize: '14px',
-            fontWeight: 'bold',
+            fontSize: '12px',
+            fontWeight: '600',
             colors: this.getColor('graph')
           }
         }
@@ -131,29 +154,71 @@ export class DashboardComponent implements AfterViewInit {
       plotOptions: {
         bar: {
           dataLabels: {
-            position: "top", // top, center, bottom
+            position: "top",
             offSetY: -20
-          }
+          },
+          borderRadius: 6,
+          columnWidth: '60%',
+          distributed: true
         },
         dataLabels: {
           enabled: true,
           offsetY: -20,
           style: {
-            fontSize: '12px',
-            fontWeight: 800,
+            fontSize: '11px',
+            fontWeight: 600,
             colors: [this.getColor('graph')],
             fontFamily: 'Cabin, sans-serif'
           }
         },
       },
-      colors: [this.getColor('graph')]
+      colors: ratingColors,
+      grid: {
+        show: false
+      },
+      stroke: {
+        width: 0
+      },
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              height: 250
+            },
+            plotOptions: {
+              bar: {
+                columnWidth: '50%'
+              }
+            }
+          }
+        },
+        {
+          breakpoint: 768,
+          options: {
+            chart: {
+              height: 260
+            }
+          }
+        }
+      ]
     };
 
     let chartOptions2: any = {
       chart: {
-        // width: '350',
-        // height: '100%',
-        type: "pie"
+        height: 380,
+        type: "pie",
+        toolbar: {
+          show: false
+        },
+        animations: {
+          enabled: true,
+          easing: 'easeinout',
+          speed: 800
+        },
+        legend: {
+          show: false
+        }
       },
       labels: ["1★", "2★", "3★", "4★", "5★"],
       responsive: [
@@ -161,10 +226,23 @@ export class DashboardComponent implements AfterViewInit {
           breakpoint: 480,
           options: {
             chart: {
-              width: 320
+              height: 300
             },
             legend: {
-              position: "bottom"
+              position: "bottom",
+              fontSize: '11px'
+            }
+          }
+        },
+        {
+          breakpoint: 768,
+          options: {
+            chart: {
+              height: 340
+            },
+            legend: {
+              position: "bottom",
+              fontSize: '12px'
             }
           }
         },
@@ -172,50 +250,53 @@ export class DashboardComponent implements AfterViewInit {
           breakpoint: 1000,
           options: {
             chart: {
-              width: 400
+              height: 360
             },
             legend: {
-              position: "bottom"
+              position: "bottom",
+              fontSize: '12px'
             }
           }
-        },
-        {
-          breakpoint: 2160,
-          options: {
-            chart: {
-              width: 400
-            },
-            legend: {
-              position: "bottom"
-            }
-          }
-        },
-        {
-          breakpoint: 750,
-          options: {
-            chart: {
-              width: 350
-            },
-            legend: {
-              position: "bottom"
-            }
-          }
-        },
+        }
       ],
       theme: {
         monochrome: {
-          enabled: true
+          enabled: false
         }
       },
       plotOptions: {
-        bar: {
-          dataLabels: {
-            position: "top" // top, center, bottom
+        pie: {
+          donut: {
+            size: '0%'
           },
-          offsetY: -20
+          dataLabels: {
+            offset: 0,
+            minAngleToShowLabel: 10
+          }
         }
       },
-      colors: this.getColorShades('graph')
+      dataLabels: {
+        enabled: true,
+        formatter: function (val: any, opts: any) {
+          return opts.w.globals.seriesTotals[opts.seriesIndex] + '\n(' + val.toFixed(1) + '%)'
+        },
+        style: {
+          fontSize: '10px',
+          fontWeight: '600',
+          fontFamily: 'Cabin, sans-serif'
+        }
+      },
+      legend: {
+        position: 'bottom',
+        fontSize: '14px',
+        fontWeight: 500,
+        markers: {
+          width: 14,
+          height: 14,
+          radius: 7
+        }
+      },
+      colors: ratingColors
     };
 
     if (!!app) {

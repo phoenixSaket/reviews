@@ -1,3 +1,4 @@
+/* Base card styles */
 .card {
     width: 100%;
     display: flex;
@@ -144,5 +145,14 @@
 
     .align-center {
         align-items: center;
+    }
+}
+
+@media (max-width: 600px) {
+    .modern-style .card > .card-inner {
+        padding: 16px 8px 16px 8px;
+    }
+    .modern-style .left {
+        gap: 8px;
     }
 }

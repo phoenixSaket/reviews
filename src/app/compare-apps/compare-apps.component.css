@@ -1,53 +1,87 @@
+/* --- Responsive Flex Table Layout for Compare Apps --- */
+.outer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  padding: 32px 0;
+  background: #f8fafc;
+  gap: 8px;
+  overflow-x: auto;
+}
+
 .flex-container {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  gap: 2px;
+  align-items: stretch;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(84,96,135,0.10);
+  overflow: hidden;
 }
 
-.data-container>div {
-  width: 100%;
-  font-size: 15px;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.flex-container>div>img {
-  width: 30px;
-  height: 30px;
-  vertical-align: middle;
-}
-
-.outer {
+.columns {
   display: flex;
-  width: 100%;
-  padding: 20px;
+  flex-direction: column;
+  background: linear-gradient(90deg, #f1f5f9 0%, #e9ecef 100%);
+  border-bottom: 2px solid #e2e8f0;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #22223b;
+  letter-spacing: 0.02em;
+  width: 300px;
 }
 
-.stars {
-  font-size: 20px;
-  /* color: #818181; */
+.header, .item {
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  box-sizing: border-box;
 }
 
 .header {
-  min-height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #dddddd;
   font-weight: 700;
-  gap: 5px;
+  font-size: 1.1rem;
+  color: #22223b;
+  background: #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100px;
+}
+
+.header img {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  margin-bottom: 6px;
+  box-shadow: 0 2px 8px rgba(84,96,135,0.10);
+  background: #f8fafc;
+  object-fit: cover;
+}
+
+.name {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #22223b;
+  text-align: center;
 }
 
 .item {
-  background-color: #e7e7e7;
-  padding: 8px;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 1.05rem;
+  color: #22223b;
+  border-bottom: 1px solid #f1f3f4;
+  background: #fff;
+  justify-content: flex-start;
+  min-height: 44px;
+  transition: background 0.2s;
+}
+
+/* Zebra striping for rows */
+.data-container .item:nth-child(even) {
+  background: #f8fafc;
 }
 
 .bold {
@@ -55,102 +89,330 @@
 }
 
 .large {
-  font-size: 17px;
-}
-
-.columns>.item {
-  background-color: #dddddd;
-}
-
-.chart-container {
-  padding: 20px;
-}
-
-.app-name {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  font-size: 24px;
-  font-weight: 700;
-}
-
-.smaller {
-    font-size: 15px;
+  font-size: 1.13rem;
 }
 
 .word-container {
-  min-height: 38px !important;
-  height: 100% !important;
-  width: 100%;
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 4px;
+  min-height: 60px;
 }
 
-.word::after {
-  content: "|";
-  margin: 0 5px;
-  color: #818181;
-}
-
-.space {
-  margin: 0 0 0 5px;
+.word, .space {
+  display: inline-block;
+  padding: 4px 14px;
+  margin: 2px 2px;
+  border-radius: 16px;
+  font-size: 0.98rem;
+  font-weight: 500;
+  background: #f1f3f4;
+  color: #22223b;
+  box-shadow: 0 1px 3px rgba(84,96,135,0.07);
   cursor: pointer;
+  transition: background 0.2s, color 0.2s;
 }
-
-.word {
-  cursor: pointer;
+.word-container.positive .word, .word-container.positive .space {
+  background: #e6f9f2;
+  color: #007A58;
+}
+.word-container.negative .word, .word-container.negative .space {
+  background: #ffeaea;
+  color: #E74B58;
+}
+.word:hover, .space:hover {
+  background: #dbeafe;
+  color: #1e293b;
 }
 
 .positive {
   color: #007A58;
 }
-
 .negative {
   color: #E74B58;
 }
-
 .neutral {
   color: #bb844c;
 }
 
-@media (max-width: 768px) {
-  .flex-container>div>img {
-    width: 20px;
-    height: 20px;
-  }
+.text-center {
+  padding: 0 12px;
+  text-align: left;
+}
 
+.stars {
+  font-size: 1.1em;
+  vertical-align: middle;
+}
+
+@media (max-width: 1100px) {
   .outer {
-    padding: 0px;
+    gap: 12px;
+    padding: 16px 0;
   }
-
-  .chart-container {
-    padding: 0px;
-    margin-top: 20px;
+  .flex-container, .columns {
+    width: 220px;
+    min-width: 180px;
   }
+}
 
-  .large {
-    font-size: 15px;
-  }
-
-  .stars {
-    font-size: 15px;
-    /* color: #818181; */
-  }
-
-  .data-container>div {
-    font-size: 12px;
-  }
-
-  .header {
-    height: 70px;
+@media (max-width: 700px) {
+  .outer {
     flex-direction: column;
-    gap: 0px;
+    gap: 8px;
+    padding: 4px 0;
+    align-items: center;
   }
-
-  .item {
-    min-height: 50px;
-    height: 100%;
+  .flex-container, .columns {
+    width: 98vw;
+    min-width: 0;
+    max-width: 98vw;
+    margin: 0 0 12px 0;
+  }
+  .header, .item {
+    font-size: 0.98rem;
+    min-height: 36px;
     padding: 8px 4px;
   }
+  .word, .space {
+    font-size: 0.92rem;
+    padding: 3px 10px;
+  }
+}
+
+.mobile-details-container {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+}
+
+/* Chart Card Styling - Following Dashboard Design */
+.chart-card {
+  background: var(--accent);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  position: relative;
+  margin: 20px 0;
+  width: 100%;
+  animation: slideInUp 0.6s ease-out;
+}
+
+.chart-card:hover {
+  background: var(--white);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+}
+
+.chart-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-dark), var(--accent-other));
+}
+
+/* Chart Header */
+.chart-header {
+  padding: 24px 24px 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.chart-info {
+  flex: 1;
+}
+
+.chart-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--accent-dark);
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.chart-subtitle {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.chart-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.chart-toggle-btn {
+  background: var(--accent-dark);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 44px;
+}
+
+.chart-toggle-btn:hover {
+  background: var(--active);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.chart-toggle-btn:focus {
+  outline: 2px solid var(--accent-dark);
+  outline-offset: 2px;
+}
+
+.chart-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+.chart-toggle-btn .material-symbols-outlined {
+  font-size: 1.2rem;
+}
+
+/* Chart Container */
+.chart-container {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: #fff;
+  border-radius: 0 0 20px 20px;
+  max-height: calc(100dvh - 100px);
+}
+
+.chart-container canvas {
+  max-width: 100% !important;
+  height: auto !important;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Loading state for chart */
+.chart-container::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--accent);
+  border-top: 3px solid var(--accent-dark);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.chart-container.loading::before {
+  opacity: 1;
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Chart card animations */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced hover effects */
+.chart-card:hover .chart-header {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.chart-card:hover .chart-title {
+  color: var(--accent-dark);
+}
+
+/* Responsive Design for Chart */
+@media (max-width: 768px) {
+  .chart-card {
+    margin: 16px 8px;
+    border-radius: 16px;
+  }
+  
+  .chart-header {
+    padding: 20px 20px 12px 20px;
+  }
+  
+  .chart-title {
+    font-size: 1.1rem;
+  }
+  
+  .chart-container {
+    padding: 16px;
+    height: 300px;
+    border-radius: 0 0 16px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-card {
+    margin: 12px 4px;
+    border-radius: 12px;
+  }
+  
+  .chart-header {
+    padding: 16px 16px 12px 16px;
+  }
+  
+  .chart-title {
+    font-size: 1rem;
+  }
+  
+  .chart-subtitle {
+    font-size: 0.8rem;
+  }
+  
+  .chart-container {
+    padding: 12px;
+    height: 250px;
+    border-radius: 0 0 12px 12px;
+  }
+  
+  .chart-toggle-btn {
+    padding: 8px 12px;
+    min-width: 36px;
+    height: 36px;
+  }
+  
+  .chart-toggle-btn .material-symbols-outlined {
+    font-size: 1rem;
+  }
+}
+
+/* Accessibility improvements */
+.chart-toggle-btn:focus-visible {
+  outline: 2px solid var(--accent-dark);
+  outline-offset: 2px;
+}
+
+.chart-card:focus-within {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 0 0 2px var(--accent-dark);
 }

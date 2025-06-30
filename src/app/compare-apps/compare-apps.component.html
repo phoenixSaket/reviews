@@ -1,5 +1,4 @@
-<div class="outer">
-
+<div class="outer" *ngIf="!isMobile">
   <div class="flex-container bold large columns" *ngIf="compareAppsArray.length != 0">
     <div class="header text-center">App Details</div>
     <div class="text-center item">Platform</div>
@@ -19,10 +18,9 @@
     <div class="text-center item positive">4&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
     <div class="text-center item positive">5&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
   </div>
-
   <div class="flex-container data-container" *ngFor="let app of compareAppsArray; let i = index">
     <div class="header text-center">
-      <img [src]="[app.icon]" alt="app icon"/>
+      <img [src]="[app.icon]" alt="app icon" (error)="onImageError($event)"/>
       <div class="name">{{ app.name }}</div>
     </div>
     <div class="text-center item">{{app.isIOS ? 'IOS' : 'Android'}}</div>
@@ -51,7 +49,50 @@
     <div class="text-center item positive">{{app.fiveStar}}</div>
   </div>
 </div>
-<div class="chart-container">
-  <div class="app-name" *ngIf="!!chart">Ratings Comparison &nbsp;&nbsp;<span class="smaller">(By Percent)</span></div>
-  <canvas id="line-chart">{{ chart }}</canvas>
+
+<div class="chart-card" *ngIf="compareAppsArray.length > 0">
+  <div class="chart-header">
+    <div class="chart-info">
+      <div class="chart-title">Ratings Comparison</div>
+      <div class="chart-subtitle">By Percent</div>
+    </div>
+    <div class="chart-controls">
+      <button class="chart-toggle-btn" (click)="refreshChart()">
+        <span class="material-symbols-outlined">refresh</span>
+      </button>
+    </div>
+  </div>
+  
+  <div class="chart-container">
+    <canvas id="line-chart"></canvas>
+  </div>
 </div>
+
+<!-- Mobile view: one .flex-container.bold.large.columns with expansion panels for each app -->
+<div *ngIf="isMobile">
+  <div class="outer">
+    <div class="flex-container columns">
+      <mat-accordion multi="true">
+        <mat-expansion-panel *ngFor="let field of fields" [expanded]="true">
+          <mat-expansion-panel-header>
+            {{ field.label }}
+          </mat-expansion-panel-header>
+          <div class="field-row">
+            <ng-container *ngFor="let app of compareAppsArray">
+              <div class="mobile-details-container">
+                <div class="field-label bold">
+                  <span>{{ app.name }} ({{ app.isIOS ? 'IOS' : 'Android' }})</span>
+                </div>
+                <div class="field-value">
+                  {{ getAppFieldValue(app, field.key) }}
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+    <!-- ...other app columns if needed... -->
+  </div>
+</div>
+

@@ -144,4 +144,8 @@ export class AddReviewComponent implements OnInit {
     localStorage.setItem("apps-review", JSON.stringify(apps));
     return shouldAddApp;
   }
+
+  onImageError(event: any): void {
+    event.target.src = 'assets/default-app.svg';
+  }
 }

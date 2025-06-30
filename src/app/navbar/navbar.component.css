@@ -3,35 +3,26 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 0 24px;
     position: fixed;
     top: 0;
     height: 50px;
-    background-color: var(--accent);
-    /* border-bottom: 1px solid #e7e7e7; */
+    background: var(--white);
+    box-shadow: 2px 0 8px rgba(84,96,135,0.04);
+    border-bottom: 1px solid var(--accent);
+    z-index: 1001;
 }
 
 .left {
     display: flex;
-    gap: 10px;
     align-items: center;
+    gap: 14px;
+    height: 50px;
 }
 
 .toggle {
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    user-select: none;
-    cursor: pointer;
-    font-weight: 800;
-    font-size: 15px;
-}
-
-.brand {
-    /* width: 30px; */
-    height: 30px;
+    width: 36px;
+    height: 36px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,14 +30,30 @@
     cursor: pointer;
     font-weight: 800;
     font-size: 18px;
+    margin-right: 4px;
+}
+
+.navbar-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+.navbar-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--accent-dark);
 }
 
 .hamburger {
-    font-size: 20px;
+    font-size: 22px;
 }
 
 .rating {
     font-size: 12px;
+    color: var(--accent-dark);
 }
 
 .platform-img {
@@ -62,6 +69,7 @@
     gap: 5px;
     font-weight: 900;
     font-size: large;
+    color: var(--accent-dark);
 }
 
 .column-on-mobile {
@@ -71,11 +79,13 @@
     justify-content: space-between;
 }
 
-@media (max-width: 768px) {
-    .brand {
+@media (max-width: 1023px) {
+    .navbar-title {
         display: none;
     }
-
+    .navbar-logo {
+        display: none;
+    }
     .column-on-mobile {
         flex-direction: column-reverse;
         justify-content: center;
@@ -83,18 +93,16 @@
         gap: 10px;
         width: 100%;
     }
-
     .bold {
         display: none;
     }
-
     .left {
         align-items: unset;
         gap: unset;
     }
-
     .navbar-container {
         height: unset;
         align-items: unset;
+        padding: 0 12px;
     }
 }

@@ -37,7 +37,7 @@
         <div class="details" (click)="addApp(app)">
             <div class="inner-container">
                 <div class="image">
-                    <img [src]="app.icon" class="icon">
+                    <img [src]="app.icon" class="icon" (error)="onImageError($event)">
                 </div>
                 <div class="inner-details">
                     <div class="bold name">{{app.title}}</div>

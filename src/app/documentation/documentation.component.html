@@ -1,5 +1,5 @@
 <div class="doc-container">
-    <div class="top">
+    <div class="center">
         <div class="left">
             <div class="title-doc">
                 Welcome
@@ -17,27 +17,154 @@
         <div class="bottom-title-doc">
             Introduction
         </div>
-        <div class="bottom-subtitle-doc">
-            <div class="section">
-                The Reviews Dashboard is a comprehensive app analytics tool that provides businesses and developers with
-                insights into user feedback to make data-driven decisions.
+        
+        <!-- Hero Section with Key Benefits -->
+        <div class="intro-hero">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h2>Comprehensive App Analytics Dashboard</h2>
+                    <p>Transform user feedback into actionable insights with our powerful review management platform</p>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">Platforms</div>
+                        <div class="stat-desc">iOS & Android</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">∞</div>
+                        <div class="stat-label">Apps</div>
+                        <div class="stat-desc">Unlimited tracking</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">AI</div>
+                        <div class="stat-label">Powered</div>
+                        <div class="stat-desc">Google Gemini</div>
+                    </div>
+                </div>
             </div>
-            <div class="section">
-                With the Reviews Dashboard, users can manage app reviews for both iOS and Android apps. The Dashboard
-                provides a visual representation of the ratings of the iOS/Android apps added to the system. Users can
-                see the number of ratings from 1 star to 5 stars and filter and sort them based on multiple factors.
+        </div>
+
+        <!-- Core Value Propositions -->
+        <div class="value-propositions">
+            <div class="value-card primary">
+                <div class="value-icon">
+                    <mat-icon>analytics</mat-icon>
+                </div>
+                <div class="value-content">
+                    <h3>Data-Driven Decisions</h3>
+                    <p>Make informed decisions with comprehensive analytics and visual insights from user feedback across multiple platforms.</p>
+                </div>
             </div>
-            <div class="section">
-                The Reviews Dashboard also includes a range of additional features that make it a valuable tool for
-                businesses and developers. These features include the ability to add any iOS/Android app available on
-                Google Play/Apple App Store, generate word clouds based on reviews and sentiments from Google Play/Apple
-                App Store, compare, delete added apps, and receive pop-up notification for new reviews added since the
-                last time the website was loaded.
+            
+            <div class="value-card secondary">
+                <div class="value-icon">
+                    <mat-icon>integration_instructions</mat-icon>
+                </div>
+                <div class="value-content">
+                    <h3>Cross-Platform Management</h3>
+                    <p>Seamlessly manage app reviews from both Google Play Store and Apple App Store in one unified dashboard.</p>
+                </div>
             </div>
-            <div class="section">
-                Overall, the Reviews Dashboard is a powerful tool that can provide businesses and developers with
-                valuable insights into user feedback. Its range of features, ease of use, and ability to work with both
-                iOS and Android apps hepls in making it easier for delivering the best user experience.
+            
+            <div class="value-card accent">
+                <div class="value-icon">
+                    <mat-icon>psychology</mat-icon>
+                </div>
+                <div class="value-content">
+                    <h3>AI-Powered Insights</h3>
+                    <p>Leverage advanced AI analysis to understand user sentiment, identify trends, and get actionable recommendations.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Platform Integration Diagram -->
+        <div class="platform-integration">
+            <h3>Platform Integration</h3>
+            <div class="integration-diagram">
+                <div class="platform-card android">
+                    <div class="platform-icon">
+                        <mat-icon>android</mat-icon>
+                    </div>
+                    <h4>Google Play Store</h4>
+                    <div class="platform-features">
+                        <div class="feature-tag">Reviews</div>
+                        <div class="feature-tag">Ratings</div>
+                        <div class="feature-tag">Sentiments</div>
+                    </div>
+                </div>
+                
+                <div class="integration-arrow">
+                    <mat-icon>sync</mat-icon>
+                </div>
+                
+                <div class="central-hub">
+                    <div class="hub-icon">
+                        <mat-icon>hub</mat-icon>
+                    </div>
+                    <h4>Reviews Dashboard</h4>
+                    <p>Unified Analytics Platform</p>
+                </div>
+                
+                <div class="integration-arrow">
+                    <mat-icon>sync</mat-icon>
+                </div>
+                
+                <div class="platform-card ios">
+                    <div class="platform-icon">
+                        <mat-icon>phone_iphone</mat-icon>
+                    </div>
+                    <h4>Apple App Store</h4>
+                    <div class="platform-features">
+                        <div class="feature-tag">Reviews</div>
+                        <div class="feature-tag">Ratings</div>
+                        <div class="feature-tag">Sentiments</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Benefits Summary -->
+        <div class="benefits-summary">
+            <div class="benefits-header">
+                <div class="benefits-title-section">
+                    <div class="title-icon">
+                        <mat-icon>star</mat-icon>
+                    </div>
+                    <h3>Why Choose Reviews Dashboard?</h3>
+                    <p class="benefits-subtitle">Discover the powerful features that make us the ultimate choice for app review management</p>
+                </div>
+            </div>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card" *ngFor="let benefit of benefits; let i = index">
+                    <div class="benefit-card-inner">
+                        <div class="benefit-icon-wrapper">
+                            <div class="benefit-icon">
+                                <mat-icon>{{benefit.icon}}</mat-icon>
+                            </div>
+                        </div>
+                        <div class="benefit-content">
+                            <h4>{{benefit.title}}</h4>
+                            <p>{{benefit.description}}</p>
+                        </div>
+                        <div class="benefit-decoration">
+                            <div class="decoration-dot"></div>
+                            <div class="decoration-line"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="benefits-cta">
+                <div class="cta-content">
+                    <h4>Ready to Transform Your App Analytics?</h4>
+                    <p>Join thousands of developers who trust Reviews Dashboard for their app success</p>
+                    <button class="cta-button" routerLink="/dashboard">
+                        <mat-icon>rocket_launch</mat-icon>
+                        <span>Get Started Now</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -46,27 +173,172 @@
         <div class="bottom-title-doc">
             AI Tools
         </div>
-        <div class="bottom-subtitle-doc">
-            <div class="section">
-                Reviews Dashboard is powered with AI ( powered by Google's Gemini AI ).
+        <div class="ai-tools-container">
+            <!-- AI Tools Overview -->
+            <div class="ai-overview">
+                <div class="ai-header">
+                    <div class="ai-icon">
+                        <mat-icon>smart_toy</mat-icon>
+                    </div>
+                    <div class="ai-title">
+                        <h2>Powered by Google Gemini AI</h2>
+                        <p>Advanced AI-powered review analysis and insights</p>
+                    </div>
+                </div>
+                
+                <div class="ai-description">
+                    <div class="ai-card">
+                        <h3>What is AI Tools?</h3>
+                        <p>AI Tools unleashes a variety of possibilities for analyzing, understanding and figuring out action plans based on the reviews provided by the users.</p>
+                    </div>
+                    
+                    <div class="ai-card">
+                        <h3>How it works</h3>
+                        <p>The prompts are executed on the reviews present on Apple App Store/ Google Play Store to give better solution and facilitate answers for the better and deeper understanding of the app.</p>
+                    </div>
+                </div>
             </div>
-            <div class="section">
-                AI Tools unleashes a variety of possibilities for analysing, understanding and figuring out action plans based on the reviews provided by the users.
+
+            <!-- AI Workflow Diagram -->
+            <div class="ai-workflow">
+                <div class="workflow-header">
+                    <div class="workflow-title-icon">
+                        <mat-icon>timeline</mat-icon>
+                    </div>
+                    <h3>AI Workflow Process</h3>
+                    <p class="workflow-subtitle">See how your app reviews transform into actionable insights</p>
+                </div>
+                
+                <div class="workflow-diagram">
+                    <div class="workflow-step" data-step="1">
+                        <div class="step-icon">
+                            <mat-icon>store</mat-icon>
+                        </div>
+                        <div class="step-content">
+                            <h4>App Store Reviews</h4>
+                            <p>Reviews from Google Play Store & Apple App Store</p>
+                        </div>
+                        <div class="step-arrow">
+                            <mat-icon>arrow_forward</mat-icon>
+                        </div>
+                    </div>
+                    
+                    <div class="workflow-step" data-step="2">
+                        <div class="step-icon">
+                            <mat-icon>api</mat-icon>
+                        </div>
+                        <div class="step-content">
+                            <h4>API Processing</h4>
+                            <p>Reviews are processed and prepared for AI analysis</p>
+                        </div>
+                        <div class="step-arrow">
+                            <mat-icon>arrow_forward</mat-icon>
+                        </div>
+                    </div>
+                    
+                    <div class="workflow-step" data-step="3">
+                        <div class="step-icon gemini-icon">
+                            <img src="assets/gemini.png" alt="Google Gemini" />
+                        </div>
+                        <div class="step-content">
+                            <h4>Google Gemini AI</h4>
+                            <p>AI processes reviews using advanced language models</p>
+                        </div>
+                        <div class="step-arrow">
+                            <mat-icon>arrow_forward</mat-icon>
+                        </div>
+                    </div>
+                    
+                    <div class="workflow-step" data-step="4">
+                        <div class="step-icon">
+                            <mat-icon>insights</mat-icon>
+                        </div>
+                        <div class="step-content">
+                            <h4>AI Insights</h4>
+                            <p>Actionable insights and recommendations generated</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="workflow-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <mat-icon>speed</mat-icon>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">Real-time</div>
+                            <div class="stat-label">Processing</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <mat-icon>security</mat-icon>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">Secure</div>
+                            <div class="stat-label">Data Handling</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <mat-icon>auto_awesome</mat-icon>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">AI-Powered</div>
+                            <div class="stat-label">Analysis</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="section">
-                <b class="color-primary">How it works:</b> <br>
-                The prompts are executed on the reviews present on Apple App Store/ Google Play Store to give better solution and facilitate answers for the better and deeper understanding of the app. <br>
+
+            <!-- AI Features -->
+            <div class="ai-features">
+                <h3>Available AI Features</h3>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <mat-icon>summarize</mat-icon>
+                        </div>
+                        <h4>Review Summarization</h4>
+                        <p>Get concise summaries of all reviews to quickly understand user sentiment</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <mat-icon>bug_report</mat-icon>
+                        </div>
+                        <h4>Issue Identification</h4>
+                        <p>Automatically identify common issues and problems mentioned in reviews</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <mat-icon>trending_up</mat-icon>
+                        </div>
+                        <h4>Improvement Suggestions</h4>
+                        <p>Get actionable recommendations to improve app ratings and user satisfaction</p>
+                    </div>
+                </div>
             </div>
-            <div class="section">
-                Summarizing reviews, identifying issues, getting an overview of improvements that can help in improving ratings are the three predefined prompts available.<br>
-                A custom prompt option is also present to prompt questions and get meaningful answers.
-            </div>
-            <div class="section">
-                AI Tools are available in the filter section on the <b class="color-primary">Reviews page</b> of every added app. <br>
-            </div>
-            <div class="section">
-                <img src="assets/gemini.png" class="gemini" alt="Google Gemini" /><br><br>
-                <a href="https://blog.google/technology/ai/google-gemini-ai/" target="_blank">Read about Google Gemini</a>
+
+            <!-- Access Information -->
+            <div class="ai-access">
+                <div class="access-card">
+                    <div class="access-icon">
+                        <mat-icon>filter_alt</mat-icon>
+                    </div>
+                    <div class="access-content">
+                        <h4>How to Access AI Tools</h4>
+                        <p>AI Tools are available in the filter section on the <strong>Reviews page</strong> of every added app.</p>
+                        <a href="https://blog.google/technology/ai/google-gemini-ai/" target="_blank" class="gemini-link">
+                            <span>Learn more about Google Gemini</span>
+                        </a>
+                        <a routerLink="/chat" class="chat-link">
+                            <mat-icon>chat</mat-icon>
+                            <span>Try AI Chat Tool</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -76,15 +348,19 @@
             Features
         </div>
         <div class="features-container">
-            <div class="feature" *ngFor="let feature of features">
-                <ng-container *ngTemplateOutlet="waveTop"></ng-container>
-                <div class="feature-title">
-                    {{feature.title}}
+            <div class="feature-card" *ngFor="let feature of features; let i = index">
+                <div class="feature-icon">
+                    <div class="icon-circle">
+                        <mat-icon>{{feature.icon}}</mat-icon>
+                    </div>
                 </div>
-                <div class="text">
-                    {{feature.text}}
+                <div class="feature-content">
+                    <h3 class="feature-title">{{feature.title}}</h3>
+                    <p class="feature-text">{{feature.text}}</p>
                 </div>
-                <ng-container *ngTemplateOutlet="wave"></ng-container>
+                <div class="feature-decoration">
+                    <div class="decoration-line"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -93,28 +369,71 @@
         <div class="bottom-title-doc">
             PWA App
         </div>
-        <div class="mobile-inner">
-            <div class="mobile-container">
-                <img class="mobile" src="https://raw.githubusercontent.com/phoenixSaket/reviews/main/src/assets/mobile.png" alt="mobile">
-                <div class="image-container">
-                    <img class="screenshot mobile ss-1" [src]="images[selectedImgIndex]" alt="mobile">
+        <div class="pwa-container">
+            <div class="pwa-features">
+                <div class="pwa-feature">
+                    <div class="pwa-icon">
+                        <mat-icon>download</mat-icon>
+                    </div>
+                    <h3>Download & Install</h3>
+                    <p>Get the app directly from your browser - no app store required</p>
+                </div>
+                <div class="pwa-feature">
+                    <div class="pwa-icon">
+                        <mat-icon>update</mat-icon>
+                    </div>
+                    <h3>Auto Updates</h3>
+                    <p>Always stay up to date with the latest features automatically</p>
+                </div>
+                <div class="pwa-feature">
+                    <div class="pwa-icon">
+                        <mat-icon>speed</mat-icon>
+                    </div>
+                    <h3>Lightning Fast</h3>
+                    <p>Optimized performance with instant loading times</p>
                 </div>
             </div>
-            <div class="bottom-subtitle-doc mobile-content">
-                <div class="section">
-                    Download the Reviews Dashboard PWA app
+            
+            <div class="pwa-download-section">
+                <div class="pwa-hero">
+                    <div class="pwa-hero-icon">
+                        <mat-icon>phone_android</mat-icon>
+                    </div>
+                    <h2>Get the Reviews Dashboard App</h2>
+                    <p>Transform your mobile experience with our powerful PWA</p>
                 </div>
-                <div class="section">
-                    No updates required
+                
+                <div class="download-buttons">
+                    <button class="download-btn android-btn" (click)="download('android')">
+                        <mat-icon>android</mat-icon>
+                        <div class="btn-content">
+                            <span class="btn-title">Download Android App</span>
+                            <span class="btn-subtitle">APK File</span>
+                        </div>
+                    </button>
+                    
+                    <button class="download-btn ios-btn" (click)="download('ios')">
+                        <mat-icon>code</mat-icon>
+                        <div class="btn-content">
+                            <span class="btn-title">iOS Source Code</span>
+                            <span class="btn-subtitle">Tar.gz Archive</span>
+                        </div>
+                    </button>
                 </div>
-                <div class="section">
-                    Stay up to date with the latest and greatest always
-                </div>
-                <div class="section">
-                    <button class="button" (click)="download('android')">Download Android App</button>
-                </div>
-                <div class="section">
-                    <button class="button" (click)="download('ios')">Download iOS App Source Code</button>
+                
+                <div class="pwa-benefits">
+                    <div class="benefit-item">
+                        <mat-icon>check_circle</mat-icon>
+                        <span>No app store required</span>
+                    </div>
+                    <div class="benefit-item">
+                        <mat-icon>check_circle</mat-icon>
+                        <span>Instant updates</span>
+                    </div>
+                    <div class="benefit-item">
+                        <mat-icon>check_circle</mat-icon>
+                        <span>Cross-platform compatibility</span>
+                    </div>
                 </div>
             </div>
         </div>

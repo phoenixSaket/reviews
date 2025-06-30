@@ -35,6 +35,7 @@ import { SentimentCloudComponent } from './sentiment-cloud/sentiment-cloud.compo
 import { GetEmailComponent } from './get-email/get-email.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { NewReviewsComponent } from './new-reviews/new-reviews.component';
 import { DocumentationComponent } from './documentation/documentation.component';
@@ -98,6 +99,7 @@ import { ReviewComponent } from './chat/review/review.component';
     ReactiveFormsModule,
     MatCheckboxModule,
     NgApexchartsModule,
+    MatExpansionModule
   ],
   providers: [
   ],

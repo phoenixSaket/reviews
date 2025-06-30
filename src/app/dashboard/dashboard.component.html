@@ -1,39 +1,69 @@
+<!-- Main Dashboard Content -->
 <div class="container" *ngIf="charts.length == dataService.getTotalApps()">
   <div class="tab-content">
-      <div class="chart shadows" *ngFor="let chart of charts; let i = index">
-          <div class="name-container shadows">
-              <div class="name">
-                  {{chart.app}}
-                  <div class="platform">{{chart.isIOS ? 'IOS' : 'Android'}}</div>
-              </div>
-              <div class="icon" (click)="changeChart(chart)">
-                  <span class="material-symbols-outlined" *ngIf="chart.isVisible == 'bar'">
-                      bar_chart
-                  </span>
-                  <span class="material-symbols-outlined" *ngIf="chart.isVisible == 'pie'">
-                      pie_chart
-                  </span>
-              </div>
+    <div class="chart-card" *ngFor="let chart of charts; let i = index" [@fadeInUp]>
+      <div class="chart-header">
+        <div class="app-info">
+          <div class="app-name">{{chart.app}}</div>
+          <div class="platform-badge" [class.ios]="chart.isIOS" [class.android]="!chart.isIOS">
+            <span class="platform-icon">
+              <img *ngIf="chart.isIOS" src="assets/apple.svg" alt="Apple" class="apple-logo-colored" />
+              <span *ngIf="!chart.isIOS" class="material-symbols-outlined">android</span>
+            </span>
+            {{chart.isIOS ? 'iOS' : 'Android'}}
           </div>
-          <apx-chart *ngIf="chart.isVisible == 'bar'" [series]="chart.bar.series" [colors]="chart.bar.colors"
-              [chart]="chart.bar.chart" [plotOptions]="chart.bar.plotOptions" [xaxis]="chart.bar.xaxis"
-              [yaxis]="chart.bar.yaxis" [dataLabels]="chart.bar.plotOptions.dataLabels"></apx-chart>
-          <apx-chart *ngIf="chart.isVisible == 'pie'" [series]="chart.pie.series" [colors]="chart.pie.colors"
-              [chart]="chart.pie.chart" [labels]="chart.pie.labels" [responsive]="chart.pie.responsive"
-              [plotOptions]="chart.pie.plotOptions"></apx-chart>
-          <div class="arrow shadows" (click)="changeChart(chart)">
-              <span class="material-symbols-outlined">
-                  arrow_circle_right
-              </span>
-          </div>
+        </div>
+        <div class="chart-controls">
+          <button class="chart-toggle-btn" (click)="changeChart(chart)">
+            <span class="material-symbols-outlined">swap_horiz</span>
+          </button>
+        </div>
       </div>
+      
+      <div class="chart-container">
+        <apx-chart *ngIf="chart.isVisible == 'bar'" 
+          [series]="chart.bar.series" 
+          [colors]="chart.bar.colors"
+          [chart]="chart.bar.chart" 
+          [plotOptions]="chart.bar.plotOptions" 
+          [xaxis]="chart.bar.xaxis"
+          [yaxis]="chart.bar.yaxis" 
+          [dataLabels]="chart.bar.plotOptions.dataLabels">
+        </apx-chart>
+        <apx-chart *ngIf="chart.isVisible == 'pie'" 
+          [series]="chart.pie.series" 
+          [colors]="chart.pie.colors"
+          [chart]="chart.pie.chart" 
+          [labels]="chart.pie.labels" 
+          [responsive]="chart.pie.responsive"
+          [plotOptions]="chart.pie.plotOptions">
+        </apx-chart>
+      </div>
+    </div>
   </div>
 </div>
 
+<!-- Enhanced Loading State -->
 <div class="loading-container" *ngIf="charts.length < dataService.getTotalApps()">
-  <div class="header">Loading Dashboard ...</div> 
-  Loaded {{charts.length}} apps of {{this.dataService.getTotalApps()}} total apps.
-  <div class="progress-bar">
-    <mat-progress-bar mode="determinate" [value]="(charts.length * 100) / dataService.getTotalApps()" [max]="100"></mat-progress-bar>
+  <div class="loading-content">
+    <div class="loading-animation">
+      <div class="loading-spinner">
+        <span class="material-symbols-outlined">dashboard</span>
+      </div>
+    </div>
+    <div class="loading-text">
+      <h2 class="loading-title">Building Your Dashboard</h2>
+      <p class="loading-subtitle">Loading {{charts.length}} of {{this.dataService.getTotalApps()}} apps</p>
+    </div>
+    <div class="progress-container">
+      <div class="progress-bar">
+        <mat-progress-bar 
+          mode="determinate" 
+          [value]="(charts.length * 100) / dataService.getTotalApps()" 
+          [max]="100">
+        </mat-progress-bar>
+      </div>
+      <div class="progress-text">{{Math.round((charts.length * 100) / dataService.getTotalApps())}}% Complete</div>
+    </div>
   </div>
 </div>
