@@ -13,6 +13,7 @@ import {
   ApexResponsive,
 } from "ng-apexcharts";
 import { ApexDataLabels, ApexPlotOptions, ApexTheme, ApexYAxis } from 'ng-apexcharts/lib/model/apex-types';
+import { IOS_INSERT_RATING } from '../services/services';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -80,7 +81,12 @@ export class DashboardComponent implements AfterViewInit {
           }, 100);
         })
       }
-    })
+    });
+
+    this.dataService.getRatingsHistory().subscribe((response: any) => {
+      let resp = JSON.parse(response.result);
+      console.log("Rating History", resp);
+    });
   }
 
   getColor(colorName: string): string {
@@ -305,6 +311,18 @@ export class DashboardComponent implements AfterViewInit {
           this.ios.getAPPRatings(app.appId || app.app).subscribe((response: any) => {
             let histogram = JSON.parse(response.result).histogram;
             let ratings: any[] = Object.values(histogram);
+
+            const dataForIOSInsertRatings: IOS_INSERT_RATING = {
+              appId: app.appId || app.app,
+              score: JSON.parse(resp.result).score,
+              ratingsCount: JSON.parse(response.result).ratings,
+              appData: {histogram}
+            } 
+            
+            this.ios.insertRatings(dataForIOSInsertRatings).subscribe((response: any) => {
+              console.log(response);
+            });
+
             this.histogram = ratings;
             let total = ratings.reduce((el, ab) => ab + el);
             this.total = total;

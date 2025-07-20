@@ -1,24 +1,34 @@
+const BASE_URL = "https://review-un6v.onrender.com/"; // "http://localhost:8000/";
 
 export const ANDROID = {
-    app: "https://review-un6v.onrender.com/android/app",
-    review: "https://review-un6v.onrender.com/android/review",
-    search: "https://review-un6v.onrender.com/android/search",
-    sentiment: "https://review-un6v.onrender.com/android/sentiment"
+    app: BASE_URL + "android/app",
+    review: BASE_URL + "android/review",
+    search: BASE_URL + "android/search",
+    sentiment: BASE_URL + "android/sentiment"
 };
 export const IOS = {
-    app: "https://review-un6v.onrender.com/ios/app",
-    review: "https://review-un6v.onrender.com/ios/review",
-    rating: "https://review-un6v.onrender.com/ios/rating",
-    search: "https://review-un6v.onrender.com/ios/search",
-    sentiment: "https://review-un6v.onrender.com/ios/sentiment"
+    app: BASE_URL + "ios/app",
+    review: BASE_URL + "ios/review",
+    rating: BASE_URL + "ios/rating",
+    search: BASE_URL + "ios/search",
+    sentiment: BASE_URL + "ios/sentiment",
+    insertRatings: BASE_URL + "ios/insert/ratings"
 };
 export const DATA = {
-    saveApps: "https://review-un6v.onrender.com/save-apps",
-    sendEmail: "https://review-un6v.onrender.com/mail/send"
+    saveApps: BASE_URL + "save-apps",
+    sendEmail: BASE_URL + "mail/send",
+    history: BASE_URL + "ratings/history"
 }
 export const AI = {
-    summary: "https://review-un6v.onrender.com/get//summary",
-    summaryV2: "https://review-un6v.onrender.com/get/v2/summary",
-    initiateChat: "https://review-un6v.onrender.com/get/initiate-chat",
-    chat: "https://review-un6v.onrender.com/get/chat"
+    summary: BASE_URL + "get/summary",
+    summaryV2: BASE_URL + "get/v2/summary",
+    initiateChat: BASE_URL + "get/initiate-chat",
+    chat: BASE_URL + "get/chat"
 }
+
+export interface IOS_INSERT_RATING {
+    appId: string,
+    score: string
+    ratingsCount: number,
+    appData: any
+} 
