@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IOS } from './services';
+import { IOS, IOS_INSERT_RATING } from './services';
 
 @Injectable({
   providedIn: 'root'
@@ -18,22 +18,27 @@ export class IosService {
   }
 
   getAppReviews(app: string, page: number, useBackup: boolean = false): Observable<any> {
-    let url = IOS.review;
+    const url = IOS.review;
     return this.http.post(url, { name: app, page: page });
   }
 
   getAPPRatings(app: string, useBackup: boolean = false) {
-    let url = IOS.rating;
+    const url = IOS.rating;
     return this.http.post(url, { name: app });
   }
 
   searchApp(term: string, num: number, lang: string, price: string, useBackup: boolean = false) {
-    let url = IOS.search;
+    const url = IOS.search;
     return this.http.post(url, { term: term, num: num, lang: lang, price: price })
   }
 
   sentimentAnalysis(text: string[]) {
-    let url = IOS.sentiment;
+    const url = IOS.sentiment;
     return this.http.post(url, {string: text});
+  }
+
+  insertRatings(data: IOS_INSERT_RATING) {
+    const url = IOS.insertRatings;
+    return this.http.post(url, data);
   }
 }

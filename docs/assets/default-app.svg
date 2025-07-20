@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Rounded square background -->
+  <rect x="8" y="8" width="48" height="48" rx="12" fill="#e0e0e0"/>
+  <!-- Gear icon -->
+  <g fill="#888">
+    <circle cx="32" cy="32" r="10"/>
+    <g>
+      <rect x="30" y="16" width="4" height="8" rx="2"/>
+      <rect x="30" y="40" width="4" height="8" rx="2"/>
+      <rect x="16" y="30" width="8" height="4" rx="2"/>
+      <rect x="40" y="30" width="8" height="4" rx="2"/>
+      <rect x="22.93" y="22.93" width="4" height="8" rx="2" transform="rotate(-45 25.93 26.93)"/>
+      <rect x="37.07" y="37.07" width="4" height="8" rx="2" transform="rotate(-45 39.07 41.07)"/>
+      <rect x="22.93" y="37.07" width="4" height="8" rx="2" transform="rotate(45 25.93 41.07)"/>
+      <rect x="37.07" y="22.93" width="4" height="8" rx="2" transform="rotate(45 39.07 26.93)"/>
+    </g>
+    <circle cx="32" cy="32" r="4" fill="#e0e0e0"/>
+  </g>
+</svg> 

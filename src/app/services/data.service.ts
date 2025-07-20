@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { NewReviewsComponent } from '../new-reviews/new-reviews.component';
 import { AndroidService } from './android.service';
 import { IosService } from './ios.service';
@@ -212,5 +212,9 @@ export class DataService {
     }
 
     return storedPrompts;
+  }
+
+  getRatingsHistory(): Observable<any> {
+    return this.http.get(DATA.history);
   }
 }
