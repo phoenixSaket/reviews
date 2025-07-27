@@ -47,6 +47,7 @@ import { ChatComponent } from './chat/chat.component';
 import { UserMessageComponent } from './chat/user-message/user-message.component';
 import { ModelMessageComponent } from './chat/model-message/model-message.component';
 import { ReviewComponent } from './chat/review/review.component';
+import { DashboardFilterComponent } from './dashboard/dashboard-filter/dashboard-filter.component';
 
 
 
@@ -77,7 +78,8 @@ import { ReviewComponent } from './chat/review/review.component';
     ChatComponent,
     UserMessageComponent,
     ModelMessageComponent,
-    ReviewComponent
+    ReviewComponent,
+    DashboardFilterComponent
   ],
   imports: [
     BrowserModule,

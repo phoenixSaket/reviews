@@ -1,0 +1,143 @@
+<div class="filter-container" [class.filtering]="isFiltering">
+  <div class="filter-header">
+    <h3 class="filter-title">
+      <span class="material-symbols-outlined" [class.spinning]="isFiltering">filter_alt</span>
+      Filters
+      <span class="filtering-indicator" *ngIf="isFiltering">(Processing...)</span>
+    </h3>
+    <button class="clear-filters-btn" (click)="clearFilters()" type="button" [disabled]="isFiltering">
+      <span class="material-symbols-outlined">clear_all</span>
+      Clear All
+    </button>
+  </div>
+
+  <form [formGroup]="filterForm" class="filter-form">
+    <div class="filter-group">
+      <label class="filter-label">
+        <span class="material-symbols-outlined">apps</span>
+        Apps
+      </label>
+      <div class="multi-select-container">
+        <div class="multi-select-display" (click)="toggleDropdown('app')" [class.open]="openDropdown === 'app'">
+          <span class="selected-text">{{getSelectedText('app')}}</span>
+          <span class="material-symbols-outlined">expand_more</span>
+        </div>
+        <div class="multi-select-dropdown" *ngIf="openDropdown === 'app'">
+          <div class="dropdown-header">
+            <label class="select-all-label">
+              <input type="checkbox" 
+                     [checked]="isAllSelected('app')" 
+                     (change)="toggleSelectAll('app')"
+                     [disabled]="isFiltering">
+              <span>Select All</span>
+            </label>
+          </div>
+          <div class="dropdown-options">
+            <label class="option-label" *ngFor="let app of availableApps">
+              <input type="checkbox" 
+                     [value]="app"
+                     [checked]="isOptionSelected('app', app)"
+                     (change)="toggleOption('app', app)"
+                     [disabled]="isFiltering">
+              <span>{{app}}</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <label class="filter-label">
+        <span class="material-symbols-outlined">phone_android</span>
+        Platforms
+      </label>
+      <div class="multi-select-container">
+        <div class="multi-select-display" (click)="toggleDropdown('platform')" [class.open]="openDropdown === 'platform'">
+          <span class="selected-text">{{getSelectedText('platform')}}</span>
+          <span class="material-symbols-outlined">expand_more</span>
+        </div>
+        <div class="multi-select-dropdown" *ngIf="openDropdown === 'platform'">
+          <div class="dropdown-header">
+            <label class="select-all-label">
+              <input type="checkbox" 
+                     [checked]="isAllSelected('platform')" 
+                     (change)="toggleSelectAll('platform')"
+                     [disabled]="isFiltering">
+              <span>Select All</span>
+            </label>
+          </div>
+          <div class="dropdown-options">
+            <label class="option-label" *ngFor="let platform of availablePlatforms">
+              <input type="checkbox" 
+                     [value]="platform"
+                     [checked]="isOptionSelected('platform', platform)"
+                     (change)="toggleOption('platform', platform)"
+                     [disabled]="isFiltering">
+              <span>{{platform}}</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <label class="filter-label">
+        <span class="material-symbols-outlined">bar_chart</span>
+        Chart Types
+      </label>
+      <div class="multi-select-container">
+        <div class="multi-select-display" (click)="toggleDropdown('type')" [class.open]="openDropdown === 'type'">
+          <span class="selected-text">{{getSelectedText('type')}}</span>
+          <span class="material-symbols-outlined">expand_more</span>
+        </div>
+        <div class="multi-select-dropdown" *ngIf="openDropdown === 'type'">
+          <div class="dropdown-header">
+            <label class="select-all-label">
+              <input type="checkbox" 
+                     [checked]="isAllSelected('type')" 
+                     (change)="toggleSelectAll('type')"
+                     [disabled]="isFiltering">
+              <span>Select All</span>
+            </label>
+          </div>
+          <div class="dropdown-options">
+            <label class="option-label" *ngFor="let type of availableTypes">
+              <input type="checkbox" 
+                     [value]="type"
+                     [checked]="isOptionSelected('type', type)"
+                     (change)="toggleOption('type', type)"
+                     [disabled]="isFiltering">
+              <span>{{type}}</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="filter-summary" *ngIf="hasActiveFilters()">
+    <div class="active-filters">
+      <span class="active-filter-label">Active Filters:</span>
+      <div class="filter-tags">
+        <span *ngFor="let app of getActiveFilters('app')" class="filter-tag">
+          App: {{app}}
+          <button class="remove-filter" (click)="removeFilter('app', app)">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </span>
+        <span *ngFor="let platform of getActiveFilters('platform')" class="filter-tag">
+          Platform: {{platform}}
+          <button class="remove-filter" (click)="removeFilter('platform', platform)">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </span>
+        <span *ngFor="let type of getActiveFilters('type')" class="filter-tag">
+          Type: {{type}}
+          <button class="remove-filter" (click)="removeFilter('type', type)">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+</div> 

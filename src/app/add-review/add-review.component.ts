@@ -129,6 +129,10 @@ export class AddReviewComponent implements OnInit {
   }
 
   saveToLocalStorage(app: any) {
+    if (typeof app.app != "string") {
+      app.app = app.app.toString();
+    }
+
     let shouldAddApp: boolean = true;
     let apps = JSON.parse(localStorage.getItem("apps-review") || "[]");
 
