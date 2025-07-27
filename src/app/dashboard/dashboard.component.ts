@@ -4,6 +4,7 @@ import { AndroidService } from '../services/android.service';
 import { DataService } from '../services/data.service';
 import { IosService } from '../services/ios.service';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { FilterOptions } from './dashboard-filter/dashboard-filter.component';
 
 import {
   ApexAxisChartSeries,
@@ -49,6 +50,7 @@ export type ChartOptions2 = {
   ]
 })
 export class DashboardComponent implements AfterViewInit {
+  
   public chart: any;
   private histogram: any = {};
   public apps: any[] = [];
@@ -57,8 +59,26 @@ export class DashboardComponent implements AfterViewInit {
   public loadingPercent: number = 0;
   public Math = Math;
 
+  // Filter properties
+  public filteredCharts: any[] = [];
+  public filteredRatingsCharts: any[] = [];
+  public filteredLineCharts: any[] = [];
+  public currentFilters: FilterOptions = {
+    type: ['All'],
+    app: ['All'],
+    platform: ['All']
+  };
+  public isFiltering: boolean = false;
+
   public charts: any[] = [];
   public charts2: any[] = [];
+  public lineCharts: any[] = [];
+  lineChartWidth: number = 500;
+  lineChartHeight: number = 350;
+
+  public ratingsCharts : any[] = [];
+  ratingsChartWidth: number = 500;
+  ratingsChartHeight: number = 350;
 
   total: any;
 
@@ -69,9 +89,7 @@ export class DashboardComponent implements AfterViewInit {
       this.loadingPercent = (data * 100) / (this.dataService.getTotalApps() == 0 ? 10 : this.dataService.getTotalApps());
       if (!!data && data > -1 && (data == (this.dataService.getTotalApps() == 0 ? 10 : this.dataService.getTotalApps()) - this.dataService.failedApps)) {
 
-        this.chart?.destroy()
-        let iosApps: any[] = []; //this.ios.iosAppsDefault;
-        let androidApps: any[] = []; //this.android.androidAppsDefault;
+        this.chart?.destroy();
 
         let apps = JSON.parse(localStorage.getItem("apps-review") || "[]");
 
@@ -84,9 +102,126 @@ export class DashboardComponent implements AfterViewInit {
     });
 
     this.dataService.getRatingsHistory().subscribe((response: any) => {
-      let resp = JSON.parse(response.result);
-      console.log("Rating History", resp);
+      let resp = response.result;
+
+      resp.forEach(chart => {
+        chart.app = this.getAppName(chart.app);
+        let chart2 = JSON.parse(JSON.stringify(chart));
+        const history = chart.history;
+        if (true || history.length > 1) {
+          // Determine platform from app data
+          const appData = this.findAppData(chart.app);
+          const isIOS = appData ? appData.isIOS : false;
+          
+          chart.isIOS = isIOS;
+          chart.lineChartOptions = this.generateLineChart(history); 
+          this.lineCharts.push(chart);
+
+          chart2.isIOS = isIOS;
+          chart2.lineChartOptions = this.generateRatingsChart(history);          
+          this.ratingsCharts.push(chart2);
+        }
+      });
     });
+  }
+
+  generateLineChart(history: any[]): any {
+    try {
+      let lineChartOptions: any = {};
+
+      const seriesData = [
+        { name: '1 Star', data: history.map((h: any) => parseFloat(h.one_star)) },
+        { name: '2 Star', data: history.map((h: any) => parseFloat(h.two_star)) },
+        { name: '3 Star', data: history.map((h: any) => parseFloat(h.three_star)) },
+        { name: '4 Star', data: history.map((h: any) => parseFloat(h.four_star)) },
+        { name: '5 Star', data: history.map((h: any) => parseFloat(h.five_star)) }
+      ];
+      const categories = history.map(((h: any, index: number) => new Date(h.recorded_at).toUTCString()));
+
+      const ratingColors = ['#e53935', '#fb8c00', '#fdd835', '#43a047', '#1e7e34'];
+      lineChartOptions = {
+        series: seriesData,
+        colors: ratingColors,
+        chart: {
+          height: this.lineChartHeight,
+          width: this.lineChartWidth,
+          type: 'line',
+          zoom: {
+            enabled: false,
+          },
+          stacked: "true"
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        markers: {
+          show: true,
+          size: 6
+        },
+        stroke: {
+          width: [2, 2, 2, 2, 2],
+          curve: 'smooth',
+        },
+        xaxis: {
+          type: "datetime",
+          categories: categories,
+          labels: {
+            style: {
+              colors: "#464646",
+            },
+          },
+          show: false
+        },
+        yaxis: [
+          {
+            axisTicks: {
+              show: true,
+            },
+            axisBorder: {
+              show: false,
+              color: "#000000",
+            },
+            show: true
+          }
+        ],
+
+        tooltip: {
+          theme: 'light',
+        },
+      };
+
+      return lineChartOptions;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  generateRatingsChart(history: any[]): any {
+    try {
+      let lineChartOptions: any = {};
+      const ratingsGraph = history.map((h: any) => parseFloat(h.score));
+      const categories = history.map(((h: any, index: number) => new Date(h.recorded_at).toUTCString()));
+
+      lineChartOptions = {
+        chart: {
+          height: this.ratingsChartHeight,
+          width: this.ratingsChartWidth,
+          type: "line"
+        },
+        series: [{
+          name: "Average Ratings",
+          data: ratingsGraph
+        }],
+        xaxis: {
+          type: 'datetime',
+          categories: categories,
+        }
+      };
+
+      return lineChartOptions;
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   getColor(colorName: string): string {
@@ -115,7 +250,6 @@ export class DashboardComponent implements AfterViewInit {
       '#' + this.getHexValue(r, 0.9) + this.getHexValue(g, 0.9) + this.getHexValue(b, 0.9),
     ];
 
-    console.log(shades)
     return shades;
   }
 
@@ -320,7 +454,6 @@ export class DashboardComponent implements AfterViewInit {
             } 
             
             this.ios.insertRatings(dataForIOSInsertRatings).subscribe((response: any) => {
-              console.log(response);
             });
 
             this.histogram = ratings;
@@ -343,7 +476,8 @@ export class DashboardComponent implements AfterViewInit {
             chartOptions2.isIOS = true;
             chartOptions2.app = JSON.parse(resp.result).title;
 
-            this.charts.push({ app: JSON.parse(resp.result).title, type: 'bar', isIOS: app.isIOS, bar: chartOptions, pie: chartOptions2, isVisible: 'bar' });;
+            this.charts.push({ app: JSON.parse(resp.result).title, type: 'bar', isIOS: app.isIOS, bar: chartOptions, pie: chartOptions2, isVisible: 'bar' });
+            this.initializeFilteredCharts();
           })
         })
 
@@ -369,6 +503,7 @@ export class DashboardComponent implements AfterViewInit {
           chartOptions2.app = JSON.parse(resp.result).title;
 
           this.charts.push({ app: JSON.parse(resp.result).title, type: 'bar', isIOS: app.isIOS, bar: chartOptions, pie: chartOptions2, isVisible: 'bar' });
+          this.initializeFilteredCharts();
 
           // setTimeout(() => {
           //   this.loading = false;
@@ -383,10 +518,21 @@ export class DashboardComponent implements AfterViewInit {
     let name = app;
     this.dataService.getAppName().forEach(appInner => {
       if (appInner.id == app) {
-        name = appInner.appName + (appInner.isIOS ? ' - IOS' : ' - Android');
+        name = appInner.appName;
       }
     })
     return name;
+  }
+
+  findAppData(appName: string): any {
+    // Find app data from localStorage to get platform information
+    const apps = JSON.parse(localStorage.getItem("apps-review") || "[]");
+    return apps.find((app: any) => {
+      // Try to match by app name or app ID
+      return app.app === appName || app.appId === appName || 
+             this.getAppName(app.app) === appName || 
+             this.getAppName(app.appId) === appName;
+    });
   }
 
   togglePage(index: number) {
@@ -408,5 +554,114 @@ export class DashboardComponent implements AfterViewInit {
       chart.isVisible = 'pie';
     }
   }
+
+  // Filter methods
+  onFilterChange(filters: FilterOptions): void {
+    this.isFiltering = true;
+    this.currentFilters = filters;
+    
+    // Add a small delay to show the loading state
+    setTimeout(() => {
+      this.applyFilters();
+      this.isFiltering = false;
+    }, 300);
+  }
+
+  private applyFilters(): void {
+    // Helper function to check if a chart matches app and platform filters
+    const matchesAppAndPlatform = (chart: any): boolean => {
+      let shouldInclude = true;
+
+      // Filter by app
+      if (!this.currentFilters.app.includes('All')) {
+        shouldInclude = shouldInclude && this.currentFilters.app.includes(chart.app);
+      }
+
+      // Filter by platform
+      if (!this.currentFilters.platform.includes('All')) {
+        const isIOS = chart.isIOS === true;
+        const isAndroid = chart.isIOS === false;
+        
+        if (this.currentFilters.platform.includes('iOS') && this.currentFilters.platform.includes('Android')) {
+          // Both platforms selected, include all
+          shouldInclude = shouldInclude && true;
+        } else if (this.currentFilters.platform.includes('iOS')) {
+          shouldInclude = shouldInclude && isIOS;
+        } else if (this.currentFilters.platform.includes('Android')) {
+          shouldInclude = shouldInclude && isAndroid;
+        }
+      }
+
+      return shouldInclude;
+    };
+
+    // Filter main charts (Ratings Distribution)
+    this.filteredCharts = this.charts.filter(chart => {
+      // Always apply app and platform filters
+      if (!matchesAppAndPlatform(chart)) {
+        return false;
+      }
+
+      // Apply chart type filter
+      if (!this.currentFilters.type.includes('All')) {
+        return this.currentFilters.type.includes('Ratings Distribution');
+      }
+
+      return true;
+    });
+
+    // Filter ratings charts (Average Ratings Graph)
+    this.filteredRatingsCharts = this.ratingsCharts.filter(chart => {
+      // Always apply app and platform filters
+      if (!matchesAppAndPlatform(chart)) {
+        return false;
+      }
+
+      // Apply chart type filter
+      if (!this.currentFilters.type.includes('All')) {
+        return this.currentFilters.type.includes('Average Ratings Graph');
+      }
+
+      return true;
+    });
+
+    // Filter line charts (Distributed Ratings Graph)
+    this.filteredLineCharts = this.lineCharts.filter(chart => {
+      // Always apply app and platform filters
+      if (!matchesAppAndPlatform(chart)) {
+        return false;
+      }
+
+      // Apply chart type filter
+      if (!this.currentFilters.type.includes('All')) {
+        return this.currentFilters.type.includes('Distributed Ratings Graph');
+      }
+
+      return true;
+    });
+  }
+
+  // Initialize filtered charts when charts are loaded
+  private initializeFilteredCharts(): void {
+    this.filteredCharts = [...this.charts];
+    this.filteredRatingsCharts = [...this.ratingsCharts];
+    this.filteredLineCharts = [...this.lineCharts];
+  }
+
+  // Check if any charts are visible after filtering
+  get hasVisibleCharts(): boolean {
+    return this.filteredCharts.length > 0 || 
+           this.filteredRatingsCharts.length > 0 || 
+           this.filteredLineCharts.length > 0;
+  }
+
+  // Check if any charts exist (for no results logic)
+  get hasAnyCharts(): boolean {
+    return this.charts.length > 0 || 
+           this.ratingsCharts.length > 0 || 
+           this.lineCharts.length > 0;
+  }
+
+
 
 }

@@ -269,6 +269,9 @@ export class AppComponent {
   }
 
   saveToLocalStorage(app: any) {
+    if (typeof app.app != "string") {
+      app.app = app.app.toString();
+    }
     let apps = JSON.parse(localStorage.getItem("apps-review") || "[]");
 
     let check: boolean = false;
@@ -291,13 +294,13 @@ export class AppComponent {
 
         apps.forEach((app: any, index: number) => {
           if (app.isIOS) {
-            if (app.app == '1337168006' || app.app == '1337168006') {
-              apps = apps.splice(index, 1);
+            if (app.app == '1337168006') {
+              apps.splice(index, 1);
               hasDeleted = true;
             }
           } else if (!app.isIOS) {
-            if (app.app == 'com.ahatpa.ahamobile' || app.app == 'com.ibxtpa.iamobile') {
-              apps = apps.splice(index, 1);
+            if (app.app == 'com.ahatpa.ahamobile' || app.app === 'com.ibxtpa.iamobile') {
+              apps.splice(index, 1);
               hasDeleted = true;            }
           }
         });

@@ -215,6 +215,8 @@ export class DataService {
   }
 
   getRatingsHistory(): Observable<any> {
-    return this.http.get(DATA.history);
+    let apps: string = JSON.parse(localStorage.getItem("apps-review")).map(el => JSON.stringify(el.app)).join(',');
+    apps = apps.replace(/"/g, "'");
+    return this.http.post(DATA.history, { apps: apps });
   }
 }

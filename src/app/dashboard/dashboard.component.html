@@ -1,7 +1,42 @@
 <!-- Main Dashboard Content -->
 <div class="container" *ngIf="charts.length == dataService.getTotalApps()">
-  <div class="tab-content">
-    <div class="chart-card" *ngFor="let chart of charts; let i = index" [@fadeInUp]>
+  <!-- Filter Component -->
+  <app-dashboard-filter 
+    [charts]="charts" 
+    [isFiltering]="isFiltering"
+    (filterChange)="onFilterChange($event)">
+  </app-dashboard-filter>
+
+  <!-- Filtering Loading State -->
+  <div class="filtering-loading" *ngIf="isFiltering">
+    <div class="filtering-loading-content">
+      <div class="filtering-spinner">
+        <span class="material-symbols-outlined">filter_alt</span>
+      </div>
+      <div class="filtering-text">
+        <h3>Applying Filters...</h3>
+        <p>Please wait while we filter your charts</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content" [class.filtering]="isFiltering">
+    <!-- No results message -->
+    <div class="no-results" *ngIf="!hasVisibleCharts && hasAnyCharts && !isFiltering">
+      <div class="no-results-content">
+        <span class="material-symbols-outlined">search_off</span>
+        <h3>No charts match your filters</h3>
+        <p>Try adjusting your filter criteria or clear all filters to see all charts.</p>
+        <button class="clear-filters-btn" (click)="onFilterChange({type: ['All'], app: ['All'], platform: ['All']})">
+          <span class="material-symbols-outlined">clear_all</span>
+          Clear All Filters
+        </button>
+      </div>
+    </div>
+    
+    <div class="chart-card" 
+         *ngFor="let chart of filteredCharts; let i = index" 
+         [@fadeInUp]>
       <div class="chart-header">
         <div class="app-info">
           <div class="app-name">{{chart.app}}</div>
@@ -41,9 +76,75 @@
       </div>
     </div>
   </div>
+
+  <div class="tab-content dist">
+    <div class="chart-card" 
+         *ngFor="let chart of filteredRatingsCharts; let i = index" 
+         [@fadeInUp]>
+      <div class="chart-header">
+        <div class="app-info">
+          <div class="app-name">{{chart.app}} (Average Ratings)</div>
+          <div class="platform-badge" [class.ios]="chart.isIOS" [class.android]="!chart.isIOS">
+            <span class="platform-icon">
+              <img *ngIf="chart.isIOS" src="assets/apple.svg" alt="Apple" class="apple-logo-colored" />
+              <span *ngIf="!chart.isIOS" class="material-symbols-outlined">android</span>
+            </span>
+            {{chart.isIOS ? 'iOS' : 'Android'}}
+          </div>
+        </div>
+      </div>
+      <div class="chart-container">
+        <apx-chart
+          [series]="chart.lineChartOptions.series"
+          [chart]="chart.lineChartOptions.chart"
+          [xaxis]="chart.lineChartOptions.xaxis"
+          [yaxis]="chart.lineChartOptions.yaxis"
+          [dataLabels]="chart.lineChartOptions.dataLabels"
+          [stroke]="chart.lineChartOptions.stroke"
+          [tooltip]="chart.lineChartOptions.tooltip"
+          [grid]="chart.lineChartOptions.grid"
+          [colors]="chart.lineChartOptions.colors"
+          [markers]="chart.lineChartOptions.markers"
+          [title]="chart.lineChartOptions.title"
+        ></apx-chart>
+      </div>
+    </div>
+
+    <div class="chart-card" 
+         *ngFor="let chart of filteredLineCharts; let i = index" 
+         [@fadeInUp]>
+      <div class="chart-header">
+        <div class="app-info">
+          <div class="app-name">{{chart.app}} (Distributed Ratings)</div>
+          <div class="platform-badge" [class.ios]="chart.isIOS" [class.android]="!chart.isIOS">
+            <span class="platform-icon">
+              <img *ngIf="chart.isIOS" src="assets/apple.svg" alt="Apple" class="apple-logo-colored" />
+              <span *ngIf="!chart.isIOS" class="material-symbols-outlined">android</span>
+            </span>
+            {{chart.isIOS ? 'iOS' : 'Android'}}
+          </div>
+        </div>
+      </div>
+      <div class="chart-container">
+        <apx-chart
+          [series]="chart.lineChartOptions.series"
+          [chart]="chart.lineChartOptions.chart"
+          [xaxis]="chart.lineChartOptions.xaxis"
+          [yaxis]="chart.lineChartOptions.yaxis"
+          [dataLabels]="chart.lineChartOptions.dataLabels"
+          [stroke]="chart.lineChartOptions.stroke"
+          [tooltip]="chart.lineChartOptions.tooltip"
+          [grid]="chart.lineChartOptions.grid"
+          [colors]="chart.lineChartOptions.colors"
+          [markers]="chart.lineChartOptions.markers"
+          [title]="chart.lineChartOptions.title"
+        ></apx-chart>
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<!-- Enhanced Loading State -->
 <div class="loading-container" *ngIf="charts.length < dataService.getTotalApps()">
   <div class="loading-content">
     <div class="loading-animation">
