@@ -109,7 +109,7 @@
 
 /* Chart Cards */
 .chart-card {
-  background: var(--accent);
+  background: #fff;
   border-radius: 20px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   overflow: hidden;
@@ -120,8 +120,6 @@
 }
 
 .chart-card:hover {
-  background: var(--white);
-  transform: scale(1.05);
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
 }
 
@@ -668,6 +666,15 @@
 }
 
 @media (max-width: 480px) {
+
+  .tab-content.dist {
+    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+  }
+
+  .chart-container {
+    padding: 4px; 
+  }
+
   .filtering-loading {
     min-height: 250px;
     margin-bottom: 12px;
