@@ -122,19 +122,19 @@
         <span *ngFor="let app of getActiveFilters('app')" class="filter-tag">
           App: {{app}}
           <button class="remove-filter" (click)="removeFilter('app', app)">
-            <span class="material-symbols-outlined">close</span>
+            <span class="material-symbols-outlined close-tag">close</span>
           </button>
         </span>
         <span *ngFor="let platform of getActiveFilters('platform')" class="filter-tag">
           Platform: {{platform}}
           <button class="remove-filter" (click)="removeFilter('platform', platform)">
-            <span class="material-symbols-outlined">close</span>
+            <span class="material-symbols-outlined close-tag">close</span>
           </button>
         </span>
         <span *ngFor="let type of getActiveFilters('type')" class="filter-tag">
           Type: {{type}}
           <button class="remove-filter" (click)="removeFilter('type', type)">
-            <span class="material-symbols-outlined">close</span>
+            <span class="material-symbols-outlined close-tag">close</span>
           </button>
         </span>
       </div>

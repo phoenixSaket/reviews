@@ -26,14 +26,16 @@ export class AppComponent {
   ) { 
     this.hotFix().then((hasDeleted: boolean) => {
       if (hasDeleted) {
-        window.location.reload();
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       }
     }).catch((hasNoDeletion: boolean) => {
       // Do Nothing
     })
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     let apps: any = localStorage.getItem("apps-review") || "[]";
     let iosApps = [];
     let androidApps = [];
@@ -290,27 +292,17 @@ export class AppComponent {
     return new Promise((resolve, reject) => {
       try {
         let apps = JSON.parse(localStorage.getItem("apps-review") || "[]");
-        let hasDeleted: boolean = false;
-
-        apps.forEach((app: any, index: number) => {
-          if (app.isIOS) {
-            if (app.app == '1337168006') {
-              apps.splice(index, 1);
-              hasDeleted = true;
-            }
-          } else if (!app.isIOS) {
-            if (app.app == 'com.ahatpa.ahamobile' || app.app === 'com.ibxtpa.iamobile') {
-              apps.splice(index, 1);
-              hasDeleted = true;            }
+        let hasUpdated: boolean = false;
+        apps.map((app: { app: any, isIOS: boolean }) => {
+          if (typeof app.app != "string") {
+            app.app = app.app.toString();
+            hasUpdated = true;
           }
+          return app;
         });
 
-        if (hasDeleted) {
-          localStorage.setItem("apps-review", JSON.stringify(apps));
-          resolve(true);
-        } else {
-          reject(false);
-        }
+        localStorage.setItem("apps-review", JSON.stringify(apps));
+        resolve(hasUpdated);
       } catch (err: any) {
         console.log("AppComponent.hotFix caught an error,", err);
         reject(false);

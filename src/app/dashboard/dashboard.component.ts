@@ -63,23 +63,34 @@ export class DashboardComponent implements AfterViewInit {
   public filteredCharts: any[] = [];
   public filteredRatingsCharts: any[] = [];
   public filteredLineCharts: any[] = [];
+  public filteredRatingsCountCharts: any[] = [];
   public currentFilters: FilterOptions = {
     type: ['All'],
     app: ['All'],
     platform: ['All']
   };
   public isFiltering: boolean = false;
+  isMobile = window.innerWidth <= 480;
 
   public charts: any[] = [];
+  chartsWidth: any = this.isMobile? 340 : 350;
+  chartsHeight: any = 350;
+
   public charts2: any[] = [];
+  charts2Width: any = this.isMobile? 340 : 350;
+  charts2Height: any = 350;
+
   public lineCharts: any[] = [];
-  isMobile = window.innerWidth <= 480;
   lineChartWidth: any = this.isMobile? 340 : 500;
   lineChartHeight: any = 350;
 
   public ratingsCharts : any[] = [];
   ratingsChartWidth: any = this.isMobile? 340 : 500;
   ratingsChartHeight: any = 350;
+
+  public ratingsCountCharts : any[] = [];
+  ratingsCountChartWidth: any = this.isMobile? 340 : 500;
+  ratingsCountChartHeight: any = 350;
 
   total: any;
 
@@ -107,6 +118,7 @@ export class DashboardComponent implements AfterViewInit {
 
       resp.forEach(chart => {
         let chart2 = JSON.parse(JSON.stringify(chart));
+        let chart3 = JSON.parse(JSON.stringify(chart));
         const history = chart.history;
         if (true || history.length > 1) {
           // Determine platform from app data
@@ -120,6 +132,10 @@ export class DashboardComponent implements AfterViewInit {
           chart2.isIOS = isIOS;
           chart2.lineChartOptions = this.generateRatingsChart(history);          
           this.ratingsCharts.push(chart2);
+
+          chart3.isIOS = isIOS;
+          chart3.lineChartOptions = this.generateRatingsCountChart(history);          
+          this.ratingsCountCharts.push(chart3);
         }
       });
     });
@@ -230,6 +246,40 @@ export class DashboardComponent implements AfterViewInit {
     }
   }
 
+  generateRatingsCountChart(history: any[]): any {
+    try {
+      let lineChartOptions: any = {};
+      const ratingsGraph = history.map((h: any) => h.ratings_count);
+      const categories = history.map(((h: any) => new Date(h.recorded_at).toUTCString()));
+
+      lineChartOptions = {
+        chart: {
+          height: this.ratingsChartHeight,
+          width: this.ratingsChartWidth,
+          type: "line"
+        },
+        series: [{
+          name: "Average Ratings",
+          data: ratingsGraph
+        }],
+        xaxis: {
+          type: 'datetime',
+          categories: categories,
+        },
+        colors: [
+          this.getColor('accent-other')
+        ],
+        markers: {
+          size: 6
+        }
+      };
+
+      return lineChartOptions;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   getColor(colorName: string): string {
     const r = document.querySelector(':root');
     const rs = getComputedStyle(r);
@@ -269,7 +319,8 @@ export class DashboardComponent implements AfterViewInit {
 
     let chartOptions: any = {
       chart: {
-        height: 280,
+        width: this.chartsWidth,
+        height: this.chartsHeight,
         type: "bar",
         toolbar: {
           show: false
@@ -352,7 +403,8 @@ export class DashboardComponent implements AfterViewInit {
 
     let chartOptions2: any = {
       chart: {
-        height: 380,
+        width: this.charts2Width,
+        height: this.charts2Height,
         type: "pie",
         toolbar: {
           show: false
@@ -580,7 +632,7 @@ export class DashboardComponent implements AfterViewInit {
 
       // Filter by app
       if (!this.currentFilters.app.includes('All')) {
-        shouldInclude = shouldInclude && this.currentFilters.app.includes(chart.app);
+        shouldInclude = shouldInclude && this.currentFilters.app.includes(this.getAppName(chart.app) || chart.app);
       }
 
       // Filter by platform
@@ -645,6 +697,20 @@ export class DashboardComponent implements AfterViewInit {
 
       return true;
     });
+
+    this.filteredRatingsCountCharts = this.ratingsCountCharts.filter(chart => {
+      // Always apply app and platform filters
+      if (!matchesAppAndPlatform(chart)) {
+        return false;
+      }
+
+      // Apply chart type filter
+      if (!this.currentFilters.type.includes('All')) {
+        return this.currentFilters.type.includes('Ratings Count Graph');
+      }
+
+      return true;
+    });
   }
 
   // Initialize filtered charts when charts are loaded
@@ -658,16 +724,16 @@ export class DashboardComponent implements AfterViewInit {
   get hasVisibleCharts(): boolean {
     return this.filteredCharts.length > 0 || 
            this.filteredRatingsCharts.length > 0 || 
-           this.filteredLineCharts.length > 0;
+           this.filteredLineCharts.length > 0 || 
+           this.filteredRatingsCountCharts.length > 0;
   }
 
   // Check if any charts exist (for no results logic)
   get hasAnyCharts(): boolean {
     return this.charts.length > 0 || 
            this.ratingsCharts.length > 0 || 
-           this.lineCharts.length > 0;
+           this.lineCharts.length > 0 ||
+           this.ratingsCountCharts.length > 0;
   }
-
-
 
 }

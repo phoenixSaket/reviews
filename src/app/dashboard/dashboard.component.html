@@ -141,6 +141,38 @@
         ></apx-chart>
       </div>
     </div>
+
+    <div class="chart-card" 
+         *ngFor="let chart of filteredRatingsCountCharts; let i = index" 
+         [@fadeInUp]>
+      <div class="chart-header">
+        <div class="app-info">
+          <div class="app-name">{{getAppName(chart.app)}} (Ratings Count)</div>
+          <div class="platform-badge" [class.ios]="chart.isIOS" [class.android]="!chart.isIOS">
+            <span class="platform-icon">
+              <img *ngIf="chart.isIOS" src="assets/apple.svg" alt="Apple" class="apple-logo-colored" />
+              <span *ngIf="!chart.isIOS" class="material-symbols-outlined">android</span>
+            </span>
+            {{chart.isIOS ? 'iOS' : 'Android'}}
+          </div>
+        </div>
+      </div>
+      <div class="chart-container">
+        <apx-chart
+          [series]="chart.lineChartOptions.series"
+          [chart]="chart.lineChartOptions.chart"
+          [xaxis]="chart.lineChartOptions.xaxis"
+          [yaxis]="chart.lineChartOptions.yaxis"
+          [dataLabels]="chart.lineChartOptions.dataLabels"
+          [stroke]="chart.lineChartOptions.stroke"
+          [tooltip]="chart.lineChartOptions.tooltip"
+          [grid]="chart.lineChartOptions.grid"
+          [colors]="chart.lineChartOptions.colors"
+          [markers]="chart.lineChartOptions.markers"
+          [title]="chart.lineChartOptions.title"
+        ></apx-chart>
+      </div>
+    </div>
   </div>
 
 </div>

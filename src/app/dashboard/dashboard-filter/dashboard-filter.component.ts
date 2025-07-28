@@ -19,7 +19,7 @@ export class DashboardFilterComponent implements OnInit, OnChanges {
 
   filterForm: FormGroup;
   availableApps: string[] = [];
-  availableTypes: string[] = ['All', 'Ratings Distribution', 'Average Ratings Graph', 'Distributed Ratings Graph'];
+  availableTypes: string[] = ['All', 'Ratings Distribution', 'Average Ratings Graph', 'Distributed Ratings Graph', 'Ratings Count Graph'];
   availablePlatforms: string[] = ['All', 'iOS', 'Android'];
   openDropdown: string | null = null;
 
