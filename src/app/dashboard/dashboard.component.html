@@ -83,7 +83,7 @@
          [@fadeInUp]>
       <div class="chart-header">
         <div class="app-info">
-          <div class="app-name">{{chart.app}} (Average Ratings)</div>
+          <div class="app-name">{{getAppName(chart.app)}} (Average Ratings)</div>
           <div class="platform-badge" [class.ios]="chart.isIOS" [class.android]="!chart.isIOS">
             <span class="platform-icon">
               <img *ngIf="chart.isIOS" src="assets/apple.svg" alt="Apple" class="apple-logo-colored" />
@@ -115,7 +115,7 @@
          [@fadeInUp]>
       <div class="chart-header">
         <div class="app-info">
-          <div class="app-name">{{chart.app}} (Distributed Ratings)</div>
+          <div class="app-name">{{getAppName(chart.app)}} (Distributed Ratings)</div>
           <div class="platform-badge" [class.ios]="chart.isIOS" [class.android]="!chart.isIOS">
             <span class="platform-icon">
               <img *ngIf="chart.isIOS" src="assets/apple.svg" alt="Apple" class="apple-logo-colored" />

@@ -73,12 +73,13 @@ export class DashboardComponent implements AfterViewInit {
   public charts: any[] = [];
   public charts2: any[] = [];
   public lineCharts: any[] = [];
-  lineChartWidth: number = 500;
-  lineChartHeight: number = 350;
+  isMobile = window.innerWidth <= 480;
+  lineChartWidth: any = this.isMobile? 340 : 500;
+  lineChartHeight: any = 350;
 
   public ratingsCharts : any[] = [];
-  ratingsChartWidth: number = 500;
-  ratingsChartHeight: number = 350;
+  ratingsChartWidth: any = this.isMobile? 340 : 500;
+  ratingsChartHeight: any = 350;
 
   total: any;
 
@@ -105,7 +106,6 @@ export class DashboardComponent implements AfterViewInit {
       let resp = response.result;
 
       resp.forEach(chart => {
-        chart.app = this.getAppName(chart.app);
         let chart2 = JSON.parse(JSON.stringify(chart));
         const history = chart.history;
         if (true || history.length > 1) {
@@ -156,7 +156,7 @@ export class DashboardComponent implements AfterViewInit {
         },
         markers: {
           show: true,
-          size: 6
+          size: 6,
         },
         stroke: {
           width: [2, 2, 2, 2, 2],
@@ -199,7 +199,7 @@ export class DashboardComponent implements AfterViewInit {
   generateRatingsChart(history: any[]): any {
     try {
       let lineChartOptions: any = {};
-      const ratingsGraph = history.map((h: any) => parseFloat(h.score));
+      const ratingsGraph = history.map((h: any) => parseFloat(parseFloat(h.score).toFixed(2)));
       const categories = history.map(((h: any, index: number) => new Date(h.recorded_at).toUTCString()));
 
       lineChartOptions = {
@@ -215,6 +215,12 @@ export class DashboardComponent implements AfterViewInit {
         xaxis: {
           type: 'datetime',
           categories: categories,
+        },
+        colors: [
+          this.getColor('accent-other')
+        ],
+        markers: {
+          size: 6
         }
       };
 

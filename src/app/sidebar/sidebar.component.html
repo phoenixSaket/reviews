@@ -5,8 +5,15 @@
     </div> -->
     <div class="backdrop" *ngIf="data.isLoading"></div>
     <nav class="sidebar-nav">
-        <div class="sidebar-divider"></div>
+        <div class="sidebar-divider margin-b"></div>
         <div class="sidebar-section">
+            <div class="sidebar-link" routerLink="/docs" [ngClass]="selectedDocumentation ? 'active': ''" (click)="closeSideBar('docs')">
+                <mat-icon>description</mat-icon>
+                <span>About</span>
+            </div>
+        </div>
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-section top">
             <div class="sidebar-link" routerLink="/dashboard" [ngClass]="selectedDashboard ? 'active': ''" (click)="closeSideBar('dashboard')">
                 <mat-icon>dashboard</mat-icon>
                 <span>Dashboard</span>
@@ -25,7 +32,7 @@
             </div>
         </div>
         <div class="sidebar-divider"></div>
-        <div class="sidebar-section">
+        <div class="sidebar-section middle">
             <div class="sidebar-section-title">
                 <mat-icon>apps</mat-icon>
                 <div class="sidebar-section-title-text">APPS</div>
@@ -90,13 +97,6 @@
                 </div>
             </div>
         </div>
-        <div class="sidebar-divider"></div>
-        <div class="sidebar-section">
-            <div class="sidebar-link" routerLink="/docs" [ngClass]="selectedDocumentation ? 'active': ''" (click)="closeSideBar('docs')">
-                <mat-icon>description</mat-icon>
-                <span>About</span>
-            </div>
-        </div>
-        <div class="sidebar-divider"></div>
-    </nav>
+        <div class="sidebar-divider margin-t"></div>
+        </nav>
 </div>

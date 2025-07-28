@@ -52,10 +52,20 @@
     flex-direction: column;
     gap: 0;
     padding: 0;
+    overflow-y: auto;
 }
 
 .sidebar-section {
     padding: 4px 0;
+}
+
+.sidebar-section.top {
+    height: 175px;
+}
+
+.sidebar-section.middle {
+    height: calc(100% - 175px - 75px);
+    overflow-y: auto;
 }
 
 .sidebar-section-title {
@@ -123,6 +133,16 @@ img.img {
     background: var(--accent-dark);
     margin: 12px 0;
     width: 100%;
+}
+
+.sidebar-divider.margin-b {
+    margin: unset;
+    margin-bottom: 12px;
+}
+
+.sidebar-divider.margin-t {
+    margin: unset;
+    margin-top: 12px;
 }
 
 .apps-container {
