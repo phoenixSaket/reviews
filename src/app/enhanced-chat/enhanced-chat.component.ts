@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ChatService } from '../services/chat.service';
 import { marked } from 'marked';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-enhanced-chat',
@@ -17,21 +18,21 @@ export class EnhancedChatComponent implements OnInit {
   sessionId: string | null = null;
   public isLoading = false;
 
-  // You'll need to get this from your application's state or a hardcoded list
-  private appsToAnalyze: { id: string, platform: string }[] = JSON.parse(localStorage.getItem("apps-review")).map((el: { app: string, isIOS: boolean }) => {
-    return { id: el.app, platform: el.isIOS ? "ios" : "android" };
+  public hasAppsBeenSelected: boolean = false;
+  public allApps: { id: string, platform: string, isSelected: boolean }[] = JSON.parse(localStorage.getItem("apps-review")).map((el: { app: string, isIOS: boolean }) => {
+    return { id: el.app, platform: el.isIOS ? "ios" : "android", isSelected: false };
   });
 
+  private appsToAnalyze: { id: string, platform: string }[] = [];
 
-  constructor(private chatService: ChatService, private fb: FormBuilder) {
+  constructor(private chatService: ChatService, private fb: FormBuilder, private dataService: DataService) {
     this.chatForm = this.fb.group({
       message: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
-    // Optionally initiate the chat session when the component loads
-    this.startNewChatSession();
+    this.hasAppsBeenSelected = false;
   }
 
   startNewChatSession() {
@@ -164,6 +165,29 @@ export class EnhancedChatComponent implements OnInit {
     } else {
       console.error("Message reference is undefined. Cannot copy.");
     }
+  }
+
+  selectApp(app: { id: string, platform: string, isSelected: boolean }) {
+    app.isSelected = !app.isSelected;
+    this.appsToAnalyze = this.allApps.filter(app => app.isSelected);
+  }
+
+  initialize () {
+    this.hasAppsBeenSelected = true;
+    console.log(this.appsToAnalyze);
+    if (this.appsToAnalyze.length > 0) {
+      this.startNewChatSession();
+    }
+  }
+
+  getAppName(id: string): string {
+    let name = '';
+    this.dataService.getAppName().forEach(appInner => {
+      if (appInner.id == id) {
+        name = appInner.appName;
+      }
+    })
+    return name;
   }
 
 }

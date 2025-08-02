@@ -82,15 +82,65 @@
 }
 
 .steps {
+    margin-top: 2rem;
+    position: relative;
+}
+
+/* This is for the connecting line */
+.steps::before {
+    content: '';
+    position: absolute;
+    top: 1.25rem; /* Start after half of the first circle */
+    bottom: 1.25rem; /* End before half of the last circle */
+    left: 1.25rem;
+    width: 2px;
+    background-color: #e0e0e0; /* A light grey color */
+    transform: translateX(-50%);
+}
+
+.step-item {
     display: flex;
-    flex-direction: column;
-    gap: 12px;
+    align-items: center;
+    position: relative;
+}
+
+.step-item:not(:last-child) {
+    margin-bottom: 2rem;
+}
+
+.step-number-container {
+    flex-shrink: 0;
+    z-index: 1; /* To be on top of the connecting line */
+}
+
+.step-number {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background-color: #3f51b5; /* Primary color from Material Design */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border: 3px solid white; /* To punch it out from the line */
+}
+
+.step-content {
+    margin-left: 1rem;
+    color: #333;
 }
 
 .link {
-    text-decoration: underline;
-    color: var(--accent-dark);
+    color: #3f51b5;
+    text-decoration: none;
+    font-weight: 500;
     cursor: pointer;
+}
+
+.link:hover {
+    text-decoration: underline;
 }
 
 .prompt-input {

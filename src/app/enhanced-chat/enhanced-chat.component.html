@@ -1,4 +1,4 @@
-<div class="chat-container">
+<div class="chat-container" *ngIf="hasAppsBeenSelected">
   <!-- Main chat display area -->
   <div class="chat-history-container">
     <div class="chat-message" *ngFor="let chat of chatHistory" [ngClass]="{'user-message': chat.sender === 'You', 'ai-message': chat.sender === 'AI', 'error-message': chat.sender === 'Error'}">
@@ -27,11 +27,38 @@
 
   <!-- Chat input form -->
   <form [formGroup]="chatForm" (ngSubmit)="sendMessage()" class="chat-input-form">
-    <input type="text" name="message" id="prompt-message" class="prompt-message" formControlName="message" placeholder="Type your message here..." [disabled]="isLoading || !sessionId">
-    <button type="submit" [disabled]="chatForm.invalid || isLoading || !sessionId">
+    <input type="text shadow" name="message" id="prompt-message" class="prompt-message" formControlName="message" placeholder="Type your message here..." [disabled]="isLoading || !sessionId">
+    <button type="submit shadow" [disabled]="chatForm.invalid || isLoading || !sessionId">
       Send<mat-icon>send</mat-icon>
     </button>
   </form>
+</div>
 
+<div class="app-selector" *ngIf="!hasAppsBeenSelected">
+  <div class="title shadow">
+    Select the apps that you wish to get assistance from AI
+  </div>
+  <div class="apps-container">
+    <div class="app shadow" *ngFor="let app of allApps" (click)="selectApp(app)" [ngClass]="{'selected': app.isSelected}">
+      <div class="checkbox">
+        <mat-icon *ngIf="!app.isSelected">check_box_outline_blank</mat-icon>
+        <mat-icon *ngIf="app.isSelected">check_box</mat-icon>
+      </div>
+      <div class="name-container">
+        <span class="name">
+          {{getAppName(app.id)}} 
+        </span>
+        <span class="platform">
+          {{(app.platform ? '( ' + app.platform + ' )' : '') | uppercase}}
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="submit-btn-container">
+    <button class="submit shadow" (click)="initialize()">
+      Assist with AI
+      <mat-icon>send</mat-icon>
+    </button>
+  </div>
 </div>
 
