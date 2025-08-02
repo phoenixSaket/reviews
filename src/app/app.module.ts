@@ -48,6 +48,7 @@ import { UserMessageComponent } from './chat/user-message/user-message.component
 import { ModelMessageComponent } from './chat/model-message/model-message.component';
 import { ReviewComponent } from './chat/review/review.component';
 import { DashboardFilterComponent } from './dashboard/dashboard-filter/dashboard-filter.component';
+import { EnhancedChatComponent } from './enhanced-chat/enhanced-chat.component';
 
 
 
@@ -79,7 +80,8 @@ import { DashboardFilterComponent } from './dashboard/dashboard-filter/dashboard
     UserMessageComponent,
     ModelMessageComponent,
     ReviewComponent,
-    DashboardFilterComponent
+    DashboardFilterComponent,
+    EnhancedChatComponent
   ],
   imports: [
     BrowserModule,

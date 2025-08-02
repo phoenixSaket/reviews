@@ -698,6 +698,7 @@ export class DashboardComponent implements AfterViewInit {
       return true;
     });
 
+    // Filter line charts (Ratings Count Graph')
     this.filteredRatingsCountCharts = this.ratingsCountCharts.filter(chart => {
       // Always apply app and platform filters
       if (!matchesAppAndPlatform(chart)) {
@@ -718,6 +719,7 @@ export class DashboardComponent implements AfterViewInit {
     this.filteredCharts = [...this.charts];
     this.filteredRatingsCharts = [...this.ratingsCharts];
     this.filteredLineCharts = [...this.lineCharts];
+    this.filteredRatingsCountCharts = [...this.ratingsCountCharts];
   }
 
   // Check if any charts are visible after filtering

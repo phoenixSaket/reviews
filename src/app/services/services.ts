@@ -23,7 +23,9 @@ export const AI = {
     summary: BASE_URL + "get/summary",
     summaryV2: BASE_URL + "get/v2/summary",
     initiateChat: BASE_URL + "get/initiate-chat",
-    chat: BASE_URL + "get/chat"
+    chat: BASE_URL + "get/chat",
+    ai_chat: BASE_URL + 'get/chat/streaming',
+    chat_new: BASE_URL + 'get/new/chat',
 }
 
 export interface IOS_INSERT_RATING {

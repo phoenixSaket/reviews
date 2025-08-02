@@ -26,6 +26,7 @@ interface SidebarState {
   selectedSmartWordCloud: boolean;
   selectedDocumentation: boolean;
   selectedChat: boolean;
+  selectedEnhancedChat: boolean;
 }
 
 @Component({
@@ -44,7 +45,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     selectedWordCloud: false,
     selectedSmartWordCloud: false,
     selectedDocumentation: false,
-    selectedChat: false
+    selectedChat: false,
+    selectedEnhancedChat: false
   };
   
   public isNotMobile: boolean = screen.availWidth > 768;
@@ -135,7 +137,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
       'wordcloud': 'selectedWordCloud',
       'smartwordcloud': 'selectedSmartWordCloud',
       'docs': 'selectedDocumentation',
-      'chat': 'selectedChat'
+      'chat': 'selectedChat',
+      'enhanced-chat': 'selectedEnhancedChat'
     };
 
     const section = sectionMap[type];
@@ -267,4 +270,5 @@ export class SidebarComponent implements OnInit, OnDestroy {
   get selectedSmartWordCloud(): boolean { return this.state.selectedSmartWordCloud; }
   get selectedDocumentation(): boolean { return this.state.selectedDocumentation; }
   get selectedChat(): boolean { return this.state.selectedChat; }
+  get selectedEnhancedChat(): boolean { return this.state.selectedEnhancedChat; }
 }
