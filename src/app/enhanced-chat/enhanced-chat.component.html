@@ -1,0 +1,37 @@
+<div class="chat-container">
+  <!-- Main chat display area -->
+  <div class="chat-history-container">
+    <div class="chat-message" *ngFor="let chat of chatHistory" [ngClass]="{'user-message': chat.sender === 'You', 'ai-message': chat.sender === 'AI', 'error-message': chat.sender === 'Error'}">
+      <div class="sender">{{ chat.sender }}:</div>
+      <div class="message-content">
+        <div class="message" *ngIf="chat.message != '[AI is typing...]'" #messageRef [innerHTML]="chat.message"></div>
+        <div class="message" *ngIf="chat.sender == 'AI' && chat.message == '[AI is typing...]'" >
+          <app-loader></app-loader>
+        </div>
+        <div class="copy" *ngIf="chat.message != '[AI is typing...]'" (click)="copy()">
+          <mat-icon><span class="material-symbols-outlined">
+            content_copy
+            </span>
+          </mat-icon>
+          Copy
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading spinner/text -->
+    <div class="loading-indicator" *ngIf="isLoading">
+      <div class="spinner"></div>
+      <p>Please wait while reviews are analyzed...</p>
+    </div>
+  </div>
+
+  <!-- Chat input form -->
+  <form [formGroup]="chatForm" (ngSubmit)="sendMessage()" class="chat-input-form">
+    <input type="text" name="message" id="prompt-message" class="prompt-message" formControlName="message" placeholder="Type your message here..." [disabled]="isLoading || !sessionId">
+    <button type="submit" [disabled]="chatForm.invalid || isLoading || !sessionId">
+      Send<mat-icon>send</mat-icon>
+    </button>
+  </form>
+
+</div>
+

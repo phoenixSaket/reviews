@@ -60,11 +60,11 @@
 }
 
 .sidebar-section.top {
-    height: 175px;
+    height: 215px;
 }
 
 .sidebar-section.middle {
-    height: calc(100% - 175px - 75px);
+    height: calc(100% - 215px - 75px);
     overflow-y: auto;
 }
 

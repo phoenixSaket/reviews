@@ -25,6 +25,7 @@
     "apexcharts": "^3.39.0",
     "chart.js": "^4.4.0",
     "gh-pages": "^4.0.0",
+    "marked": "^16.1.1",
     "ng-apexcharts": "^1.7.5",
     "rxjs": "~7.5.0",
     "showdown": "^2.1.0",
