@@ -1,0 +1,41 @@
+<div class="settings-container">
+    <div class="settings-header">
+        <h1>Settings</h1>
+        <p>Manage your application preferences and theme settings.</p>
+    </div>
+
+    <div class="settings-section">
+        <h2>Appearance & Theming</h2>
+
+        <div class="theme-options">
+            <div class="theme-card" *ngFor="let theme of themes"
+                 [class.active]="currentTheme === theme.id"
+                 (click)="selectTheme(theme.id)">
+                <mat-icon>{{ theme.icon }}</mat-icon>
+                <span>{{ theme.name }}</span>
+            </div>
+        </div>
+
+        <div class="dark-mode-toggle">
+            <div class="toggle-info">
+                <mat-icon>{{ isDarkMode ? 'dark_mode' : 'light_mode' }}</mat-icon>
+                <span>{{ isDarkMode ? 'Dark Mode' : 'Light Mode' }}</span>
+            </div>
+            <mat-slide-toggle [checked]="isDarkMode" (change)="toggleDarkMode()"></mat-slide-toggle>
+        </div>
+    </div>
+
+    <div class="settings-section">
+        <h2>Notifications</h2>
+        <div class="settings-list">
+            <div class="setting-item">
+                <span>Email alerts for new reviews</span>
+                <mat-slide-toggle [checked]="true"></mat-slide-toggle>
+            </div>
+            <div class="setting-item">
+                <span>In-app notifications</span>
+                <mat-slide-toggle [checked]="true"></mat-slide-toggle>
+            </div>
+        </div>
+    </div>
+</div>

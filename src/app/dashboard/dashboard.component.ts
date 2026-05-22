@@ -154,7 +154,7 @@ export class DashboardComponent implements AfterViewInit {
       ];
       const categories = history.map(((h: any, index: number) => new Date(h.recorded_at).toUTCString()));
 
-      const ratingColors = ['#e53935', '#fb8c00', '#fdd835', '#43a047', '#1e7e34'];
+      const ratingColors = ['#EB5757', '#F2994A', '#F2C94C', '#6FCF97', '#4BC693'];
       lineChartOptions = {
         series: seriesData,
         colors: ratingColors,
@@ -315,7 +315,7 @@ export class DashboardComponent implements AfterViewInit {
 
   loadCharts(app: any) {
     this.loading = true;
-    const ratingColors = ['#e53935', '#fb8c00', '#fdd835', '#43a047', '#1e7e34'];
+    const ratingColors = ['#EB5757', '#F2994A', '#F2C94C', '#6FCF97', '#4BC693'];
 
     let chartOptions: any = {
       chart: {

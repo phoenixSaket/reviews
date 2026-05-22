@@ -35,7 +35,14 @@ export class AppComponent {
     })
   }
 
+  private resizeListener = () => {
+    this.width = window.innerWidth;
+    this.cdr.detectChanges();
+  };
+
   async ngOnInit() {
+    window.addEventListener('resize', this.resizeListener);
+
     let apps: any = localStorage.getItem("apps-review") || "[]";
     let iosApps = [];
     let androidApps = [];
@@ -268,6 +275,10 @@ export class AppComponent {
 
   ngAfterViewInit() {
     this.data.newReviewsCheck();
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('resize', this.resizeListener);
   }
 
   saveToLocalStorage(app: any) {
