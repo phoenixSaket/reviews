@@ -8,7 +8,7 @@
     top: 0;
     height: 50px;
     background: var(--white);
-    box-shadow: 2px 0 8px rgba(84,96,135,0.04);
+    box-shadow: var(--shadow-brand);
     border-bottom: 1px solid var(--accent);
     z-index: 1001;
 }
@@ -31,6 +31,7 @@
     font-weight: 800;
     font-size: 18px;
     margin-right: 4px;
+    color: var(--accent-dark);
 }
 
 .navbar-logo {

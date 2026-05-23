@@ -1,99 +1,133 @@
-<div class="filter-container" *ngIf="showFilters">
+<div class="mobile-filters" *ngIf="showFilterButton">
+  <button class="filter-button" (click)="toggleFilters()">
+    <span class="material-symbols-outlined">filter_alt</span>
+    <span class="text">{{showFilters ? 'Hide' :'Show'}} Filters</span>
+  </button>
+</div>
 
-    <div class="ratings div">
-        <!-- <div class="rating" *ngFor="let rate of ratings">
-            {{rate.text}}
-            <div class="selected">
-                <span class="check">&#10003;</span>
+<div class="filter-container" [class.collapsed]="!showFilters">
+  <div class="filter-header">
+    <h3 class="filter-title">
+      <span class="material-symbols-outlined">filter_alt</span>
+      Filters
+    </h3>
+    <div class="header-actions">
+      <button class="ai-tools-btn" [class.active]="openAI" (click)="openAITools()" type="button">
+        <span class="material-symbols-outlined">smart_toy</span>
+        {{openAI ? 'Hide' : 'Show'}} AI Tools
+      </button>
+      <button class="clear-filters-btn" (click)="clearFilters()" type="button">
+        <span class="material-symbols-outlined">clear_all</span>
+        Clear All
+      </button>
+    </div>
+  </div>
+
+  <div class="filter-grid">
+    <!-- Search keyword -->
+    <div class="filter-group">
+      <label class="filter-label">
+        <span class="material-symbols-outlined">search</span>
+        Search Keyword
+      </label>
+      <div class="search-input-wrapper">
+        <input type="text" class="filter-input" placeholder="Search reviews..." (keyup)="searchInput($event)" autocomplete="off">
+        <span class="material-symbols-outlined search-icon">search</span>
+      </div>
+    </div>
+
+    <!-- Rating selectors -->
+    <div class="filter-group">
+      <label class="filter-label">
+        <span class="material-symbols-outlined">star</span>
+        Ratings
+      </label>
+      <div class="rating-chips">
+        <button type="button" 
+                *ngFor="let rate of ratings" 
+                class="rating-chip" 
+                [class.selected]="rate.isSelected"
+                (click)="toggleRatingSelection(rate)">
+          <span>{{rate.text}}</span>
+          <span class="checkmark" *ngIf="rate.isSelected">&#10003;</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Version custom dropdown -->
+    <div class="filter-group">
+      <label class="filter-label">
+        <span class="material-symbols-outlined">layers</span>
+        Version
+      </label>
+      <div class="multi-select-container">
+        <div class="multi-select-display" (click)="toggleDropdown('version')" [class.open]="openDropdown === 'version'">
+          <span class="selected-text">{{selectedVersion}}</span>
+          <span class="material-symbols-outlined">expand_more</span>
+        </div>
+        <div class="multi-select-dropdown" *ngIf="openDropdown === 'version'">
+          <div class="dropdown-options">
+            <div class="option-label" (click)="selectVersion('-1')" [class.selected]="selectedVersion === 'All Versions'">
+              <span>All Versions</span>
             </div>
-        </div> -->
-
-
-        <mat-chip-list multiple>
-            <mat-chip color="rating" *ngFor="let rate of ratings" (click)="toggleRatingSelection(rate)"
-                selectable="true" [selected]="rate.isSelected">
-                <div class="rating-container">
-                    <div>{{rate.text}}</div>
-                    <div class="bold" *ngIf="rate.isSelected">&#10003;</div>
-                </div>
-            </mat-chip>
-        </mat-chip-list>
-
+            <div class="option-label" *ngFor="let ver of versions" (click)="selectVersion(ver)" [class.selected]="selectedVersion === (ver != null ? ver.toString() : 'NA')">
+              <span>{{ver != null ? ver : 'NA'}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="filter-div">
-        <form class="example-form">
-            <mat-form-field appearance="outline" class="example-full-width">
-                <mat-label>Search by keyword</mat-label>
-                <input matInput placeholder="Search" (keyup)="searchInput($event)" autocomplete="off">
-            </mat-form-field>
-        </form>
+    <!-- Year custom dropdown -->
+    <div class="filter-group">
+      <label class="filter-label">
+        <span class="material-symbols-outlined">calendar_today</span>
+        Year
+      </label>
+      <div class="multi-select-container">
+        <div class="multi-select-display" (click)="toggleDropdown('year')" [class.open]="openDropdown === 'year'">
+          <span class="selected-text">{{selectedYear}}</span>
+          <span class="material-symbols-outlined">expand_more</span>
+        </div>
+        <div class="multi-select-dropdown" *ngIf="openDropdown === 'year'">
+          <div class="dropdown-options">
+            <div class="option-label" (click)="selectYear('-1')" [class.selected]="selectedYear === 'All Years'">
+              <span>All Years</span>
+            </div>
+            <div class="option-label" *ngFor="let yr of years" (click)="selectYear(yr)" [class.selected]="selectedYear === (yr != null ? yr.toString() : 'NA')">
+              <span>{{yr != null ? yr : 'NA'}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <div class="filter-div">
-        <mat-form-field appearance="outline">
-            <mat-label>Version</mat-label>
-            <mat-select (selectionChange)="versionSelected($event)">
-                <mat-option value="-1">All Versions</mat-option>
-                <mat-option *ngFor="let version of versions" [value]="version">
-                    {{version != null ? version : 'NA'}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
+  <!-- Segmented Sort Control Wrapper -->
+  <div class="sorting-wrapper">
+    <div class="sorting-label">
+      <span class="material-symbols-outlined">sort</span>
+      Sort By
     </div>
-
-    <div class="filter-div">
-        <mat-form-field appearance="outline">
-            <mat-label>Year</mat-label>
-            <mat-select (selectionChange)="yearSelected($event)">
-                <mat-option value="-1">All Years</mat-option>
-                <mat-option *ngFor="let year of years" [value]="year">
-                    {{year != null ? year : 'NA'}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
+    <div class="sort-segmented-control">
+      <button class="sort-btn" [class.active]="versionSorted.sorted" (click)="sortByEmit('version')">
+        <span>Version</span>
+        <span class="sort-direction-icon" *ngIf="versionSorted.sorted">
+          {{versionSorted.type === 'A' ? '▲' : '▼'}}
+        </span>
+      </button>
+      <button class="sort-btn" [class.active]="ratingSorted.sorted" (click)="sortByEmit('rating')">
+        <span>Rating</span>
+        <span class="sort-direction-icon" *ngIf="ratingSorted.sorted">
+          {{ratingSorted.type === 'A' ? '▲' : '▼'}}
+        </span>
+      </button>
+      <button class="sort-btn" [class.active]="dateSorted.sorted" (click)="sortByEmit('date')">
+        <span>Date</span>
+        <span class="sort-direction-icon" *ngIf="dateSorted.sorted">
+          {{dateSorted.type === 'A' ? '▲' : '▼'}}
+        </span>
+      </button>
     </div>
-
-    <div class="filter-div">
-        <button mat-raised-button color="custom" type="button" (click)="openAITools()">{{openAI ? 'Close' : 'Open'}} AI Tools</button>
-    </div>
-    
-    <!-- <mat-form-field appearance="outline">
-        <mat-label>Sort By</mat-label>
-        <mat-select (selectionChange)="sortChange($event)">
-            <mat-option *ngFor="let sort of sortingArray" [value]="sort.value">
-                {{sort.text}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field> -->
-
-</div>
-<div class="sorting-container">
-    <div class="sort-box left" (click)="sortByEmit('version')">
-        <div class="text">Version</div>
-        <mat-icon *ngIf="!versionSorted.sorted">sort</mat-icon>
-        <div *ngIf="versionSorted.sorted && versionSorted.type == 'A'">&#8642;</div>
-        <div *ngIf="versionSorted.sorted && versionSorted.type == 'D'">&#8638;</div>
-    </div>
-    <div class="sort-box center" (click)="sortByEmit('rating')">
-        <div class="text">Rating</div>
-        <mat-icon *ngIf="!ratingSorted.sorted">sort</mat-icon>
-        <div *ngIf="ratingSorted.sorted && ratingSorted.type == 'A'">&#8642;</div>
-        <div *ngIf="ratingSorted.sorted && ratingSorted.type == 'D'">&#8638;</div>
-        
-    </div>
-    <div class="sort-box right" (click)="sortByEmit('date')">
-        <div class="text">Date</div>
-        <mat-icon *ngIf="!dateSorted.sorted">sort</mat-icon>
-        <div *ngIf="dateSorted.sorted && dateSorted.type == 'A'">&#8642;</div>
-        <div *ngIf="dateSorted.sorted && dateSorted.type == 'D'">&#8638;</div>
-    </div>
-</div>
-
-<div class="mobile-filters" *ngIf="showFilterButton" [ngStyle]="{'height' : showFilters ? 'unset' : '100%'}">
-    
-    <button mat-flat-button color="primary" class="filter-button" (click)="toggleFilters()">
-        <img class="filter-img" src="assets/filter.png" alt="filter">
-        <div class="text">{{showFilters ? 'Hide' :'Show'}} Filters</div>
-    </button>
+  </div>
 </div>

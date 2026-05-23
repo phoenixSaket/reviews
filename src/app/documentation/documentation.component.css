@@ -92,8 +92,8 @@
   background: linear-gradient(135deg, var(--white) 0%, var(--accent) 100%);
   border-radius: 20px;
   padding: 30px;
-  box-shadow: 0 10px 40px rgba(73, 93, 123, 0.1);
-  border: 1px solid rgba(73, 93, 123, 0.1);
+  box-shadow: var(--shadow-doc-light);
+  border: 1px solid var(--border-doc-default);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
   cursor: pointer;
@@ -101,8 +101,8 @@
 
 .feature-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 60px rgba(73, 93, 123, 0.15);
-  border-color: rgba(73, 93, 123, 0.2);
+  box-shadow: var(--shadow-doc-medium);
+  border-color: rgba(var(--active-rgb), 0.2);
 }
 
 .feature-icon {
@@ -119,13 +119,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 25px rgba(73, 93, 123, 0.3);
+  box-shadow: var(--shadow-doc-heavy);
   transition: all 0.3s ease;
 }
 
 .feature-card:hover .icon-circle {
   transform: scale(1.1);
-  box-shadow: 0 12px 35px rgba(73, 93, 123, 0.4);
+  box-shadow: var(--shadow-doc-deep);
 }
 
 .icon-number {
@@ -168,7 +168,7 @@ path {
 
 .text {
   padding: 10px 0 0 0;
-  color: #999999;
+  color: var(--color-gray-light);
   font-size: 16px;
   text-align: center;
 }
@@ -178,7 +178,7 @@ path {
   flex-direction: column;
   padding: 30px;
   text-align: start;
-  color: #999999;
+  color: var(--color-gray-light);
   font-size: 16px;
 }
 
@@ -187,7 +187,7 @@ path {
 }
 
 .icon-circle > mat-icon {
-  color: white;
+  color: var(--pure-white);
 }
 
 .button {
@@ -469,7 +469,7 @@ path {
 .guideline-card {
   background: var(--white);
   border-radius: 18px;
-  box-shadow: 0 8px 32px rgba(84, 96, 135, 0.10);
+  box-shadow: var(--shadow-brand-medium);
   border: 2px solid var(--active);
   padding: 32px 24px 24px 24px;
   display: flex;
@@ -483,7 +483,7 @@ path {
 }
 
 .guideline-card:hover {
-  box-shadow: 0 16px 48px rgba(84, 96, 135, 0.18);
+  box-shadow: var(--shadow-brand-heavy);
   transform: translateY(-4px) scale(1.03);
   border-color: var(--accent-other);
 }
@@ -499,7 +499,7 @@ path {
   justify-content: center;
   font-size: 2.2rem;
   margin-bottom: 18px;
-  box-shadow: 0 4px 16px rgba(84, 96, 135, 0.10);
+  box-shadow: var(--shadow-brand-medium);
 }
 
 .guideline-title {
@@ -608,8 +608,8 @@ path {
   border-radius: 16px;
   padding: 30px 24px;
   text-align: center;
-  box-shadow: 0 8px 32px rgba(73, 93, 123, 0.08);
-  border: 1px solid rgba(73, 93, 123, 0.1);
+  box-shadow: var(--shadow-doc-subtle);
+  border: 1px solid var(--border-doc-default);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
@@ -629,7 +629,7 @@ path {
 
 .pwa-feature:hover {
   transform: translateY(-6px);
-  box-shadow: 0 16px 48px rgba(73, 93, 123, 0.12);
+  box-shadow: var(--shadow-doc-medium-light);
 }
 
 .pwa-feature:hover::before {
@@ -645,13 +645,13 @@ path {
   align-items: center;
   justify-content: center;
   margin: 0 auto 20px;
-  box-shadow: 0 8px 25px rgba(73, 93, 123, 0.2);
+  box-shadow: var(--shadow-doc-dark);
   transition: all 0.3s ease;
 }
 
 .pwa-feature:hover .pwa-icon {
   transform: scale(1.1);
-  box-shadow: 0 12px 35px rgba(73, 93, 123, 0.3);
+  box-shadow: var(--shadow-doc-heavy);
 }
 
 .pwa-icon mat-icon {
@@ -681,8 +681,8 @@ path {
   background: linear-gradient(135deg, var(--white) 0%, var(--accent) 100%);
   border-radius: 24px;
   padding: 40px;
-  box-shadow: 0 12px 40px rgba(73, 93, 123, 0.1);
-  border: 1px solid rgba(73, 93, 123, 0.1);
+  box-shadow: var(--shadow-doc-light);
+  border: 1px solid var(--border-doc-default);
   text-align: center;
 }
 
@@ -699,11 +699,11 @@ path {
   align-items: center;
   justify-content: center;
   margin: 0 auto 20px;
-  box-shadow: 0 12px 35px rgba(73, 93, 123, 0.25);
+  box-shadow: var(--shadow-doc-darker);
 }
 
 .pwa-hero-icon mat-icon {
-  color: white;
+  color: var(--pure-white);
   font-size: 36px;
   width: 36px;
   height: 36px;
@@ -745,30 +745,30 @@ path {
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   min-width: 200px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-brand-medium);
 }
 
 .android-btn {
-  background: linear-gradient(135deg, #3DDC84 0%, #2BB673 100%);
+  background: var(--gradient-android-alt);
   color: var(--white);
 }
 
 .ios-btn {
-  background: linear-gradient(135deg, #007AFF 0%, #0056CC 100%);
+  background: var(--gradient-ios-alt);
   color: var(--white);
 }
 
 .download-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-brand-heavy);
 }
 
 .android-btn:hover {
-  background: linear-gradient(135deg, #2BB673 0%, #1A9B5A 100%);
+  background: var(--gradient-android-darker);
 }
 
 .ios-btn:hover {
-  background: linear-gradient(135deg, #0056CC 0%, #004499 100%);
+  background: var(--gradient-ios-darker);
 }
 
 .download-btn mat-icon {
@@ -900,8 +900,8 @@ path {
   background: linear-gradient(135deg, var(--white) 0%, var(--accent) 100%);
   border-radius: 24px;
   padding: 40px;
-  box-shadow: 0 20px 60px rgba(73, 93, 123, 0.1);
-  border: 1px solid rgba(73, 93, 123, 0.1);
+  box-shadow: var(--shadow-doc-light);
+  border: 1px solid var(--border-doc-default);
 }
 
 .ai-header {
@@ -919,7 +919,7 @@ path {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 12px 35px rgba(73, 93, 123, 0.3);
+  box-shadow: var(--shadow-doc-heavy);
 }
 
 .ai-icon mat-icon {
@@ -954,14 +954,14 @@ path {
   background: var(--white);
   border-radius: 16px;
   padding: 24px;
-  box-shadow: 0 8px 25px rgba(73, 93, 123, 0.08);
-  border: 1px solid rgba(73, 93, 123, 0.05);
+  box-shadow: var(--shadow-doc-subtle);
+  border: 1px solid var(--border-doc-light);
   transition: all 0.3s ease;
 }
 
 .ai-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 35px rgba(73, 93, 123, 0.12);
+  box-shadow: var(--shadow-doc-medium-light);
 }
 
 .ai-card h3 {
@@ -983,8 +983,8 @@ path {
   background: linear-gradient(135deg, var(--accent) 0%, var(--white) 100%);
   border-radius: 24px;
   padding: 40px;
-  box-shadow: 0 20px 60px rgba(73, 93, 123, 0.1);
-  border: 1px solid rgba(73, 93, 123, 0.1);
+  box-shadow: var(--shadow-doc-light);
+  border: 1px solid var(--border-doc-default);
   position: relative;
   overflow: hidden;
 }
@@ -1020,7 +1020,7 @@ path {
   align-items: center;
   justify-content: center;
   margin: 0 auto 20px;
-  box-shadow: 0 8px 25px rgba(73, 93, 123, 0.3);
+  box-shadow: var(--shadow-doc-heavy);
   animation: float 3s ease-in-out infinite;
 }
 
@@ -1084,14 +1084,14 @@ path {
   font-weight: 700;
   font-size: 14px;
   margin-bottom: 16px;
-  box-shadow: 0 4px 15px rgba(73, 93, 123, 0.3);
+  box-shadow: var(--shadow-doc-heavy);
   position: relative;
   z-index: 3;
 }
 
 .workflow-step:hover .step-number {
   transform: scale(1.2);
-  box-shadow: 0 6px 20px rgba(73, 93, 123, 0.4);
+  box-shadow: var(--shadow-doc-deep);
 }
 
 .step-icon {
@@ -1126,7 +1126,7 @@ path {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  background: var(--gradient-skeleton-medium);
   transition: left 0.8s ease;
   z-index: 1;
 }
@@ -1139,7 +1139,7 @@ path {
   width: 90%;
   height: 90%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  background: var(--radial-glow-light);
   transform: translate(-50%, -50%);
   z-index: 0;
 }
@@ -1185,11 +1185,11 @@ path {
 }
 
 .gemini-icon::before {
-  background: linear-gradient(90deg, transparent, rgba(73, 93, 123, 0.1), transparent);
+  background: var(--gradient-skeleton-doc);
 }
 
 .gemini-icon::after {
-  background: radial-gradient(circle, rgba(73, 93, 123, 0.05) 0%, transparent 70%);
+  background: var(--radial-glow-doc);
 }
 
 .workflow-step:hover .gemini-icon {
@@ -1276,13 +1276,13 @@ path {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  box-shadow: 0 4px 15px rgba(73, 93, 123, 0.2);
+  box-shadow: var(--shadow-doc-dark);
   transition: all 0.3s ease;
 }
 
 .workflow-step:hover .step-badge {
   transform: scale(1.05);
-  box-shadow: 0 6px 20px rgba(73, 93, 123, 0.3);
+  box-shadow: var(--shadow-doc-heavy);
 }
 
 .step-arrow {
@@ -1320,15 +1320,15 @@ path {
   background: var(--white);
   padding: 20px 24px;
   border-radius: 16px;
-  box-shadow: 0 8px 25px rgba(73, 93, 123, 0.08);
-  border: 1px solid rgba(73, 93, 123, 0.05);
+  box-shadow: var(--shadow-doc-subtle);
+  border: 1px solid var(--border-doc-light);
   transition: all 0.3s ease;
   cursor: pointer;
 }
 
 .stat-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 35px rgba(73, 93, 123, 0.15);
+  box-shadow: var(--shadow-doc-medium);
 }
 
 .stat-icon {
@@ -1339,13 +1339,13 @@ path {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 20px rgba(73, 93, 123, 0.25);
+  box-shadow: var(--shadow-doc-darker);
   transition: all 0.3s ease;
 }
 
 .stat-card:hover .stat-icon {
   transform: scale(1.1);
-  box-shadow: 0 8px 25px rgba(73, 93, 123, 0.35);
+  box-shadow: var(--shadow-doc-heavier);
 }
 
 .stat-icon mat-icon {
@@ -1385,8 +1385,8 @@ path {
   background: linear-gradient(135deg, var(--white) 0%, var(--accent) 100%);
   border-radius: 24px;
   padding: 40px;
-  box-shadow: 0 20px 60px rgba(73, 93, 123, 0.1);
-  border: 1px solid rgba(73, 93, 123, 0.1);
+  box-shadow: var(--shadow-doc-light);
+  border: 1px solid var(--border-doc-default);
 }
 
 .ai-features h3 {
@@ -1409,15 +1409,15 @@ path {
   border-radius: 16px;
   padding: 24px;
   text-align: center;
-  box-shadow: 0 8px 25px rgba(73, 93, 123, 0.08);
-  border: 1px solid rgba(73, 93, 123, 0.05);
+  box-shadow: var(--shadow-doc-subtle);
+  border: 1px solid var(--border-doc-light);
   transition: all 0.3s ease;
   cursor: pointer;
 }
 
 .feature-item:hover {
   transform: translateY(-6px);
-  box-shadow: 0 16px 45px rgba(73, 93, 123, 0.15);
+  box-shadow: var(--shadow-doc-medium);
 }
 
 .feature-item .feature-icon {
@@ -1429,13 +1429,13 @@ path {
   align-items: center;
   justify-content: center;
   margin: 0 auto 16px;
-  box-shadow: 0 8px 25px rgba(73, 93, 123, 0.3);
+  box-shadow: var(--shadow-doc-heavy);
   transition: all 0.3s ease;
 }
 
 .feature-item:hover .feature-icon {
   transform: scale(1.1);
-  box-shadow: 0 12px 35px rgba(73, 93, 123, 0.4);
+  box-shadow: var(--shadow-doc-deep);
 }
 
 .feature-item .feature-icon mat-icon {
@@ -1463,8 +1463,8 @@ path {
   background: linear-gradient(135deg, var(--accent) 0%, var(--white) 100%);
   border-radius: 24px;
   padding: 40px;
-  box-shadow: 0 20px 60px rgba(73, 93, 123, 0.1);
-  border: 1px solid rgba(73, 93, 123, 0.1);
+  box-shadow: var(--shadow-doc-light);
+  border: 1px solid var(--border-doc-default);
 }
 
 .access-card {
@@ -1474,8 +1474,8 @@ path {
   background: var(--white);
   border-radius: 16px;
   padding: 32px;
-  box-shadow: 0 8px 25px rgba(73, 93, 123, 0.08);
-  border: 1px solid rgba(73, 93, 123, 0.05);
+  box-shadow: var(--shadow-doc-subtle);
+  border: 1px solid var(--border-doc-light);
 }
 
 .access-icon {
@@ -1486,7 +1486,7 @@ path {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 25px rgba(73, 93, 123, 0.3);
+  box-shadow: var(--shadow-doc-heavy);
 }
 
 .access-icon mat-icon {
@@ -1515,18 +1515,18 @@ path {
   align-items: center;
   gap: 8px;
   padding: 12px 20px;
-  background: linear-gradient(135deg, #4285f4, #34a853);
+  background: var(--gradient-google);
   color: var(--white);
   text-decoration: none;
   border-radius: 12px;
   font-weight: 500;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3);
+  box-shadow: var(--shadow-google-btn);
 }
 
 .gemini-link:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(66, 133, 244, 0.4);
+  box-shadow: var(--shadow-google-btn-heavy);
 }
 
 .gemini-link img {
@@ -1546,13 +1546,13 @@ path {
   border-radius: 12px;
   font-weight: 500;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(73, 93, 123, 0.3);
+  box-shadow: var(--shadow-doc-heavy);
   margin-left: 12px;
 }
 
 .chat-link:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(73, 93, 123, 0.4);
+  box-shadow: var(--shadow-doc-deep);
 }
 
 .chat-link mat-icon {
@@ -1793,7 +1793,7 @@ path {
   padding: 40px;
   margin: 20px 0;
   box-shadow: var(--doc-card-shadow);
-  border: 1px solid rgba(73, 93, 123, 0.1);
+  border: 1px solid var(--border-doc-default);
 }
 
 .hero-content {
@@ -1829,7 +1829,7 @@ path {
   border-radius: 15px;
   color: var(--white);
   min-width: 100px;
-  box-shadow: 0 8px 25px rgba(73, 93, 123, 0.3);
+  box-shadow: var(--shadow-doc-heavy);
 }
 
 .stat-number {
@@ -1863,7 +1863,7 @@ path {
   border-radius: var(--doc-radius);
   padding: 30px;
   box-shadow: var(--doc-card-shadow);
-  border: 1px solid rgba(73, 93, 123, 0.1);
+  border: 1px solid var(--border-doc-default);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
@@ -1893,7 +1893,7 @@ path {
 
 .value-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(73, 93, 123, 0.15);
+  box-shadow: var(--shadow-doc-medium);
 }
 
 .value-icon {
@@ -1905,7 +1905,7 @@ path {
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
-  box-shadow: 0 8px 25px rgba(73, 93, 123, 0.3);
+  box-shadow: var(--shadow-doc-heavy);
 }
 
 .value-icon mat-icon {
@@ -1958,14 +1958,14 @@ path {
   border-radius: 15px;
   padding: 25px;
   text-align: center;
-  box-shadow: 0 8px 25px rgba(73, 93, 123, 0.15);
+  box-shadow: var(--shadow-doc-medium);
   min-width: 180px;
   transition: all 0.3s ease;
 }
 
 .platform-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(73, 93, 123, 0.25);
+  box-shadow: var(--shadow-doc-darker);
 }
 
 .platform-card.android {
@@ -1987,11 +1987,11 @@ path {
 }
 
 .platform-card.android .platform-icon {
-  background: linear-gradient(135deg, #3DDC84, #2E7D32);
+  background: var(--gradient-android-darker);
 }
 
 .platform-card.ios .platform-icon {
-  background: linear-gradient(135deg, #007AFF, #0056CC);
+  background: var(--gradient-ios-alt);
 }
 
 .platform-icon mat-icon {
@@ -2036,14 +2036,14 @@ path {
   padding: 30px;
   text-align: center;
   color: var(--white);
-  box-shadow: 0 10px 30px rgba(73, 93, 123, 0.3);
+  box-shadow: var(--shadow-doc-heavy);
 }
 
 .hub-icon {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: rgba(245, 246, 251, 0.2);
+  background: var(--bg-translucent-white-light);
   margin: 0 auto 15px;
   display: flex;
   align-items: center;
@@ -2097,14 +2097,14 @@ path {
   border-radius: var(--doc-radius);
   padding: 25px;
   box-shadow: var(--doc-card-shadow);
-  border: 1px solid rgba(73, 93, 123, 0.1);
+  border: 1px solid var(--border-doc-default);
   transition: all 0.3s ease;
   text-align: center;
 }
 
 .capability-item:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(73, 93, 123, 0.15);
+  box-shadow: var(--shadow-doc-medium);
 }
 
 .capability-icon {
@@ -2116,7 +2116,7 @@ path {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 25px rgba(73, 93, 123, 0.3);
+  box-shadow: var(--shadow-doc-heavy);
 }
 
 .capability-icon mat-icon {
@@ -2487,8 +2487,8 @@ path {
   border-radius: 24px;
   padding: 40px;
   margin-bottom: 40px;
-  box-shadow: 0 15px 50px rgba(73, 93, 123, 0.1);
-  border: 1px solid rgba(73, 93, 123, 0.1);
+  box-shadow: var(--shadow-doc-light);
+  border: 1px solid var(--border-doc-default);
 }
 
 .flow-diagram h3 {
@@ -2513,15 +2513,15 @@ path {
   padding: 25px;
   background: linear-gradient(135deg, var(--white) 0%, rgba(73, 93, 123, 0.02) 100%);
   border-radius: 16px;
-  border: 1px solid rgba(73, 93, 123, 0.08);
+  border: 1px solid var(--border-doc-medium);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
 }
 
 .flow-step:hover {
   transform: translateX(8px);
-  box-shadow: 0 10px 30px rgba(73, 93, 123, 0.15);
-  border-color: rgba(73, 93, 123, 0.2);
+  box-shadow: var(--shadow-doc-medium);
+  border-color: rgba(var(--active-rgb), 0.2);
 }
 
 .step-number {
@@ -2535,7 +2535,7 @@ path {
   color: var(--white);
   font-size: 20px;
   font-weight: 700;
-  box-shadow: 0 8px 25px rgba(73, 93, 123, 0.3);
+  box-shadow: var(--shadow-doc-heavy);
   flex-shrink: 0;
 }
 
@@ -2578,7 +2578,7 @@ path {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  background: var(--gradient-skeleton-medium);
   transition: left 0.8s ease;
   z-index: 1;
 }
@@ -2591,7 +2591,7 @@ path {
   width: 90%;
   height: 90%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  background: var(--radial-glow-light);
   transform: translate(-50%, -50%);
   z-index: 0;
 }
@@ -2667,8 +2667,8 @@ path {
   background: linear-gradient(135deg, var(--white) 0%, var(--accent) 100%);
   border-radius: 24px;
   padding: 40px;
-  box-shadow: 0 15px 50px rgba(73, 93, 123, 0.1);
-  border: 1px solid rgba(73, 93, 123, 0.1);
+  box-shadow: var(--shadow-doc-light);
+  border: 1px solid var(--border-doc-default);
 }
 
 .quick-actions h3 {
@@ -3281,8 +3281,8 @@ path {
 .benefit-card {
   background: var(--white);
   border-radius: 18px;
-  box-shadow: 0 8px 32px rgba(73, 93, 123, 0.10);
-  border: 1px solid rgba(73, 93, 123, 0.08);
+  box-shadow: var(--shadow-doc-light);
+  border: 1px solid var(--border-doc-medium);
   transition: box-shadow 0.2s, transform 0.2s;
   overflow: hidden;
   position: relative;
@@ -3292,14 +3292,14 @@ path {
 
 .benefit-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 16px 48px rgba(73, 93, 123, 0.18);
+  box-shadow: var(--shadow-doc-heavy);
 }
 
 .benefit-card-inner {
   background: var(--white);
   border-radius: 16px;
   padding: 32px 24px;
-  box-shadow: 0 4px 16px rgba(73, 93, 123, 0.06);
+  box-shadow: var(--shadow-doc-subtle);
   display: grid;
   grid-template-rows: auto 1fr auto;
   align-items: center;
@@ -3320,7 +3320,7 @@ path {
   align-items: center;
   justify-content: center;
   font-size: 2.2rem;
-  box-shadow: 0 4px 16px rgba(84, 96, 135, 0.10);
+  box-shadow: var(--shadow-brand-medium);
 }
 
 .benefit-icon mat-icon {
@@ -3420,7 +3420,7 @@ path {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 24px rgba(73, 93, 123, 0.15);
+  box-shadow: var(--shadow-doc-medium);
   margin-bottom: 8px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
@@ -3450,7 +3450,7 @@ path {
 
 .benefits-title-section:hover .title-icon {
   transform: scale(1.05);
-  box-shadow: 0 12px 32px rgba(73, 93, 123, 0.25);
+  box-shadow: var(--shadow-doc-darker);
 }
 
 .benefits-title-section:hover .title-icon::before {
@@ -3480,7 +3480,7 @@ path {
   padding: 40px 30px;
   margin-top: 40px;
   text-align: center;
-  border: 1px solid rgba(73, 93, 123, 0.08);
+  border: 1px solid var(--border-doc-medium);
   position: relative;
   overflow: hidden;
 }
@@ -3526,7 +3526,7 @@ path {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 8px 24px rgba(73, 93, 123, 0.15);
+  box-shadow: var(--shadow-doc-medium);
   text-decoration: none;
   position: relative;
   overflow: hidden;
@@ -3539,13 +3539,13 @@ path {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: var(--gradient-skeleton-light);
   transition: left 0.5s;
 }
 
 .cta-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(73, 93, 123, 0.25);
+  box-shadow: var(--shadow-doc-darker);
 }
 
 .cta-button:hover::before {

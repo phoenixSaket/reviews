@@ -50,7 +50,7 @@
     padding: 10px;
     background-color: var(--accent);
     border-radius: 10px;
-    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-color-default);
     cursor: pointer;
 }
 
@@ -81,6 +81,7 @@
 
 .name {
     font-size: 16px;
+    color: var(--active)
 }
 
 .bold {
@@ -88,7 +89,7 @@
 }
 
 .grey {
-    color: #474747;
+    color: var(--accent-dark);
     word-wrap: break-word;
 }
 
@@ -97,13 +98,13 @@
 }
 
 .mat-custom {
-    background-color: var(--active);
-    color: var(--white);
+    background-color: var(--active) !important;
+    color: var(--white) !important;
 }
 
 .hover {
     position: absolute;
-    background-color: #475e8375;
+    box-shadow: 0 0 4px 2px var(--active);
     opacity: 0;
     width: 100%;
     height: 100%;
@@ -114,7 +115,7 @@
     border-radius: 10px;
     transition-property: all;
     transition-duration: 3000ms;
-    color: var(--white);
+    color: var(--pure-white);
     font-weight: 700;
     font-size: 16px;
     cursor: pointer;
@@ -122,20 +123,20 @@
 
 @media (min-width: 500px) {
 
-    .app:hover > .hover {
+    .app:hover>.hover {
         display: flex;
         justify-content: flex-end;
         align-items: flex-end;
         opacity: 1;
         transition-property: all;
-    transition-duration: 3000ms;
+        transition-duration: 3000ms;
     }
-    
+
     .text {
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 5px;
-        padding: 5px; 
+        padding: 5px;
     }
 }

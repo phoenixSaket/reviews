@@ -1,4 +1,11 @@
-<div class="filter-container" [class.filtering]="isFiltering">
+<div class="mobile-filters" *ngIf="showFilterButton">
+  <button class="filter-button" (click)="toggleFilters()" type="button">
+    <span class="material-symbols-outlined">filter_alt</span>
+    <span class="text">{{showFilters ? 'Hide' : 'Show'}} Filters</span>
+  </button>
+</div>
+
+<div class="filter-container" [class.filtering]="isFiltering" [class.collapsed]="!showFilters">
   <div class="filter-header">
     <h3 class="filter-title">
       <span class="material-symbols-outlined" [class.spinning]="isFiltering">filter_alt</span>

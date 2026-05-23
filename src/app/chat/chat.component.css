@@ -19,6 +19,19 @@
     gap: 16px;
 }
 
+.message-box input {
+    background: transparent;
+    border: none;
+    color: var(--accent-dark);
+    font-size: 16px;
+    outline: none;
+    flex: 1;
+}
+
+.message-box input::placeholder {
+    color: var(--accent-other);
+}
+
 .message-box-container {
     width: 100%;
     max-width: 824px;
@@ -79,6 +92,7 @@
     font-size: 32px;
     font-weight: 700;
     text-decoration: underline;
+    color: var(--accent-dark);
 }
 
 .steps {
@@ -94,7 +108,7 @@
     bottom: 1.25rem; /* End before half of the last circle */
     left: 1.25rem;
     width: 2px;
-    background-color: #e0e0e0; /* A light grey color */
+    background-color: var(--border-color-default); /* A light grey color */
     transform: translateX(-50%);
 }
 
@@ -117,8 +131,8 @@
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 50%;
-    background-color: #3f51b5; /* Primary color from Material Design */
-    color: white;
+    background-color: var(--brand-primary); /* Primary color from Material Design */
+    color: var(--pure-white);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -129,11 +143,11 @@
 
 .step-content {
     margin-left: 1rem;
-    color: #333;
+    color: var(--color-gray-dark);
 }
 
 .link {
-    color: #3f51b5;
+    color: var(--brand-primary);
     text-decoration: none;
     font-weight: 500;
     cursor: pointer;
@@ -168,6 +182,16 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    background-color: var(--white);
+    color: var(--accent-dark);
+    border: 1px solid var(--accent-other);
+    transition: all 0.2s ease-in-out;
+}
+
+.pre-defined-prompt:hover {
+    background-color: var(--active);
+    color: var(--white);
+    border-color: var(--active);
 }
 
 @media (max-width: 768px) {

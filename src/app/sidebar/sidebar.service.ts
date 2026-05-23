@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class SidebarService {
   public isSidebarOpen: boolean = true;
+  public isCollapsed: boolean = false;
 
   constructor() { }
 

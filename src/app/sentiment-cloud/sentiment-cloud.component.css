@@ -26,9 +26,14 @@
 }
 
 .shuffle-button {
-    background-color: var(--active);
+    background-color: var(--active) !important;
     height: 50px;
-    color: var(--white);
+    color: var(--white) !important;
+}
+
+.words {
+    color: var(--accent-dark);
+    font-weight: 500;
 }
 
 .contain {
