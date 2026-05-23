@@ -22,6 +22,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatListModule } from "@angular/material/list";
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from "@angular/material/button";
 import { MatRadioModule } from '@angular/material/radio';
 import { MatIconModule } from "@angular/material/icon";
@@ -49,6 +50,7 @@ import { ModelMessageComponent } from './chat/model-message/model-message.compon
 import { ReviewComponent } from './chat/review/review.component';
 import { DashboardFilterComponent } from './dashboard/dashboard-filter/dashboard-filter.component';
 import { EnhancedChatComponent } from './enhanced-chat/enhanced-chat.component';
+import { SettingsComponent } from './settings/settings.component';
 
 
 
@@ -81,7 +83,8 @@ import { EnhancedChatComponent } from './enhanced-chat/enhanced-chat.component';
     ModelMessageComponent,
     ReviewComponent,
     DashboardFilterComponent,
-    EnhancedChatComponent
+    EnhancedChatComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -95,6 +98,7 @@ import { EnhancedChatComponent } from './enhanced-chat/enhanced-chat.component';
     MatChipsModule,
     MatListModule,
     MatProgressSpinnerModule,
+    MatSlideToggleModule,
     MatButtonModule,
     MatRadioModule,
     MatIconModule,

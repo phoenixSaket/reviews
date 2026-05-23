@@ -18,7 +18,7 @@
                 </div>
             </mat-radio-button>
         </mat-radio-group>
-        <button mat-raised-button color="custom" (click)="searchApp($event)">
+        <button mat-raised-button class="mat-custom" (click)="searchApp($event)">
             <div class="platform">
                 <span>Search</span>
                 <mat-icon>search</mat-icon>
@@ -44,7 +44,7 @@
                     <div class="grey">{{app.name}}</div>
                     <div class="grey">{{app.appId}}</div>
                     <div class="grey italic">{{app.developer}}</div>
-                    <div class="grey italic bold">{{(app.score).toFixed(2)}} / 5</div>
+                    <div class="grey italic bold">{{app.score != null ? app.score.toFixed(2) : 'N/A'}} / 5</div>
                 </div>
             </div>
         </div>

@@ -2,7 +2,7 @@
     <mat-spinner></mat-spinner>
 </div>
 
-<div *ngIf="!isLoading && !!data.getCurrentApp().name">
+<div *ngIf="!isLoading && !!data.getCurrentApp().name" class="reviews-page-wrapper">
     <div class="top">
         <div class="filter">
             <app-filters [versions]="versions" [years]="years" (version)="versionFilter($event)"

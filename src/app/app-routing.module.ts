@@ -10,6 +10,7 @@ import { WordcloudComponent } from './wordcloud/wordcloud.component';
 import { SentimentReviewsComponent } from './sentiment-reviews/sentiment-reviews.component';
 import { ChatComponent } from './chat/chat.component';
 import { EnhancedChatComponent } from './enhanced-chat/enhanced-chat.component';
+import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
   {path: "", component: DashboardComponent},
@@ -22,7 +23,8 @@ const routes: Routes = [
   {path: "docs", component: DocumentationComponent},
   {path: "sentiment-reviews", component: SentimentReviewsComponent},
   {path: "chat", component: ChatComponent},
-  {path: "enhanced-chat", component: EnhancedChatComponent}
+  {path: "enhanced-chat", component: EnhancedChatComponent},
+  {path: "settings", component: SettingsComponent}
 ];
 
 @NgModule({
