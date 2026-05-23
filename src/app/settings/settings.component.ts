@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-settings',
@@ -18,37 +19,24 @@ export class SettingsComponent implements OnInit {
   public currentTheme: string = 'minimal';
   public isDarkMode: boolean = false;
 
-  constructor() { }
+  constructor(private themeService: ThemeService) { }
 
   ngOnInit(): void {
-    // Optionally retrieve theme from localStorage
-    const savedTheme = localStorage.getItem('app-theme') || 'minimal';
-    this.currentTheme = savedTheme;
-
-    const savedDarkMode = localStorage.getItem('app-dark-mode');
-    if (savedDarkMode) {
-      this.isDarkMode = savedDarkMode === 'true';
-      if (this.isDarkMode) {
-        document.body.classList.add('dark-mode');
-      }
-    }
+    this.themeService.currentTheme$.subscribe(theme => {
+      this.currentTheme = theme;
+    });
+    this.themeService.isDarkMode$.subscribe(isDark => {
+      this.isDarkMode = isDark;
+    });
   }
 
   selectTheme(themeId: string) {
-    this.currentTheme = themeId;
-    localStorage.setItem('app-theme', themeId);
-    // Ideally, a theme service should be notified here to apply global CSS changes
+    this.themeService.setTheme(themeId);
   }
 
   toggleDarkMode() {
-    this.isDarkMode = !this.isDarkMode;
-    localStorage.setItem('app-dark-mode', this.isDarkMode.toString());
-
-    if (this.isDarkMode) {
-      document.body.classList.add('dark-mode');
-    } else {
-      document.body.classList.remove('dark-mode');
-    }
+    this.themeService.toggleDarkMode();
   }
 
 }
+

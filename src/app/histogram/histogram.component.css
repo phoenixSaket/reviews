@@ -21,11 +21,24 @@
     width: unset;
     line-height: 15px;
     font-size: 12px;
+    color: var(--accent-dark);
+}
+
+.hide {
+    color: var(--accent-dark);
 }
 
 .histogram span {
     line-height: 15px;
     font-size: 15px;
+}
+
+.star-filled {
+    color: var(--gold);
+}
+
+.star-empty {
+    color: var(--accent-other);
 }
 
 @media (max-width: 768px) {

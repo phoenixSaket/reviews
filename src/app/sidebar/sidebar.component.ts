@@ -50,7 +50,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   };
   
   public isNotMobile: boolean = screen.availWidth > 768;
-  public isCollapsed: boolean = false;
+  get isCollapsed(): boolean { return this.sidebar.isCollapsed; }
   private backupSelectedApp: App | null = null;
   private destroy$ = new Subject<void>();
 
@@ -121,7 +121,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   toggleCollapse(): void {
-    this.isCollapsed = !this.isCollapsed;
+    this.sidebar.isCollapsed = !this.sidebar.isCollapsed;
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 300);
   }
 
   closeSideBar(type?: string): void {

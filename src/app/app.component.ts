@@ -4,6 +4,7 @@ import { AndroidService } from './services/android.service';
 import { DataService } from './services/data.service';
 import { IosService } from './services/ios.service';
 import { SidebarService } from './sidebar/sidebar.service';
+import { ThemeService } from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,8 @@ export class AppComponent {
     private cdr: ChangeDetectorRef,
     private data: DataService,
     public sidebar: SidebarService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private themeService: ThemeService
   ) { 
     this.hotFix().then((hasDeleted: boolean) => {
       if (hasDeleted) {

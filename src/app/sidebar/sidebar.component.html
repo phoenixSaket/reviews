@@ -1,41 +1,38 @@
-<div class="side-bar-container" id="sidebar" [ngClass]="[sidebar.getIsSidebarOpen() ? 'open' : 'close', data.isLoading ? 'no-select' : 'selectable', isCollapsed ? 'collapsed' : '']">
+<div class="side-bar-container" id="sidebar"
+    [ngClass]="[sidebar.getIsSidebarOpen() ? 'open' : 'close', data.isLoading ? 'no-select' : 'selectable', isCollapsed ? 'collapsed' : '']">
     <div class="sidebar-collapse-toggle" (click)="toggleCollapse()" *ngIf="isNotMobile">
         <mat-icon>{{ isCollapsed ? 'chevron_right' : 'chevron_left' }}</mat-icon>
     </div>
     <div class="backdrop" *ngIf="data.isLoading"></div>
     <nav class="sidebar-nav">
-        <div class="sidebar-divider margin-b"></div>
-        <div class="sidebar-section">
-            <div class="sidebar-link" routerLink="/docs" [ngClass]="selectedDocumentation ? 'active': ''" (click)="closeSideBar('docs')" title="About">
-                <mat-icon>description</mat-icon>
-                <span *ngIf="!isCollapsed">About</span>
-            </div>
-        </div>
-        <div class="sidebar-divider"></div>
+        <!-- <div class="sidebar-divider margin-b"></div> -->
+        <!-- <div class="sidebar-divider"></div> -->
         <div class="sidebar-section top">
-            <div class="sidebar-link" routerLink="/dashboard" [ngClass]="selectedDashboard ? 'active': ''" (click)="closeSideBar('dashboard')" title="Dashboard">
+            <div class="sidebar-link" routerLink="/dashboard" [ngClass]="selectedDashboard ? 'active': ''"
+                (click)="closeSideBar('dashboard')" title="Dashboard">
                 <mat-icon>dashboard</mat-icon>
                 <span *ngIf="!isCollapsed">Dashboard</span>
             </div>
-            <div class="sidebar-link" routerLink="/add-app" [ngClass]="selectedAddApp ? 'active': ''" (click)="closeSideBar('addApp')" title="Add App">
+            <div class="sidebar-link" routerLink="/add-app" [ngClass]="selectedAddApp ? 'active': ''"
+                (click)="closeSideBar('addApp')" title="Add App">
                 <mat-icon>add</mat-icon>
                 <span *ngIf="!isCollapsed">Add App</span>
             </div>
-            <div class="sidebar-link" routerLink="/chat" [ngClass]="selectedChat ? 'active': ''" (click)="closeSideBar('chat')" title="AI Chat">
+            <div class="sidebar-link" routerLink="/chat" [ngClass]="selectedChat ? 'active': ''"
+                (click)="closeSideBar('chat')" title="AI Chat">
                 <mat-icon>chat</mat-icon>
                 <span *ngIf="!isCollapsed">AI Chat<span class="sidebar-beta">beta</span></span>
             </div>
-            <div class="sidebar-link" routerLink="/enhanced-chat" [ngClass]="selectedEnhancedChat ? 'active': ''" (click)="closeSideBar('enhanced-chat')" title="AI Assistance">
+            <div class="sidebar-link" routerLink="/enhanced-chat" [ngClass]="selectedEnhancedChat ? 'active': ''"
+                (click)="closeSideBar('enhanced-chat')" title="AI Assistance">
                 <mat-icon>chat</mat-icon>
-                <span *ngIf="!isCollapsed">AI Assistance<span class="sidebar-beta">beta</span><span class="sidebar-beta">WIP</span></span>
+                <span *ngIf="!isCollapsed">AI Assistance<span class="sidebar-beta">beta</span><span
+                        class="sidebar-beta">WIP</span></span>
             </div>
-            <div class="sidebar-link" routerLink="/sentiment-cloud" [ngClass]="selectedSmartWordCloud ? 'active': ''" (click)="closeSideBar('smartwordcloud')" title="Sentiment Word-Cloud">
+            <div class="sidebar-link" routerLink="/sentiment-cloud" [ngClass]="selectedSmartWordCloud ? 'active': ''"
+                (click)="closeSideBar('smartwordcloud')" title="Sentiment Word-Cloud">
                 <mat-icon>sentiment_very_satisfied</mat-icon>
                 <span *ngIf="!isCollapsed">Sentiment Word-Cloud <span class="sidebar-beta">beta</span></span>
-            </div>
-            <div class="sidebar-link" routerLink="/settings" (click)="closeSideBar('settings')" title="Settings">
-                <mat-icon>settings</mat-icon>
-                <span *ngIf="!isCollapsed">Settings</span>
             </div>
         </div>
         <div class="sidebar-divider"></div>
@@ -45,7 +42,8 @@
                 <div class="sidebar-section-title-text">APPS</div>
             </div>
             <div class="apps-container">
-                <div class="apps" *ngFor="let app of apps" [ngClass]="app.isSelected ? 'active' : ''" (click)="deleteOrCompareApp(app)" [title]="app.name">
+                <div class="apps" *ngFor="let app of apps" [ngClass]="app.isSelected ? 'active' : ''"
+                    (click)="deleteOrCompareApp(app)" [title]="app.name">
                     <div class="sidebar-link app-link">
                         <img [src]="app.icon" [alt]="app.name" class="img" (error)="onImageError($event)">
                         <div class="app" *ngIf="!isCollapsed">
@@ -75,7 +73,8 @@
         </div>
         <div class="sidebar-divider"></div>
         <div class="sidebar-section">
-            <div class="sidebar-link compare" (click)="compareApp()" *ngIf="!shouldCompare" [ngClass]="shouldDelete ? 'disable': '' " title="Compare Apps">
+            <div class="sidebar-link compare" (click)="compareApp()" *ngIf="!shouldCompare"
+                [ngClass]="shouldDelete ? 'disable': '' " title="Compare Apps">
                 <mat-icon class="dark-text">compare_arrows</mat-icon>
                 <span *ngIf="!isCollapsed">Compare Apps</span>
             </div>
@@ -89,7 +88,8 @@
                     <mat-icon>compare_arrows</mat-icon>
                 </div>
             </div>
-            <div class="sidebar-link delete" (click)="deleteApp()" *ngIf="!shouldDelete" [ngClass]="shouldCompare ? 'disable': '' " title="Delete Apps">
+            <div class="sidebar-link delete" (click)="deleteApp()" *ngIf="!shouldDelete"
+                [ngClass]="shouldCompare ? 'disable': '' " title="Delete Apps">
                 <mat-icon class="img">delete_outline</mat-icon>
                 <span *ngIf="!isCollapsed">Delete Apps</span>
             </div>
@@ -103,7 +103,19 @@
                     <mat-icon>delete_outline</mat-icon>
                 </div>
             </div>
+            <div class="sidebar-divider"></div>
+            <div class="sidebar-link" routerLink="/settings" (click)="closeSideBar('settings')" title="Settings">
+                <mat-icon>settings</mat-icon>
+                <span *ngIf="!isCollapsed">Settings</span>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-link" routerLink="/docs" [ngClass]="selectedDocumentation ? 'active': ''"
+                    (click)="closeSideBar('docs')" title="About">
+                    <mat-icon>description</mat-icon>
+                    <span *ngIf="!isCollapsed">About</span>
+                </div>
+            </div>
         </div>
         <div class="sidebar-divider margin-t"></div>
-        </nav>
+    </nav>
 </div>

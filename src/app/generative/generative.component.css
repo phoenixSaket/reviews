@@ -1,3 +1,13 @@
+:host {
+    display: block;
+}
+
+@media (min-width: 769px) {
+    :host {
+        height: 100%;
+    }
+}
+
 .container {
     width: 100%;
     display: flex;
@@ -6,7 +16,7 @@
     padding: 10px;
     border-radius: 5px;
     margin: 3px 0px;
-    background-color: #fefefe;
+    background-color: var(--white);
     position: sticky;
     top: 94px;
     height: calc(100dvh - 170px);
@@ -34,13 +44,13 @@
 .title {
     font-size: 20px;
     font-weight: 700;
-    color: #474747;
+    color: var(--accent-dark);
 }
 
 .sub-title {
     font-size: 14px;
     font-style: italic;
-    color: #757575;
+    color: var(--color-gray-muted);
 }
 
 .prompt {
@@ -71,7 +81,7 @@
 
 .prompt > button.disabled {
     background-color: var(--white);
-    color: #ababab;
+    color: var(--color-gray-light);
     cursor: not-allowed;
 }
 
@@ -96,12 +106,13 @@
 .label {
     margin: 0 0 5px;
     font-weight: 400;
-    color: #474747;
+    color: var(--accent-dark);
 }
 
 .content {
+    flex-grow: 1;
+    min-height: 0;
     overflow-y: auto;
-    /* height: calc(100dvh - 420px); */
     padding: 16px;
     border-radius: 8px;
 }
@@ -155,5 +166,13 @@
 
     .content {
         height: calc(100dvh - 465px);
+    }
+}
+
+@media (min-width: 769px) {
+    .container {
+        position: static !important;
+        height: 100% !important;
+        margin: 0 !important;
     }
 }

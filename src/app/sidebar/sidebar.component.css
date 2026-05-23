@@ -3,24 +3,22 @@
     left: 0px;
     top: 50px;
     padding: 0;
-    width: 100%;
-    max-width: 305px;
+    width: 305px;
     display: flex;
     flex-direction: column;
     background: var(--white);
     height: calc(100vh - 50px);
-    box-shadow: 2px 0 8px rgba(84,96,135,0.04);
+    box-shadow: var(--shadow-brand);
     border-right: 1px solid var(--accent);
+    transition: left 0.3s ease, width 0.3s ease;
 }
 
 .side-bar-container.open {
     left: 0;
-    transition: left 0.3s, width 0.3s;
 }
 
 .side-bar-container.close {
     left: -305px;
-    transition: left 0.3s, width 0.3s;
 }
 
 .side-bar-container.collapsed {
@@ -41,7 +39,7 @@
     justify-content: center;
     cursor: pointer;
     z-index: 10;
-    box-shadow: 2px 0 8px rgba(84,96,135,0.04);
+    box-shadow: var(--shadow-brand);
 }
 
 .sidebar-collapse-toggle mat-icon {
@@ -288,7 +286,7 @@ img.img {
     width: 20px;
     height: 20px;
     border-radius: 4px;
-    box-shadow: 0 0 2px 1px rgb(84 96 135 / 6%);
+    box-shadow: var(--shadow-brand-light);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -356,7 +354,7 @@ img.img {
         max-width: 100vw;
         z-index: 2000;
         background: var(--white);
-        box-shadow: 2px 0 8px rgba(84,96,135,0.12);
+        box-shadow: var(--shadow-brand-hover);
         transition: left 0.3s;
     }
     .side-bar-container.close {

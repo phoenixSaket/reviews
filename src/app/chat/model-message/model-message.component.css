@@ -10,8 +10,8 @@
     max-width: 100%;
     text-align: left;
     padding: 16px 32px;
-    background-color: #d5e5fb;
-    color: var(--graph);
+    background-color: var(--chat-bubble-bot-bg);
+    color: var(--accent-dark);
     border-radius: 8px;
     display: flex;
     flex-direction: column;

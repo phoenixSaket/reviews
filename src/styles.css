@@ -17,6 +17,7 @@
 } */
 
 :root {
+    color-scheme: light;
     --graph: #2E3349;
     --accent: #F4F6F9;
     --accent-dark: #2E3349;
@@ -27,14 +28,185 @@
     --mat-mdc-snack-bar-button-color: var(--accent) !important;
     --mdc-snackbar-container-color: var(--active) !important;
     --white: #FFFFFF;
+
+    /* New Centralized Color & Utility Variables */
+    --pure-white: #FFFFFF;
+    --pure-black: #000000;
+    --gold: #ffb703;
+
+    --color-gray-dark: #22223b;
+    --color-gray-muted: #666666;
+    --color-gray-light: #ababab;
+    --color-text-constant-dark: #222222;
+
+    --brand-primary: #3f51b5;
+    --brand-primary-hover: #303f9f;
+    --blue-brand: #007bff;
+    --blue-brand-hover: #0056b3;
+
+    --sentiment-positive-bg: #e6f9f2;
+    --sentiment-positive-text: #007A58;
+    --sentiment-negative-bg: #ffeaea;
+    --sentiment-negative-text: #E74B58;
+    --sentiment-neutral-bg: var(--accent);
+
+    --chat-bubble-bot-bg: #d5e5fb;
+    --chat-bubble-user-bg: var(--active);
+
+    --blue-light-bg: #dbeafe;
+    --blue-light-text: #1e293b;
+
+    --border-color-default: rgba(0, 0, 0, 0.1);
+    --border-color-light: rgba(0, 0, 0, 0.05);
+    --shadow-color-default: rgba(0, 0, 0, 0.1);
+    --shadow-color-light: rgba(0, 0, 0, 0.05);
+    --shadow-brand: rgba(84, 96, 135, 0.04);
+    --shadow-brand-hover: rgba(84, 96, 135, 0.12);
+    --shadow-brand-medium: rgba(84, 96, 135, 0.10);
+    --shadow-brand-light: rgba(84, 96, 135, 0.06);
+
+    --gradient-ios: linear-gradient(135deg, #007AFF 0%, #5856D6 50%, #FF2D92 100%);
+    --gradient-android: linear-gradient(135deg, #3DDC84 0%, #4285F4 50%, #34A853 100%);
+    --gradient-android-alt: linear-gradient(135deg, #3DDC84 0%, #2BB673 100%);
+    --gradient-ios-alt: linear-gradient(135deg, #007AFF 0%, #0056CC 100%);
+
+    --shadow-doc-light: rgba(73, 93, 123, 0.1);
+    --shadow-doc-medium: rgba(73, 93, 123, 0.15);
+    --shadow-doc-dark: rgba(73, 93, 123, 0.2);
+    --shadow-doc-darker: rgba(73, 93, 123, 0.25);
+    --shadow-doc-heavy: rgba(73, 93, 123, 0.3);
+    --shadow-doc-heavier: rgba(73, 93, 123, 0.35);
+    --shadow-doc-deep: rgba(73, 93, 123, 0.4);
+    --shadow-doc-subtle: rgba(73, 93, 123, 0.08);
+    --shadow-doc-ultrasubtle: rgba(73, 93, 123, 0.05);
+    --shadow-doc-medium-light: rgba(73, 93, 123, 0.12);
+
+    --active-rgb: 29, 33, 50;
+    --active-opacity-04: rgba(var(--active-rgb), 0.04);
+    --active-opacity-08: rgba(var(--active-rgb), 0.08);
+    --active-opacity-10: rgba(var(--active-rgb), 0.10);
+    --active-opacity-15: rgba(var(--active-rgb), 0.15);
+    --active-opacity-20: rgba(var(--active-rgb), 0.20);
+    --active-opacity-30: rgba(var(--active-rgb), 0.30);
+    --active-focus-ring: 0 0 0 3px var(--active-opacity-10);
+    --bg-overlay-hover: rgba(90, 93, 110, 0.597);
+    --shadow-card: 0 1px 3px var(--shadow-color-light);
+    --shadow-brand-heavy: rgba(84, 96, 135, 0.18);
+    --border-doc-default: rgba(73, 93, 123, 0.1);
+    --border-doc-light: rgba(73, 93, 123, 0.05);
+    --border-doc-medium: rgba(73, 93, 123, 0.15);
+    --border-doc-dark: rgba(73, 93, 123, 0.2);
+    --gradient-android-darker: linear-gradient(135deg, #2BB673 0%, #1A9B5A 100%);
+    --gradient-ios-darker: linear-gradient(135deg, #0056CC 0%, #004499 100%);
+    --gradient-google: linear-gradient(135deg, #4285f4, #34a853);
+    --gradient-gray-light: linear-gradient(90deg, #f1f5f9 0%, #e9ecef 100%);
+    --gradient-skeleton-light: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    --gradient-skeleton-medium: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    --gradient-skeleton-doc: linear-gradient(90deg, transparent, rgba(73, 93, 123, 0.1), transparent);
+    --radial-glow-light: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    --radial-glow-doc: radial-gradient(circle, rgba(73, 93, 123, 0.05) 0%, transparent 70%);
+
+    --filter-card-bg: #ffffff;
+    --filter-border: #e0e0e0;
+    --filter-text-primary: #333333;
+    --filter-text-secondary: #666666;
+    --filter-input-bg: #ffffff;
+    --filter-hover-bg: #f5f5f5;
+    --filter-secondary-bg: #f5f5f5;
+    --filter-disabled-bg: #f5f5f5;
+    --sort-control-bg: #f5f5f5;
+    --sort-btn-active-bg: #ffffff;
+    --option-selected-bg: rgba(25, 118, 210, 0.08);
+    --sentiment-neutral-text: #bb844c;
+    --shadow-ios: 0 2px 8px rgba(0, 122, 255, 0.3);
+    --shadow-android: 0 2px 8px rgba(61, 220, 132, 0.3);
+    --shadow-active-btn: 0 4px 12px rgba(25, 118, 210, 0.2);
+    --shadow-active-btn-subtle: 0 2px 6px rgba(25, 118, 210, 0.2);
+    --shadow-google-btn: 0 4px 15px rgba(66, 133, 244, 0.3);
+    --shadow-google-btn-heavy: 0 8px 25px rgba(66, 133, 244, 0.4);
+    --shadow-active-focus-ring-glow: 0 4px 10px rgba(25, 118, 210, 0.3);
+    --bg-translucent-white-light: rgba(245, 246, 251, 0.2);
+    --bg-translucent-white: rgba(255, 255, 255, 0.5);
 }
 
 body.dark-mode {
+    color-scheme: dark;
     --accent: #171923;
     --white: #2D3748;
     --accent-dark: #E2E8F0;
     --active: #E2E8F0;
     --accent-other: #A0AEC0;
+
+    /* Dark Mode Overrides */
+    --color-gray-dark: #F7FAFC;
+    --color-gray-muted: #A0AEC0;
+    --color-gray-light: #718096;
+
+    --sentiment-positive-bg: rgba(75, 198, 147, 0.2);
+    --sentiment-positive-text: #4BC693;
+    --sentiment-negative-bg: rgba(235, 87, 87, 0.2);
+    --sentiment-negative-text: #EB5757;
+
+    --chat-bubble-bot-bg: #2D3748;
+    --chat-bubble-user-bg: var(--active);
+
+    --blue-light-bg: #1A365D;
+    --blue-light-text: #E2E8F0;
+
+    --border-color-default: rgba(255, 255, 255, 0.1);
+    --border-color-light: rgba(255, 255, 255, 0.05);
+    --shadow-color-default: rgba(0, 0, 0, 0.3);
+    --shadow-color-light: rgba(0, 0, 0, 0.15);
+    --shadow-brand: rgba(0, 0, 0, 0.2);
+    --shadow-brand-hover: rgba(0, 0, 0, 0.35);
+    --shadow-brand-medium: rgba(0, 0, 0, 0.25);
+    --shadow-brand-light: rgba(0, 0, 0, 0.15);
+
+    --shadow-doc-light: rgba(0, 0, 0, 0.2);
+    --shadow-doc-medium: rgba(0, 0, 0, 0.25);
+    --shadow-doc-dark: rgba(0, 0, 0, 0.3);
+    --shadow-doc-darker: rgba(0, 0, 0, 0.35);
+    --shadow-doc-heavy: rgba(0, 0, 0, 0.4);
+    --shadow-doc-heavier: rgba(0, 0, 0, 0.45);
+    --shadow-doc-deep: rgba(0, 0, 0, 0.5);
+    --shadow-doc-subtle: rgba(0, 0, 0, 0.15);
+    --shadow-doc-ultrasubtle: rgba(0, 0, 0, 0.1);
+    --shadow-doc-medium-light: rgba(0, 0, 0, 0.22);
+
+    --active-rgb: 226, 232, 240;
+    --bg-overlay-hover: rgba(0, 0, 0, 0.75);
+    --shadow-brand-heavy: rgba(0, 0, 0, 0.4);
+    --border-doc-default: rgba(255, 255, 255, 0.1);
+    --border-doc-light: rgba(255, 255, 255, 0.05);
+    --border-doc-medium: rgba(255, 255, 255, 0.15);
+    --border-doc-dark: rgba(255, 255, 255, 0.2);
+    --gradient-gray-light: linear-gradient(90deg, #1e293b 0%, #0f172a 100%);
+    --gradient-skeleton-light: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+    --gradient-skeleton-medium: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    --gradient-skeleton-doc: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+
+    --filter-card-bg: #2d2d2d;
+    --filter-border: #404040;
+    --filter-text-primary: #ffffff;
+    --filter-text-secondary: #b0b0b0;
+    --filter-input-bg: #3d3d3d;
+    --filter-hover-bg: #404040;
+    --filter-secondary-bg: #404040;
+    --filter-disabled-bg: #404040;
+    --sort-control-bg: #1e1e1e;
+    --sort-btn-active-bg: #2d2d2d;
+    --option-selected-bg: rgba(25, 118, 210, 0.15);
+    --sentiment-neutral-text: #eab308;
+    --bg-translucent-white: rgba(45, 55, 72, 0.5);
+
+    --shadow-ios: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-android: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-active-btn: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-active-btn-subtle: 0 2px 6px rgba(0, 0, 0, 0.3);
+    --shadow-google-btn: 0 4px 15px rgba(0, 0, 0, 0.3);
+    --shadow-google-btn-heavy: 0 8px 25px rgba(0, 0, 0, 0.4);
+    --shadow-active-focus-ring-glow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    --bg-translucent-white-light: rgba(45, 55, 72, 0.2);
 }
 
 .mat-snack-bar-container {
@@ -80,17 +252,17 @@ body {
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: var(--filter-secondary-bg);
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #888;
+    background: var(--color-gray-light);
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: var(--color-gray-muted);
 }
 
 /* html, body { height: 100%; } */
@@ -103,7 +275,7 @@ body {
     margin: 15px 0;
 }
 
-.content li { 
+.content li {
     margin: 10px 20px;
 }
 
@@ -179,7 +351,7 @@ span.mat-checkbox-label {
         gap: 0px;
         justify-content: center;
     }
-    
+
 }
 
 mat-dialog-container {
@@ -192,7 +364,7 @@ mat-dialog-container {
     gap: 8px;
 }
 
-app-model-message .message > * {
+app-model-message .message>* {
     word-break: break-all;
     width: 100% !important;
     display: flex;
@@ -307,4 +479,447 @@ app-model-message .message > * {
     background-color: var(--surface-color) !important;
     border-radius: 4px;
     box-shadow: 0 2px 4px -1px var(--shadow-color), 0 4px 5px 0 var(--shadow-color);
+}
+
+/* ==========================================================================
+   Global Layout & Theme Customizations (Minimal, Compact, Grid, Expressive, Glass)
+   ========================================================================== */
+
+/* 1. Minimal Theme Styling */
+body.theme-minimal .chart-card,
+body.theme-minimal .card,
+body.theme-minimal app-generative .container,
+body.theme-minimal .settings-section,
+body.theme-minimal .filter-container {
+    box-shadow: none !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-radius: 8px !important;
+    background-color: var(--white) !important;
+}
+
+body.theme-minimal.dark-mode .chart-card,
+body.theme-minimal.dark-mode .card,
+body.theme-minimal.dark-mode app-generative .container,
+body.theme-minimal.dark-mode .settings-section,
+body.theme-minimal.dark-mode .filter-container {
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background-color: var(--white) !important;
+}
+
+/* 2. Compact Theme Styling */
+body.theme-compact .tab-content {
+    gap: 14px !important;
+}
+
+body.theme-compact .tab-content.dist {
+    gap: 14px !important;
+    margin-top: 16px !important;
+}
+
+body.theme-compact .chart-card {
+    min-height: 380px !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04) !important;
+}
+
+body.theme-compact .chart-header {
+    padding: 12px 16px 8px 16px !important;
+}
+
+body.theme-compact .chart-container {
+    padding: 8px !important;
+    height: 280px !important;
+}
+
+body.theme-compact .app-name {
+    font-size: 1.05rem !important;
+    margin-bottom: 4px !important;
+}
+
+body.theme-compact .platform-badge {
+    padding: 4px 8px !important;
+    font-size: 0.7rem !important;
+}
+
+body.theme-compact .chart-toggle-btn {
+    padding: 6px 10px !important;
+    border-radius: 8px !important;
+}
+
+body.theme-compact .card {
+    padding: 6px 12px !important;
+    margin: 2px 0px !important;
+    border-radius: 6px !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02) !important;
+}
+
+body.theme-compact app-generative .container {
+    padding: 8px !important;
+    border-radius: 8px !important;
+}
+
+body.theme-compact app-generative .top {
+    padding: 4px 0 !important;
+}
+
+body.theme-compact app-generative .title {
+    font-size: 16px !important;
+}
+
+body.theme-compact app-generative .content {
+    padding: 8px !important;
+}
+
+body.theme-compact .card .author,
+body.theme-compact .card .content,
+body.theme-compact .card .date,
+body.theme-compact .card .version {
+    font-size: 13px !important;
+}
+
+body.theme-compact .card .title {
+    font-size: 14px !important;
+}
+
+body.theme-compact .card .user-img {
+    width: 32px !important;
+    height: 32px !important;
+}
+
+body.theme-compact .card .rate span {
+    font-size: 16px !important;
+    line-height: 16px !important;
+}
+
+body.theme-compact .reviews-container {
+    margin: 8px 0px 0px 12px;
+}
+
+body.theme-compact .settings-section {
+    padding: 16px !important;
+    margin-bottom: 16px !important;
+    border-radius: 8px !important;
+}
+
+body.theme-compact .filter-container {
+    padding: 12px 16px !important;
+    margin-bottom: 12px !important;
+    border-radius: 8px !important;
+}
+
+body.theme-compact .filter-grid,
+body.theme-compact .filter-form {
+    gap: 12px !important;
+    margin-bottom: 12px !important;
+}
+
+body.theme-compact .filter-header {
+    margin-bottom: 12px !important;
+    padding-bottom: 10px !important;
+}
+
+body.theme-compact .sorting-wrapper {
+    margin-top: 6px !important;
+    padding-top: 10px !important;
+}
+
+/* 3. Grid Theme Styling */
+body.theme-grid .reviews-container {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
+    gap: 16px !important;
+    margin: 8px 0px 0px 12px;
+    align-items: stretch !important;
+}
+
+body.theme-grid .apps-container {
+    width: 100% !important;
+    margin: 0 !important;
+    display: flex !important;
+}
+
+body.theme-grid .apps-container>* {
+    width: 100% !important;
+    display: flex !important;
+}
+
+body.theme-grid .card {
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    margin: 0 !important;
+    padding: 16px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+    background-color: var(--white) !important;
+    border: 1px solid rgba(0, 0, 0, 0.04) !important;
+}
+
+body.theme-grid.dark-mode .card {
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+body.theme-grid .card .left {
+    width: 100% !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin-bottom: 12px !important;
+}
+
+body.theme-grid .card .center {
+    width: 100% !important;
+    flex-grow: 1 !important;
+    margin-bottom: 12px !important;
+}
+
+body.theme-grid .card .right {
+    width: 100% !important;
+    align-items: flex-end !important;
+}
+
+body.theme-grid .reviews-and-generative-container {
+    align-items: flex-start !important;
+}
+
+body.theme-grid app-generative .container {
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* 4. Expressive Theme Styling */
+body.theme-expressive .chart-card,
+body.theme-expressive .card,
+body.theme-expressive app-generative .container,
+body.theme-expressive .settings-section,
+body.theme-expressive .filter-container {
+    border-radius: 24px !important;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.06) !important;
+    border: 1px solid rgba(0, 0, 0, 0.02) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    background-color: var(--white) !important;
+}
+
+body.theme-expressive.dark-mode .chart-card,
+body.theme-expressive.dark-mode .card,
+body.theme-expressive.dark-mode app-generative .container,
+body.theme-expressive.dark-mode .settings-section,
+body.theme-expressive.dark-mode .filter-container {
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.22) !important;
+    border: 1px solid rgba(255, 255, 255, 0.04) !important;
+    background-color: var(--white) !important;
+}
+
+body.theme-expressive .chart-card:hover,
+body.theme-expressive .card:hover,
+body.theme-expressive app-generative .container:hover,
+body.theme-expressive .filter-container:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.12) !important;
+}
+
+body.theme-expressive.dark-mode .chart-card:hover,
+body.theme-expressive.dark-mode .card:hover,
+body.theme-expressive.dark-mode app-generative .container:hover,
+body.theme-expressive.dark-mode .filter-container:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.32) !important;
+}
+
+body.theme-expressive .chart-card::before {
+    height: 6px !important;
+    background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899) !important;
+}
+
+/* 5. Glass Theme Styling */
+body.theme-glass {
+    background: radial-gradient(circle at 10% 20%, rgba(216, 241, 230, 0.46) 0.1%, rgba(233, 226, 226, 0.28) 90.1%) !important;
+    --filter-card-bg: rgba(255, 255, 255, 0.45);
+    --filter-input-bg: rgba(255, 255, 255, 0.3);
+    --filter-hover-bg: rgba(255, 255, 255, 0.2);
+    --filter-secondary-bg: rgba(255, 255, 255, 0.15);
+    --filter-border: rgba(255, 255, 255, 0.3);
+    --filter-text-primary: #333333;
+    --filter-text-secondary: #555555;
+    --sort-control-bg: rgba(255, 255, 255, 0.2);
+    --sort-btn-active-bg: rgba(255, 255, 255, 0.5);
+}
+
+body.theme-glass.dark-mode {
+    background: radial-gradient(circle at 10% 20%, rgba(23, 25, 35, 1) 0%, rgba(15, 17, 23, 1) 90%) !important;
+    --filter-card-bg: rgba(45, 55, 72, 0.45);
+    --filter-input-bg: rgba(45, 55, 72, 0.3);
+    --filter-hover-bg: rgba(255, 255, 255, 0.1);
+    --filter-secondary-bg: rgba(255, 255, 255, 0.05);
+    --filter-border: rgba(255, 255, 255, 0.1);
+    --filter-text-primary: #ffffff;
+    --filter-text-secondary: #cccccc;
+    --sort-control-bg: rgba(23, 25, 35, 0.4);
+    --sort-btn-active-bg: rgba(45, 55, 72, 0.5);
+}
+
+body.theme-glass .container {
+    background-color: transparent !important;
+}
+
+body.theme-glass .chart-card,
+body.theme-glass .card,
+body.theme-glass app-generative .container,
+body.theme-glass .settings-section,
+body.theme-glass .filter-container {
+    background: rgba(255, 255, 255, 0.45) !important;
+    backdrop-filter: blur(16px) saturate(120%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(120%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.45) !important;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.06) !important;
+}
+
+body.theme-glass.dark-mode .chart-card,
+body.theme-glass.dark-mode .card,
+body.theme-glass.dark-mode app-generative .container,
+body.theme-glass.dark-mode .settings-section,
+body.theme-glass.dark-mode .filter-container {
+    background: rgba(45, 55, 72, 0.45) !important;
+    backdrop-filter: blur(16px) saturate(120%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(120%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.24) !important;
+}
+
+/* ==========================================================================
+   Modern Material UI Progress Bar Customization
+   ========================================================================== */
+mat-progress-bar,
+.mat-progress-bar {
+    height: 4px !important;
+    border-radius: 4px !important;
+    overflow: hidden !important;
+    /* Establish stacking context and force rounded clipping on all browsers (including Safari) */
+    isolation: isolate !important;
+    transform: translateZ(0) !important;
+}
+
+/* Target SVG and rect elements */
+mat-progress-bar svg,
+mat-progress-bar .mat-progress-bar-element {
+    height: 4px !important;
+    border-radius: 4px !important;
+}
+
+mat-progress-bar rect {
+    height: 4px !important;
+    rx: 4px !important;
+    ry: 4px !important;
+}
+
+mat-progress-bar .mat-progress-bar-background {
+    fill: rgba(29, 33, 50, 0.08) !important;
+}
+
+body.dark-mode mat-progress-bar .mat-progress-bar-background {
+    fill: rgba(226, 232, 240, 0.12) !important;
+}
+
+mat-progress-bar .mat-progress-bar-buffer {
+    background-color: rgba(29, 33, 50, 0.08) !important;
+    border-radius: 4px !important;
+}
+
+body.dark-mode mat-progress-bar .mat-progress-bar-buffer {
+    background-color: rgba(226, 232, 240, 0.12) !important;
+}
+
+/* For div-based fills - MUST NOT have background-color on the parent fill container,
+   otherwise it overrides and breaks the scale/translate animations */
+mat-progress-bar .mat-progress-bar-fill {
+    background-color: transparent !important;
+}
+
+/* Style the actual fill bar using the ::after pseudo-element */
+mat-progress-bar .mat-progress-bar-fill::after {
+    background-color: var(--active) !important;
+    /* Do NOT apply border-radius here to avoid scaling distortion during scaleX transforms! */
+    border-radius: 0 !important;
+}
+
+/* For determinate mode, color the SVG rect.mat-progress-bar-fill */
+mat-progress-bar rect.mat-progress-bar-fill {
+    fill: var(--active) !important;
+}
+
+/* Smooth transitions for value changes */
+mat-progress-bar .mat-progress-bar-fill,
+mat-progress-bar rect.mat-progress-bar-fill {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), width 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* ==========================================================================
+   Modern Material UI Circular Progress Customization
+   ========================================================================== */
+mat-spinner,
+mat-progress-spinner {
+    margin: 0 auto !important;
+}
+
+mat-spinner circle,
+mat-progress-spinner circle {
+    stroke: var(--active) !important;
+    stroke-width: 10% !important;
+    /* Elegant thickness */
+    transition: stroke-dashoffset 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Angular Material Theme & High-Contrast overrides */
+.mat-form-field-label {
+    color: var(--accent-dark) !important;
+}
+
+.mat-select-value {
+    color: var(--accent-dark) !important;
+}
+
+.mat-select-arrow {
+    color: var(--accent-dark) !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-start,
+.mat-form-field-appearance-outline .mat-form-field-outline-end,
+.mat-form-field-appearance-outline .mat-form-field-outline-gap {
+    border-color: var(--accent-dark) !important;
+}
+
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-start,
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-end,
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-gap {
+    border-color: var(--active) !important;
+}
+
+.mat-radio-button {
+    color: var(--accent-dark) !important;
+}
+
+.mat-radio-label-content {
+    color: var(--accent-dark) !important;
+}
+
+.mat-option-text {
+    color: var(--accent-dark) !important;
+}
+
+.mat-select-panel {
+    background-color: var(--white) !important;
+}
+
+.mat-option {
+    background-color: var(--white) !important;
+}
+
+.mat-option:hover:not(.mat-option-disabled),
+.mat-option.mat-active:not(.mat-option-disabled) {
+    background-color: var(--accent) !important;
+}
+
+input.mat-input-element {
+    color: var(--accent-dark) !important;
 }

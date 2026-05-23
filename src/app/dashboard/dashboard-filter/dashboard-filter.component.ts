@@ -23,6 +23,9 @@ export class DashboardFilterComponent implements OnInit, OnChanges {
   availablePlatforms: string[] = ['All', 'iOS', 'Android'];
   openDropdown: string | null = null;
 
+  showFilters: boolean = true;
+  showFilterButton: boolean = true;
+
   constructor(private fb: FormBuilder) {
     this.filterForm = this.fb.group({
       type: [['All']],
@@ -32,6 +35,8 @@ export class DashboardFilterComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    this.showFilters = window.innerWidth > 768;
+    this.showFilterButton = true;
     this.extractAvailableApps();
     this.setupFilterListeners();
   }
@@ -196,6 +201,19 @@ export class DashboardFilterComponent implements OnInit, OnChanges {
 
   removeFilter(type: string, value: string): void {
     this.toggleOption(type, value);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkScreenSize();
+  }
+
+  private checkScreenSize() {
+    this.showFilterButton = true;
+  }
+
+  toggleFilters() {
+    this.showFilters = !this.showFilters;
   }
 
   @HostListener('document:click', ['$event'])

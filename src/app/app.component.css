@@ -1,11 +1,11 @@
 .container {
     margin: 50px 0 0 0;
     width: 100%;
-    height: calc(100vh - 50px);
     padding: 10px;
-    transition-duration: 300ms;
-    overflow: auto;
+    transition: margin-left 0.3s ease, width 0.3s ease;
     background-color: var(--accent);
+    height: calc(100vh - 50px);
+    overflow-y: auto;
 }
 
 @media (max-width: 768px) {
