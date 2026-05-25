@@ -14,10 +14,12 @@ export class NavbarComponent implements OnInit {
   public isSideBarOpen: boolean = false;
   public iosReviews: any[] = [];
   public androidReviews: any[] = [];
+  public isMobile: boolean = false;
 
   constructor(public sidebar: SidebarService, public data: DataService, private android: AndroidService, private ios: IosService) { }
 
   ngOnInit(): void {
+    this.isMobile = window.innerWidth <= 600;
     this.data.appLoader.subscribe((app: any) => {
       if (!!app) {
         this.androidReviews = [];
