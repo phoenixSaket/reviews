@@ -84,23 +84,28 @@
     .navbar-title {
         display: none;
     }
+
     .navbar-logo {
         display: none;
     }
+
     .column-on-mobile {
         flex-direction: column-reverse;
         justify-content: center;
         align-items: center;
-        gap: 10px;
+        gap: 0px;
         width: 100%;
     }
+
     .bold {
         display: none;
     }
+
     .left {
         align-items: unset;
         gap: unset;
     }
+
     .navbar-container {
         height: unset;
         align-items: unset;

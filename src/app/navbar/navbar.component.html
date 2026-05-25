@@ -1,10 +1,10 @@
 <div class="navbar-container">
     <div class="left">
-        <div class="toggle" routerLink="/">
-            <!-- <span *ngIf="!sidebar.getIsSidebarOpen()" class="hamburger">&#x2630;</span>
-            <span *ngIf="sidebar.getIsSidebarOpen()">&#x2573;</span> -->
-            <img src="../../assets/logo.png" style="width: 40px; border-radius: 40%;" alt="logo">
+        <div class="toggle" *ngIf="isMobile" (click)="toggleSideBar()">
+            <span *ngIf="!sidebar.getIsSidebarOpen()" class="hamburger">&#x2630;</span>
+            <span *ngIf="sidebar.getIsSidebarOpen()">&#x2573;</span>
         </div>
+        <img *ngIf="!isMobile" src="assets/logo.png" style="width: 40px; border-radius: 40%;" alt="logo">
         <span class="navbar-title">Reviews Dashboard</span>
     </div>
     <div class="column-on-mobile">

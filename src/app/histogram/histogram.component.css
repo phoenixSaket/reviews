@@ -43,14 +43,21 @@
 
 @media (max-width: 768px) {
     .histogram span {
-        line-height: 12px;
-        font-size: 12px;
-    } 
+        line-height: 8px;
+        font-size: 8px;
+    }
 
     .d-flex {
         display: flex;
         gap: 15px;
         align-items: center;
+    }
+
+    .main-container {
+        gap: 0px 8px;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
     }
 
     .hide {
@@ -74,7 +81,7 @@
     flex-direction: column;
 }
 
-.number-container > div {
+.number-container>div {
     width: 100%;
     display: flex;
     justify-content: space-between;
