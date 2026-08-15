@@ -344,24 +344,34 @@ img.img {
     letter-spacing: 0.5px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .side-bar-container {
         position: fixed;
         top: 50px;
         left: 0;
-        width: 100vw;
+        width: 290px;
+        max-width: 85vw;
         height: calc(100vh - 50px);
-        max-width: 100vw;
         z-index: 2000;
         background: var(--white);
-        box-shadow: var(--shadow-brand-hover);
-        transition: left 0.3s;
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.18);
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
+
     .side-bar-container.close {
-        left: -100vw;
+        left: -320px;
     }
+
     .side-bar-container.open {
         left: 0;
+    }
+
+    .side-bar-container.collapsed {
+        width: 290px; /* Do not collapse to 80px inside mobile/tablet drawer */
+    }
+
+    .sidebar-collapse-toggle {
+        display: none !important;
     }
 
     .sidebar-header {

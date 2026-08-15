@@ -1,51 +1,59 @@
-<div class="top-container">
-    <form class="example-form">
-        <mat-form-field class="example-full-width" appearance="outline">
-            <mat-label>Search App</mat-label>
-            <input matInput placeholder="App Name" [value]="appName" (change)="appNameChange($event)" autocomplete="off">
-        </mat-form-field>
-        <mat-radio-group aria-label="Select platform" class="radio-group" (change)="platformSelect($event)">
-            <mat-radio-button value="IOS" checked>
-                <div class="platform">
-                    <span class="name">IOS</span>
-                    <span><img src="assets/apple.jpg" alt="apple" class="platform-img"></span>
-                </div>
-            </mat-radio-button>
-            <mat-radio-button value="Android">
-                <div class="platform">
-                    <span class="name">Android</span>
-                    <span><img src="assets/android.jpg" alt="apple" class="platform-img"></span>
-                </div>
-            </mat-radio-button>
-        </mat-radio-group>
-        <button mat-raised-button class="mat-custom" (click)="searchApp($event)">
-            <div class="platform">
-                <span>Search</span>
-                <mat-icon>search</mat-icon>
-            </div>
-        </button>
-    </form>
-</div>
-
-<div class="bottom-container">
-    <div class="app" *ngFor="let app of apps">
-        <div class="hover" (click)="addApp(app)">
-            <div class="text">
-                <mat-icon>ads_click</mat-icon><span>Click to add</span>
-            </div>
+<div class="add-app-container">
+    <div class="search-hero-card">
+        <div class="search-header">
+            <h2>Add New Application</h2>
+            <p>Search iOS App Store or Google Play Store to import app reviews and sentiment telemetry.</p>
         </div>
-        <div class="details" (click)="addApp(app)">
-            <div class="inner-container">
-                <div class="image">
-                    <img [src]="app.icon" class="icon" (error)="onImageError($event)">
+        <form class="search-form" (ngSubmit)="searchApp($event)">
+            <mat-form-field class="search-input-field" appearance="outline">
+                <mat-label>Search Application</mat-label>
+                <input matInput placeholder="Enter app name (e.g., Slack, Spotify)" [value]="appName" (change)="appNameChange($event)" autocomplete="off">
+                <mat-icon matSuffix class="search-suffix-icon">search</mat-icon>
+            </mat-form-field>
+
+            <div class="search-controls-row">
+                <mat-radio-group aria-label="Select platform" class="platform-radio-group" (change)="platformSelect($event)">
+                    <mat-radio-button value="IOS" checked>
+                        <div class="platform-item">
+                            <img src="assets/apple.jpg" alt="Apple" class="platform-logo">
+                            <span>iOS App Store</span>
+                        </div>
+                    </mat-radio-button>
+                    <mat-radio-button value="Android">
+                        <div class="platform-item">
+                            <img src="assets/android.jpg" alt="Android" class="platform-logo">
+                            <span>Google Play</span>
+                        </div>
+                    </mat-radio-button>
+                </mat-radio-group>
+
+                <button mat-raised-button class="search-submit-btn" type="submit" (click)="searchApp($event)">
+                    <mat-icon>search</mat-icon>
+                    <span>Search App</span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="results-grid" *ngIf="apps && apps.length > 0">
+        <div class="app-result-card" *ngFor="let app of apps" (click)="addApp(app)">
+            <div class="card-body">
+                <div class="app-icon-wrap">
+                    <img [src]="app.icon" class="app-icon" alt="{{app.title || app.name}}" (error)="onImageError($event)">
                 </div>
-                <div class="inner-details">
-                    <div class="bold name">{{app.title}}</div>
-                    <div class="grey">{{app.name}}</div>
-                    <div class="grey">{{app.appId}}</div>
-                    <div class="grey italic">{{app.developer}}</div>
-                    <div class="grey italic bold">{{app.score != null ? app.score.toFixed(2) : 'N/A'}} / 5</div>
+                <div class="app-info">
+                    <h3 class="app-name">{{app.title || app.name}}</h3>
+                    <div class="app-meta-line app-developer">{{app.developer}}</div>
+                    <div class="app-meta-line app-id-tag">{{app.appId || app.id}}</div>
+                    <div class="rating-badge" *ngIf="app.score != null">
+                        <mat-icon class="star-icon">star</mat-icon>
+                        <span>{{app.score.toFixed(1)}} / 5.0</span>
+                    </div>
                 </div>
+            </div>
+            <div class="card-action-footer">
+                <mat-icon>add_circle_outline</mat-icon>
+                <span>Click to import</span>
             </div>
         </div>
     </div>

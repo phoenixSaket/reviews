@@ -63,13 +63,12 @@
             </div>
         </div>
         <div class="message-box shadows">
-            <input matInput placeholder="Enter your message" name="prompt" id="prompt" type="text" name="prompt" [value]="message" (keydown)="changeInput($event)" autocomplete="off">
+            <input matInput placeholder="Enter your message..." name="prompt" id="prompt" type="text" [value]="message" (keydown)="changeInput($event)" autocomplete="off">
             <button class="send-btn" mat-raised-button color="primary" type="button" [ngClass]="{'disabled': isButtonDisabled}" [disabled]="isButtonDisabled" (click)="sendMessage()">
-                Send
-                <mat-icon>
-                    send
-                </mat-icon>
+                <span>Send</span>
+                <mat-icon>send</mat-icon>
             </button>
         </div>
     </div>
 </div>
+

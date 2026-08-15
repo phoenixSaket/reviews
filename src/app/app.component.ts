@@ -14,7 +14,7 @@ import { ThemeService } from './services/theme.service';
 export class AppComponent {
   title = 'Reviews Dashboard';
   public apps: any[] = [];
-  public width: number = screen.width;
+  public width: number = typeof window !== 'undefined' ? window.innerWidth : 1200;
   private loadedApps: number = 0;
 
   constructor(

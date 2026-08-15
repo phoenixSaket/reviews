@@ -118,20 +118,22 @@
 @media (max-width: 768px) {
     .right {
         width: 100%;
-        align-items: end;
+        align-items: flex-end;
+        margin-top: 4px;
     }
 
     .left {
-        width: 100;
+        width: 100%;
         flex-direction: row;
     }
 
     .center {
-        width: 100%
+        width: 100%;
     }
 
     .card {
         flex-direction: column;
+        padding: 12px;
     }
 
     .d-flex {
@@ -147,7 +149,7 @@
     }
 
     .w-100 {
-        width: 100%
+        width: 100%;
     }
 
     .image {
@@ -166,14 +168,5 @@
 
     .align-center {
         align-items: center;
-    }
-}
-
-@media (max-width: 600px) {
-    .modern-style .card > .card-inner {
-        padding: 16px 8px 16px 8px;
-    }
-    .modern-style .left {
-        gap: 8px;
     }
 }

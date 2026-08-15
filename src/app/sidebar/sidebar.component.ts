@@ -49,10 +49,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
     selectedEnhancedChat: false
   };
   
-  public isNotMobile: boolean = screen.availWidth > 768;
+  get isNotMobile(): boolean {
+    return typeof window !== 'undefined' ? window.innerWidth > 1024 : true;
+  }
   get isCollapsed(): boolean { return this.sidebar.isCollapsed; }
   private backupSelectedApp: App | null = null;
   private destroy$ = new Subject<void>();
+
 
   constructor(
     public data: DataService,
@@ -133,10 +136,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
       this.setActiveSection(type);
     }
 
-    if (screen.width < 768) {
+    if (typeof window !== 'undefined' && window.innerWidth <= 1024) {
       this.sidebar.closeSidebar();
     }
   }
+
 
   private setActiveSection(type: string): void {
     const sectionMap: { [key: string]: keyof SidebarState } = {
@@ -207,11 +211,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.data.compareAppAdded.next(selectedApps);
     this.state.shouldCompare = false;
     
-    if (screen.width < 768) {
+    if (typeof window !== 'undefined' && window.innerWidth <= 1024) {
       this.sidebar.closeSidebar();
     }
     this.router.navigate(['/compare']);
   }
+
 
   deleteOrCompareApp(app: App): void {
     if (this.state.shouldDelete) {
