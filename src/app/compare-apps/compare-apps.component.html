@@ -1,98 +1,112 @@
-<div class="outer" *ngIf="!isMobile">
-  <div class="flex-container bold large columns" *ngIf="compareAppsArray.length != 0">
-    <div class="header text-center">App Details</div>
-    <div class="text-center item">Platform</div>
-    <div class="text-center item">Avg Rating</div>
-    <div class="text-center item">Developer</div>
-    <div class="text-center item">Genre</div>
-    <div class="text-center item">Current Version</div>
-    <div class="text-center item">Release Date</div>
-    <div class="text-center item">Last Updated</div>
-    <div class="text-center item">Number of Reviews</div>
-    <div class="text-center item">Number of Ratings</div>
-    <div class="text-center item word-container positive">Top Positive Words</div>
-    <div class="text-center item word-container negative">Top Negative Words</div>
-    <div class="text-center item negative">1&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
-    <div class="text-center item negative">2&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
-    <div class="text-center item neutral">3&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
-    <div class="text-center item positive">4&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
-    <div class="text-center item positive">5&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
-  </div>
-  <div class="flex-container data-container" *ngFor="let app of compareAppsArray; let i = index">
-    <div class="header text-center">
-      <img [src]="[app.icon]" alt="app icon" (error)="onImageError($event)"/>
-      <div class="name">{{ app.name }}</div>
+<div class="compare-page-container">
+  <!-- Empty State when no apps selected -->
+  <div class="empty-state-compare" *ngIf="compareAppsArray.length === 0">
+    <div class="empty-icon">
+      <mat-icon>compare_arrows</mat-icon>
     </div>
-    <div class="text-center item">{{app.isIOS ? 'IOS' : 'Android'}}</div>
-    <div class="text-center item">{{app.rating | number : '1.1-1' }}</div>
-    <div class="text-center item">{{app.developer}}</div>
-    <div class="text-center item">{{app.genre}}</div>
-    <div class="text-center item">{{app.version}}</div>
-    <div class="text-center item">{{app.releaseDate | date}}</div>
-    <div class="text-center item">{{app.lastUpdated | date}}</div>
-    <div class="text-center item">{{app.reviews}}</div>
-    <div class="text-center item">{{app.ratings}}</div>
-    <div class="text-center item word-container positive">
-      <div [ngClass]="last? 'space' : 'word'" *ngFor="let word of app.positive; let last = last" (click)="openSentimentReviews(word?.text, true, app)">
-        {{word?.text}}
+    <h2>Compare Apps Side-by-Side</h2>
+    <p>Select 2 or 3 apps from the sidebar using the "Compare Apps" button to view detailed comparative metrics and ratings.</p>
+    <button class="action-btn" routerLink="/dashboard" type="button">
+      <mat-icon>dashboard</mat-icon>
+      <span>Go to Dashboard</span>
+    </button>
+  </div>
+
+  <!-- Desktop & Tablet Side-by-side Table -->
+  <div class="outer" *ngIf="!isMobile && compareAppsArray.length > 0">
+    <div class="flex-container bold large columns">
+      <div class="header text-center">App Details</div>
+      <div class="text-center item">Platform</div>
+      <div class="text-center item">Avg Rating</div>
+      <div class="text-center item">Developer</div>
+      <div class="text-center item">Genre</div>
+      <div class="text-center item">Current Version</div>
+      <div class="text-center item">Release Date</div>
+      <div class="text-center item">Last Updated</div>
+      <div class="text-center item">Number of Reviews</div>
+      <div class="text-center item">Number of Ratings</div>
+      <div class="text-center item word-container positive">Top Positive Words</div>
+      <div class="text-center item word-container negative">Top Negative Words</div>
+      <div class="text-center item negative">1&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
+      <div class="text-center item negative">2&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
+      <div class="text-center item neutral">3&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
+      <div class="text-center item positive">4&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
+      <div class="text-center item positive">5&nbsp;<span class="stars">&#9733;</span>&nbsp; Ratings</div>
+    </div>
+    <div class="flex-container data-container" *ngFor="let app of compareAppsArray; let i = index">
+      <div class="header text-center">
+        <img [src]="[app.icon]" alt="app icon" (error)="onImageError($event)"/>
+        <div class="name">{{ app.name }}</div>
+      </div>
+      <div class="text-center item">{{app.isIOS ? 'iOS' : 'Android'}}</div>
+      <div class="text-center item">{{app.rating | number : '1.1-1' }}</div>
+      <div class="text-center item">{{app.developer}}</div>
+      <div class="text-center item">{{app.genre}}</div>
+      <div class="text-center item">{{app.version}}</div>
+      <div class="text-center item">{{app.releaseDate | date}}</div>
+      <div class="text-center item">{{app.lastUpdated | date}}</div>
+      <div class="text-center item">{{app.reviews}}</div>
+      <div class="text-center item">{{app.ratings}}</div>
+      <div class="text-center item word-container positive">
+        <div [ngClass]="last? 'space' : 'word'" *ngFor="let word of app.positive; let last = last" (click)="openSentimentReviews(word?.text, true, app)">
+          {{word?.text}}
+        </div>
+      </div>
+      <div class="text-center item word-container negative">
+        <div [ngClass]="last? 'space' : 'word'" *ngFor="let word of app.negative; let last = last" (click)="openSentimentReviews(word?.text, false, app)">
+          {{word?.text}}
+        </div>
+      </div>
+      <div class="text-center item negative">{{app.oneStar}}</div>
+      <div class="text-center item negative">{{app.twoStar}}</div>
+      <div class="text-center item neutral">{{app.threeStar}}</div>
+      <div class="text-center item positive">{{app.fourStar}}</div>
+      <div class="text-center item positive">{{app.fiveStar}}</div>
+    </div>
+  </div>
+
+  <div class="chart-card" *ngIf="compareAppsArray.length > 0">
+    <div class="chart-header">
+      <div class="chart-info">
+        <div class="chart-title">Ratings Comparison</div>
+        <div class="chart-subtitle">Distribution By Percent</div>
+      </div>
+      <div class="chart-controls">
+        <button class="chart-toggle-btn" (click)="refreshChart()" title="Refresh Chart">
+          <span class="material-symbols-outlined">refresh</span>
+        </button>
       </div>
     </div>
-    <div class="text-center item word-container negative">
-      <div [ngClass]="last? 'space' : 'word'" *ngFor="let word of app.negative; let last = last" (click)="openSentimentReviews(word?.text, false, app)">
-        {{word?.text}}
-      </div>
+    
+    <div class="chart-container">
+      <canvas id="line-chart"></canvas>
     </div>
-    <div class="text-center item negative">{{app.oneStar}}</div>
-    <div class="text-center item negative">{{app.twoStar}}</div>
-    <div class="text-center item neutral">{{app.threeStar}}</div>
-    <div class="text-center item positive">{{app.fourStar}}</div>
-    <div class="text-center item positive">{{app.fiveStar}}</div>
   </div>
-</div>
 
-<div class="chart-card" *ngIf="compareAppsArray.length > 0">
-  <div class="chart-header">
-    <div class="chart-info">
-      <div class="chart-title">Ratings Comparison</div>
-      <div class="chart-subtitle">By Percent</div>
-    </div>
-    <div class="chart-controls">
-      <button class="chart-toggle-btn" (click)="refreshChart()">
-        <span class="material-symbols-outlined">refresh</span>
-      </button>
-    </div>
-  </div>
-  
-  <div class="chart-container">
-    <canvas id="line-chart"></canvas>
-  </div>
-</div>
-
-<!-- Mobile view: one .flex-container.bold.large.columns with expansion panels for each app -->
-<div *ngIf="isMobile">
-  <div class="outer">
-    <div class="flex-container columns">
+  <!-- Mobile view: expansion panels for each field -->
+  <div *ngIf="isMobile && compareAppsArray.length > 0">
+    <div class="mobile-outer">
       <mat-accordion multi="true">
         <mat-expansion-panel *ngFor="let field of fields" [expanded]="true">
           <mat-expansion-panel-header>
-            {{ field.label }}
+            <mat-panel-title class="panel-field-title">
+              {{ field.label }}
+            </mat-panel-title>
           </mat-expansion-panel-header>
           <div class="field-row">
-            <ng-container *ngFor="let app of compareAppsArray">
-              <div class="mobile-details-container">
-                <div class="field-label bold">
-                  <span>{{ app.name }} ({{ app.isIOS ? 'IOS' : 'Android' }})</span>
-                </div>
-                <div class="field-value">
-                  {{ getAppFieldValue(app, field.key) }}
-                </div>
+            <div class="mobile-details-container" *ngFor="let app of compareAppsArray">
+              <div class="field-label bold">
+                <span>{{ app.name }} ({{ app.isIOS ? 'iOS' : 'Android' }})</span>
               </div>
-            </ng-container>
+              <div class="field-value">
+                {{ getAppFieldValue(app, field.key) }}
+              </div>
+            </div>
           </div>
         </mat-expansion-panel>
       </mat-accordion>
     </div>
-    <!-- ...other app columns if needed... -->
   </div>
 </div>
+
 

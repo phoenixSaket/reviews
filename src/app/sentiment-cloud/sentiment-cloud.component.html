@@ -1,46 +1,37 @@
 <div class="top-container sentiment">
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="app-selector-field">
         <mat-label>{{shouldWait ? 'Loading apps '+currentApp + ' / '+totalApps :'Select App'}}</mat-label>
         <mat-select (selectionChange)="appSelected($event)">
             <mat-option *ngFor="let app of apps" [value]="app">
-                {{app.appName}} - {{app.isIOS ? 'IOS': 'Android'}}
+                {{app.appName}} - {{app.isIOS ? 'iOS': 'Android'}}
             </mat-option>
         </mat-select>
     </mat-form-field>
-    <button mat-raised-button class="shuffle-button" *ngIf="!!selectedApp && !loading" (click)="redraw()">
-        <div class="text">Shuffle</div>
-        <span class="material-symbols-outlined">
-            shuffle
-        </span>
-    </button>
-    <button mat-raised-button class="shuffle-button" *ngIf="!!selectedApp && !loading" (click)="getWordReport()">
-        <div class="text">Get Word Report</div>
-        <span class="material-symbols-outlined">
-            list_alt
-        </span>
-    </button>
-    <button mat-raised-button class="shuffle-button" *ngIf="!!selectedApp && !loading" (click)="zoomIn()">
-        <div class="text">Zoom In</div>
-        <span class="material-symbols-outlined">
-            zoom_in
-        </span>
-    </button>
-    <button mat-raised-button class="shuffle-button" *ngIf="!!selectedApp && !loading" (click)="zoomOut()">
-        <div class="text">Zoom Out</div>
-        <span class="material-symbols-outlined">
-            zoom_out
-        </span>
-    </button>
-    <button mat-raised-button class="shuffle-button" *ngIf="!!selectedApp && !loading" (click)="download()">
-        <div class="text">Save</div>
-        <span class="material-symbols-outlined">
-            download
-        </span>
-    </button>
-    <div class="words" *ngIf="!!selectedApp && !loading">
-        Word Count : {{words.length}}
+    
+    <div class="actions-group" *ngIf="!!selectedApp && !loading">
+        <button mat-raised-button class="shuffle-button" (click)="redraw()" title="Shuffle">
+            <span class="btn-text">Shuffle</span>
+            <span class="material-symbols-outlined">shuffle</span>
+        </button>
+        <button mat-raised-button class="shuffle-button" (click)="getWordReport()" title="Get Word Report">
+            <span class="btn-text">Report</span>
+            <span class="material-symbols-outlined">list_alt</span>
+        </button>
+        <button mat-raised-button class="shuffle-button icon-only" (click)="zoomIn()" title="Zoom In">
+            <span class="material-symbols-outlined">zoom_in</span>
+        </button>
+        <button mat-raised-button class="shuffle-button icon-only" (click)="zoomOut()" title="Zoom Out">
+            <span class="material-symbols-outlined">zoom_out</span>
+        </button>
+        <button mat-raised-button class="shuffle-button icon-only" (click)="download()" title="Save Image">
+            <span class="material-symbols-outlined">download</span>
+        </button>
+        <div class="words-badge">
+            Words: <strong>{{words.length}}</strong>
+        </div>
     </div>
 </div>
+
 
 <div class="loading-container" *ngIf="loading">
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>

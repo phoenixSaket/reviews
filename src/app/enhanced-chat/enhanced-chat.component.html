@@ -2,63 +2,68 @@
   <!-- Main chat display area -->
   <div class="chat-history-container">
     <div class="chat-message" *ngFor="let chat of chatHistory" [ngClass]="{'user-message': chat.sender === 'You', 'ai-message': chat.sender === 'AI', 'error-message': chat.sender === 'Error'}">
-      <div class="sender">{{ chat.sender }}:</div>
+      <div class="sender">{{ chat.sender }}</div>
       <div class="message-content">
         <div class="message" *ngIf="chat.message != '[AI is typing...]'" #messageRef [innerHTML]="chat.message"></div>
-        <div class="message" *ngIf="chat.sender == 'AI' && chat.message == '[AI is typing...]'" >
+        <div class="message loader-wrap" *ngIf="chat.sender == 'AI' && chat.message == '[AI is typing...]'">
           <app-loader></app-loader>
         </div>
-        <div class="copy" *ngIf="chat.message != '[AI is typing...]'" (click)="copy()">
-          <mat-icon><span class="material-symbols-outlined">
-            content_copy
-            </span>
-          </mat-icon>
-          Copy
-        </div>
+        <button class="copy-btn" *ngIf="chat.message != '[AI is typing...]'" (click)="copy()" type="button" title="Copy Message">
+          <span class="material-symbols-outlined">content_copy</span>
+          <span>Copy</span>
+        </button>
       </div>
     </div>
 
     <!-- Loading spinner/text -->
     <div class="loading-indicator" *ngIf="isLoading">
       <div class="spinner"></div>
-      <p>Please wait while reviews are analyzed...</p>
+      <p>Analyzing reviews and initializing AI session...</p>
     </div>
   </div>
 
   <!-- Chat input form -->
   <form [formGroup]="chatForm" (ngSubmit)="sendMessage()" class="chat-input-form">
-    <input type="text shadow" name="message" id="prompt-message" class="prompt-message" formControlName="message" placeholder="Type your message here..." [disabled]="isLoading || !sessionId">
-    <button type="submit shadow" [disabled]="chatForm.invalid || isLoading || !sessionId">
-      Send<mat-icon>send</mat-icon>
+    <input type="text" name="message" id="prompt-message" class="prompt-message" formControlName="message" placeholder="Ask about app insights, bugs, feature requests..." [disabled]="isLoading || !sessionId" autocomplete="off">
+    <button type="submit" class="send-btn" [disabled]="chatForm.invalid || isLoading || !sessionId">
+      <span>Send</span>
+      <mat-icon>send</mat-icon>
     </button>
   </form>
 </div>
 
 <div class="app-selector" *ngIf="!hasAppsBeenSelected">
-  <div class="title shadow">
-    Select the apps that you wish to get assistance from AI
-  </div>
-  <div class="apps-container">
-    <div class="app shadow" *ngFor="let app of allApps" (click)="selectApp(app)" [ngClass]="{'selected': app.isSelected}">
-      <div class="checkbox">
-        <mat-icon *ngIf="!app.isSelected">check_box_outline_blank</mat-icon>
-        <mat-icon *ngIf="app.isSelected">check_box</mat-icon>
-      </div>
-      <div class="name-container">
-        <span class="name">
-          {{getAppName(app.id)}} 
-        </span>
-        <span class="platform">
-          {{(app.platform ? '( ' + app.platform + ' )' : '') | uppercase}}
-        </span>
+  <div class="selector-card">
+    <div class="selector-header">
+      <mat-icon class="header-icon">psychology</mat-icon>
+      <div class="header-titles">
+        <h2>AI Multi-App Assistance</h2>
+        <p>Select the apps you wish to analyze together with Google Gemini AI</p>
       </div>
     </div>
-  </div>
-  <div class="submit-btn-container">
-    <button class="submit shadow" (click)="initialize()">
-      Assist with AI
-      <mat-icon>send</mat-icon>
-    </button>
+    
+    <div class="apps-grid">
+      <div class="app-card" *ngFor="let app of allApps" (click)="selectApp(app)" [ngClass]="{'selected': app.isSelected}">
+        <div class="checkbox-wrapper">
+          <mat-icon *ngIf="!app.isSelected" class="checkbox-icon">check_box_outline_blank</mat-icon>
+          <mat-icon *ngIf="app.isSelected" class="checkbox-icon checked">check_box</mat-icon>
+        </div>
+        <div class="app-info-wrap">
+          <span class="app-title-name">{{getAppName(app.id)}}</span>
+          <span class="app-platform-pill" [ngClass]="app.platform?.toLowerCase()">
+            {{app.platform | uppercase}}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="submit-btn-container">
+      <button class="submit-action-btn" (click)="initialize()" type="button">
+        <span>Start AI Assistance</span>
+        <mat-icon>auto_awesome</mat-icon>
+      </button>
+    </div>
   </div>
 </div>
+
 

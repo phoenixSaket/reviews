@@ -1,24 +1,43 @@
-<div class="back-outer-container" (click)="goBack($event)">
-    <div class="back-container">
-        <div class="material-symbols-outlined">
-            arrow_back
+<div class="sentiment-page-container">
+    <div class="sentiment-header-bar">
+        <button class="back-btn" (click)="goBack($event)" type="button">
+            <span class="material-symbols-outlined">arrow_back</span>
+            <span>Back</span>
+        </button>
+        <div class="sentiment-meta" *ngIf="app">
+            <span class="sentiment-badge" [ngClass]="sentiment?.toLowerCase()">
+                {{sentiment}}
+            </span>
+            <div class="header-text">
+                Showing reviews for <strong class="app-title">{{app.appName || app.name}}</strong>
+                <span class="platform-tag">({{app.isIOS ? 'iOS' : 'Android'}})</span>
+                <span class="keyword-pill" *ngIf="keyword">
+                    Keyword: <strong>'{{keyword}}'</strong>
+                </span>
+            </div>
+            <span class="review-count-badge" *ngIf="!isLoading">
+                {{reviews.length}} {{reviews.length === 1 ? 'review' : 'reviews'}}
+            </span>
         </div>
-        Back
     </div>
-    <div class="header">
-        Showing <span class="bold">{{sentiment}}</span> reviews for <span class="bold">{{app.appName || app.name}} ( {{app.isIOS ? 'IOS': 'Android'}} )</span> with keyword <span class="bold">'{{keyword}}'</span>
-    </div>
-</div>
-<div class="container-sentiment">
-    <div class="review" *ngFor="let review of reviews">
-        <div class="ios" *ngIf="isIOS">
-            <app-card-ios [data]="review"></app-card-ios>
+
+    <div class="container-sentiment" *ngIf="!isLoading">
+        <div class="review" *ngFor="let review of reviews">
+            <div class="ios" *ngIf="isIOS">
+                <app-card-ios [data]="review"></app-card-ios>
+            </div>
+            <div class="android" *ngIf="!isIOS">
+                <app-card-android [data]="review"></app-card-android>
+            </div>
         </div>
-        <div class="android" *ngIf="!isIOS">
-            <app-card-android [data]="review"></app-card-android>
+        <div class="no-reviews-state" *ngIf="reviews.length === 0">
+            <span class="material-symbols-outlined">sentiment_dissatisfied</span>
+            <h3>No reviews found</h3>
+            <p>No matching reviews found for keyword '{{keyword}}'.</p>
         </div>
     </div>
-</div>
-<div class="loading" *ngIf="isLoading">
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+
+    <div class="loading" *ngIf="isLoading">
+        <mat-spinner diameter="48"></mat-spinner>
+    </div>
 </div>

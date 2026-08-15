@@ -117,3 +117,17 @@
     font-weight: 500;
     color: var(--accent-dark);
 }
+
+@media (max-width: 768px) {
+    .settings-container {
+        padding: 16px 12px;
+    }
+
+    .settings-section {
+        padding: 16px;
+    }
+
+    .theme-options {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

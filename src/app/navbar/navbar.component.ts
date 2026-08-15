@@ -14,12 +14,28 @@ export class NavbarComponent implements OnInit {
   public isSideBarOpen: boolean = false;
   public iosReviews: any[] = [];
   public androidReviews: any[] = [];
-  public isMobile: boolean = false;
+  get isMobile(): boolean {
+    return typeof window !== 'undefined' ? window.innerWidth <= 1024 : false;
+  }
 
-  constructor(public sidebar: SidebarService, public data: DataService, private android: AndroidService, private ios: IosService) { }
+  get isPhone(): boolean {
+    return typeof window !== 'undefined' ? window.innerWidth <= 600 : false;
+  }
+
+  get isTablet(): boolean {
+    return typeof window !== 'undefined' ? window.innerWidth > 600 && window.innerWidth <= 1024 : false;
+  }
+
+  constructor(
+    public data: DataService,
+    public ios: IosService,
+    public android: AndroidService,
+    public sidebar: SidebarService
+  ) { }
 
   ngOnInit(): void {
-    this.isMobile = window.innerWidth <= 600;
+
+
     this.data.appLoader.subscribe((app: any) => {
       if (!!app) {
         this.androidReviews = [];
